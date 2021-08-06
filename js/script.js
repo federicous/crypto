@@ -13,6 +13,8 @@ let takeProfit = 30;
 // Porcentaje de baja de precio para realizar una venta y dejar de perder dinero
 let stopLoss = 5;
 
+alert("Los limites para finalizar la operación son los siguientes: \n Take Profit= " + takeProfit + "% \n Stop Loss= " + stopLoss + "%")
+
 function compra(dinero, precio) {
 	let resultado = dinero / precio;
 	return resultado;
@@ -49,5 +51,3 @@ if (dineroTotal < dineroInvertido) {
 } else {
 	alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + dineroTotal)
 }
-
-alert("Dinero disponible en dolares: " + dineroTotal)
