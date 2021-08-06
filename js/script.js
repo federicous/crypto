@@ -18,18 +18,18 @@ function compra(dinero, precio) {
 	return resultado;
 }
 
-/* function vender(dinero, precio, billetera) {
-	let resultado = dinero/precio;
-	return billetera-resultado;	
+function vender(crypto, precio, billetera) {
+	let resultado = crypto * precio;
+	return resultado;
 }
- */
+
 function porcentajeCambio(precioAnterior, precioNuevo) {
-	return (precioNuevo * 100) / precioAnterior;
+	return Math.abs(((precioNuevo * 100) / precioAnterior) - 100);
 }
 
 let criptoComprada = compra(dineroInvertido, precioInicial);
 // billetera = billetera + criptoComprada;
-let dineroTotal=0;
+let dineroTotal = 0;
 // Loop para actualizar el precio de la criptomoneda
 while (true) {
 	let precioActualizado = prompt("ingrese el nuevo precio, o bien ESC para finalizar la operación");
@@ -39,9 +39,15 @@ while (true) {
 		let precioNuevo = parseInt(precioActualizado);
 		let cambioPrecio = porcentajeCambio(precioInicial, precioNuevo);
 		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
-			dineroTotal = compra(criptoComprada, precioNuevo);
+			dineroTotal = vender(criptoComprada, precioNuevo);
 			break;
-		} 
+		}
 	}
 }
-prompt("Dinero disponible en dolares: " + dineroTotal)
+if (dineroTotal < dineroInvertido) {
+	alert("La operación finalizó por alcanzar el Stop Loss \n Dinero disponible en dolares: " + dineroTotal)
+} else {
+	alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + dineroTotal)
+}
+
+alert("Dinero disponible en dolares: " + dineroTotal)
