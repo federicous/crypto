@@ -7,7 +7,6 @@ o porque descendió por debajo del limite de pérdida (stop loss), estos limites
 fijados como valores constantes
 */
 
-// let billetera = parseInt(prompt("Ingrese la cantidad de criptomonedas disponible en su billetera"));
 let dineroInvertido = parseInt(prompt("Ingrese la cantidad de dinero en dolares a invertir"));
 let precioInicial = parseInt(prompt("ingrese el precio actual en dolares de la criptomoneda"));
 
@@ -33,8 +32,9 @@ function porcentajeCambio(precioAnterior, precioNuevo) {
 }
 
 let criptoComprada = comprar(dineroInvertido, precioInicial);
-// billetera = billetera + criptoComprada;
+
 let dineroTotal = 0;
+
 // Loop para actualizar el precio de la criptomoneda
 while (true) {
 	let precioActualizado = prompt("ingrese el nuevo precio, o bien ESC para finalizar la operación");
