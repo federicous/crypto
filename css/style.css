@@ -1,0 +1,11 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+/* Revierto estilo de Boostrap que genera padding-left indeseado */
+ol,
+ul {
+	padding-left: 0;
+}
