@@ -9,3 +9,42 @@ ol,
 ul {
 	padding-left: 0;
 }
+.dimensionesLogo {
+	width: 2rem;
+	height: 2rem;
+}
+.dimensionesSvg {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+.dimensionesOpciones {
+	height: 3rem;
+	width: 100%;
+}
+.dimensionesCuenta {
+	height: 4rem;
+	width: 100%;
+}
+.dimensionesMensaje {
+	height: 0.5rem;
+	width: 0.5rem;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+.ml-2 {
+	margin-left: 0.5rem;
+}
+
+.bg-gray-900 {
+	background-color: #111827;
+}
+.text-gray-400 {
+	color: #9CA3AF;
+}
+.border-gray-700 {
+	border-color: #374151;
+}
+/* hover:bg-gray-700 hover:text-gray-300 */
