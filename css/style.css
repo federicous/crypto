@@ -14,8 +14,10 @@ ul {
 	height: 2rem;
 }
 .dimensionesSvg {
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 2rem;
+	height: 2rem;
+	padding: 0.25rem;
+	/* margin: 0.1rem; */
 }
 .dimensionesOpciones {
 	height: 3rem;
