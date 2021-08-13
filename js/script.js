@@ -7,6 +7,67 @@ o porque descendió por debajo del limite de pérdida (stop loss), estos limites
 fijados como valores constantes
 */
 
+class Crypto {
+	constructor(nombre,precio){
+		this.nombre=nombre;
+		this.cantidad=0;
+		this.precio=[parseInt(precio)];
+	}
+	// permite actualizar el precio de la crypto
+	actualizar(precioNuevo){
+		this.precio.push(parseInt(precioNuevo));
+	}
+	// devuelve el ultimo precio actualizado
+	precioActual(){
+		return this.precio[precio.length-1];
+	}
+	// retorna el dinero en dolares de la venta del total de las crypto
+	vender(){
+		return this.precio[precio.length-1]*this.cantidad;
+	}
+	// agrega más cantidad de crypto por medio de ingresar la cantidad dinero a comprar
+	comprar(masDinero){
+		this.cantidad=this.cantidad+(parseInt(masDinero)/this.precio[precio.length-1])
+	}
+	// muestra en consola los valores que fue teniendo la crypto
+	historial(){
+		console.log(this.precio);
+	}
+	// muestra la cantidad de crypto en consola
+	verCantidad(){
+		console.log(this.cantidad);
+	}
+}
+
+class Inversion {
+	constructor(dineroInvertido,takeProfit,stopLoss,fechaHora,crypto) {
+		this.dineroInvertido= parseInt(dineroInvertido);
+		this.takeProfit= parseInt(takeProfit);
+		this.stopLoss= parseInt(stopLoss);
+		this.fechaHora= fechaHora;
+		this.nombre=crypto.nombre;
+		this.precioInicial=crypto.precioActual();
+		this.dineroTotal=parseInt(dineroInvertido);
+		this.finalizada= false;
+	}
+	// finalizar la inversión
+	finalizar(){
+		this.dineroTotal= crypto.vender();
+		this.finalizada= true;
+	}
+
+	// finalizar(cantidadCryto,precioCrypto){
+	// 	this.dineroTotal=cantidadCryto*precioCrypto;
+	// }
+	// precio(precioNuevo){
+	// 	this.precio=precioNuevo;
+	// }
+	// resultado(){
+	// 	this.dineroTotal=this.precio;
+	// }
+}
+
+
 // let billetera = parseInt(prompt("Ingrese la cantidad de criptomonedas disponible en su billetera"));
 let dineroInvertido = parseInt(prompt("Ingrese la cantidad de dinero en dolares a invertir"));
 let precioInicial = parseInt(prompt("ingrese el precio actual en dolares de la criptomoneda"));
