@@ -21,13 +21,17 @@ class Crypto {
 	precioActual(){
 		return this.precio[precio.length-1];
 	}
+	// devuelve el precio inicial
+	precioInicial(){
+		return this.precio[0];
+	}
 	// retorna el dinero en dolares de la venta del total de las crypto
 	vender(){
 		return this.precio[precio.length-1]*this.cantidad;
 	}
 	// agrega más cantidad de crypto por medio de ingresar la cantidad dinero a comprar
 	comprar(masDinero){
-		this.cantidad=this.cantidad+(parseInt(masDinero)/this.precio[precio.length-1])
+		this.cantidad=this.cantidad+(parseInt(masDinero)/this.precio[this.precio.length-1])
 	}
 	// muestra en consola los valores que fue teniendo la crypto
 	historial(){
@@ -36,6 +40,9 @@ class Crypto {
 	// muestra la cantidad de crypto en consola
 	verCantidad(){
 		console.log(this.cantidad);
+	}
+	porcentajeCambio(precioAnterior, precioNuevo) {
+		return Math.abs(((this.precio[precio.length-1] * 100) / this.precio[0]) - 100);
 	}
 }
 
@@ -67,19 +74,31 @@ class Inversion {
 	// }
 }
 
+/* ################### Ingreso de Datos ###################### */
 
 // let billetera = parseInt(prompt("Ingrese la cantidad de criptomonedas disponible en su billetera"));
+let cryptoName = prompt("ingrese el nombre de la Criptomoneda a operar");
 let dineroInvertido = parseInt(prompt("Ingrese la cantidad de dinero en dolares a invertir"));
 let precioInicial = parseInt(prompt("ingrese el precio actual en dolares de la criptomoneda"));
 
 // Porcentaje de aumento de precio para realizar una venta y obtener ganancia
-let takeProfit = 30;
+let takeProfit =  parseInt(prompt("Ingrese el porcentaje de ganancia en el que finaliza la operación"));
 // Porcentaje de baja de precio para realizar una venta y dejar de perder dinero
-let stopLoss = 5;
+let stopLoss =  parseInt(prompt("Ingrese el porcentaje de pérdida en el que finaliza la operación"));
 
-alert("Los limites que finalizan la operación son los siguientes: \n Take Profit= " + takeProfit + "% \n Stop Loss= " + stopLoss + "%")
+/* ################### Fin Ingreso de Datos ###################### */
 
-function comprar(dinero, precio) {
+/* ################### Bloque del programa ###################### */
+
+const criptomoneda= new Crypto(cryptoName,precioInicial);
+criptomoneda.comprar(dineroInvertido);
+
+alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:"+ dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
+
+const operacion= new Inversion(dineroInvertido,takeProfit,stopLoss,Date.now,criptomoneda);
+
+
+/* function comprar(dinero, precio) {
 	let resultado = dinero / precio;
 	return resultado;
 }
@@ -88,8 +107,8 @@ function vender(crypto, precio) {
 	let resultado = crypto * precio;
 	return resultado;
 }
-
-function porcentajeCambio(precioAnterior, precioNuevo) {
+ */
+/* function porcentajeCambio(precioAnterior, precioNuevo) {
 	return Math.abs(((precioNuevo * 100) / precioAnterior) - 100);
 }
 
@@ -116,4 +135,4 @@ if (dineroTotal < dineroInvertido) {
 	alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + dineroTotal);
 }else {
 	alert("La operación fue cancelada  \n Dinero disponible en dolares: " + dineroTotal);
-}
+} */
