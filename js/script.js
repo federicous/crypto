@@ -7,52 +7,130 @@ o porque descendió por debajo del limite de pérdida (stop loss), estos limites
 fijados como valores constantes
 */
 
+/* ################### Definición de los Objetos ###################### */
+class Crypto {
+	constructor(nombre,precio){
+		this.nombre=nombre;
+		this.cantidad=0;
+		this.precio=[parseInt(precio)];
+	}
+	// permite actualizar el precio de la crypto
+	actualizar(precioNuevo){
+		this.precio.push(parseInt(precioNuevo));
+	}
+	// devuelve el ultimo precio actualizado
+	precioActual(){
+		return this.precio[this.precio.length-1];
+	}
+	// devuelve el precio inicial
+	precioInicial(){
+		return this.precio[0];
+	}
+	// retorna el dinero en dolares de la venta del total de las crypto
+	vender(){
+		return this.precio[this.precio.length-1]*this.cantidad;
+	}
+	// agrega más cantidad de crypto por medio de ingresar la cantidad dinero a comprar
+	comprar(masDinero){
+		this.cantidad=this.cantidad+(parseInt(masDinero)/this.precio[this.precio.length-1])
+	}
+	// muestra en consola los valores que fue teniendo la crypto
+	historial(){
+		console.log(this.precio);
+	}
+	// muestra la cantidad de crypto en consola
+	verCantidad(){
+		console.log(this.cantidad);
+	}
+	porcentajeCambio() {
+		return Math.abs(((this.precio[this.precio.length-1] * 100) / this.precio[0]) - 100);
+	}
+}
+
+class Inversion {
+	constructor(dineroInvertido,takeProfit,stopLoss,fechaHora,crypto) {
+		this.dineroInvertido= parseInt(dineroInvertido);
+		this.takeProfit= parseInt(takeProfit);
+		this.stopLoss= parseInt(stopLoss);
+		this.fechaHora= fechaHora;
+		this.crypto=crypto;
+		this.nombre=crypto.nombre;
+		this.precioInicial=crypto.precioActual();
+		this.dineroTotal=parseInt(dineroInvertido);
+		this.finalizada= false;
+	}
+	// finalizar la inversión
+	finalizar(){
+		this.dineroTotal= this.crypto.vender();
+		this.finalizada= true;
+	}
+
+	// finalizar(cantidadCryto,precioCrypto){
+	// 	this.dineroTotal=cantidadCryto*precioCrypto;
+	// }
+	// precio(precioNuevo){
+	// 	this.precio=precioNuevo;
+	// }
+	// resultado(){
+	// 	this.dineroTotal=this.precio;
+	// }
+}
+
+/* ################### Bloque del programa ###################### */
+
+const listaOperaciones= [];
+
+/* ################### Ingreso de Datos ###################### */
+
+// let billetera = parseInt(prompt("Ingrese la cantidad de criptomonedas disponible en su billetera"));
+let cryptoName = prompt("ingrese el nombre de la Criptomoneda a operar");
 let dineroInvertido = parseInt(prompt("Ingrese la cantidad de dinero en dolares a invertir"));
 let precioInicial = parseInt(prompt("ingrese el precio actual en dolares de la criptomoneda"));
 
 // Porcentaje de aumento de precio para realizar una venta y obtener ganancia
-let takeProfit = 30;
+let takeProfit =  parseInt(prompt("Ingrese el porcentaje de ganancia en el que finaliza la operación"));
 // Porcentaje de baja de precio para realizar una venta y dejar de perder dinero
-let stopLoss = 5;
+let stopLoss =  parseInt(prompt("Ingrese el porcentaje de pérdida en el que finaliza la operación"));
 
-alert("Los limites que finalizan la operación son los siguientes: \n Take Profit= " + takeProfit + "% \n Stop Loss= " + stopLoss + "%")
+/* ################### Fin Ingreso de Datos ###################### */
 
-function comprar(dinero, precio) {
-	let resultado = dinero / precio;
-	return resultado;
-}
+const criptomoneda= new Crypto(cryptoName,precioInicial);
+criptomoneda.comprar(dineroInvertido);
 
-function vender(crypto, precio) {
-	let resultado = crypto * precio;
-	return resultado;
-}
+alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:"+ dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
 
-function porcentajeCambio(precioAnterior, precioNuevo) {
-	return Math.abs(((precioNuevo * 100) / precioAnterior) - 100);
-}
+const operacion= new Inversion(dineroInvertido,takeProfit,stopLoss,Date.now(),criptomoneda);
 
-let criptoComprada = comprar(dineroInvertido, precioInicial);
 
-let dineroTotal = 0;
+/* ################### Bucle de actualización de precio ###################### */
 
-// Loop para actualizar el precio de la criptomoneda
 while (true) {
 	let precioActualizado = prompt("ingrese el nuevo precio, o bien ESC para finalizar la operación");
 	if (precioActualizado == "ESC") {
 		break;
 	} else {
 		let precioNuevo = parseInt(precioActualizado);
-		let cambioPrecio = porcentajeCambio(precioInicial, precioNuevo);
+		criptomoneda.actualizar(precioNuevo);
+		let cambioPrecio = criptomoneda.porcentajeCambio();
 		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
-			dineroTotal = vender(criptoComprada, precioNuevo);
+			operacion.finalizar();
 			break;
 		}
 	}
+
 }
-if (dineroTotal < dineroInvertido) {
-	alert("La operación finalizó por alcanzar el Stop Loss \n Dinero disponible en dolares: " + dineroTotal);
-} else if (dineroTotal>dineroInvertido){
-	alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + dineroTotal);
+/* ################### Fin Bucle de actualización de precio ###################### */
+
+listaOperaciones.push(operacion);
+    
+if (operacion.dineroTotal < operacion.dineroInvertido) {
+	alert("La operación finalizó por alcanzar el Stop Loss \n Dinero disponible en dolares: " + operacion.dineroTotal);
+} else if (operacion.dineroTotal>operacion.dineroInvertido){
+	alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + operacion.dineroTotal);
 }else {
-	alert("La operación fue cancelada  \n Dinero disponible en dolares: " + dineroTotal);
+	alert("La operación fue cancelada  \n Dinero disponible en dolares: " + operacion.dineroTotal);
 }
+
+
+
+
