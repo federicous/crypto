@@ -64,16 +64,6 @@ class Inversion {
 		this.dineroTotal= this.crypto.vender();
 		this.finalizada= true;
 	}
-
-	// finalizar(cantidadCryto,precioCrypto){
-	// 	this.dineroTotal=cantidadCryto*precioCrypto;
-	// }
-	// precio(precioNuevo){
-	// 	this.precio=precioNuevo;
-	// }
-	// resultado(){
-	// 	this.dineroTotal=this.precio;
-	// }
 }
 
 /* ################### Bloque del programa ###################### */
@@ -82,7 +72,6 @@ const listaOperaciones= [];
 
 /* ################### Ingreso de Datos ###################### */
 
-// let billetera = parseInt(prompt("Ingrese la cantidad de criptomonedas disponible en su billetera"));
 let cryptoName = prompt("ingrese el nombre de la Criptomoneda a operar");
 let dineroInvertido = parseInt(prompt("Ingrese la cantidad de dinero en dolares a invertir"));
 let precioInicial = parseInt(prompt("ingrese el precio actual en dolares de la criptomoneda"));
