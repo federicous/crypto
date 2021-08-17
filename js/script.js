@@ -53,16 +53,24 @@ class Inversion {
 		this.takeProfit= parseInt(takeProfit);
 		this.stopLoss= parseInt(stopLoss);
 		this.fechaHora= fechaHora;
+		this.fechaHoraFin= fechaHora;
 		this.crypto=crypto;
 		this.nombre=crypto.nombre;
 		this.precioInicial=crypto.precioActual();
 		this.dineroTotal=parseInt(dineroInvertido);
 		this.finalizada= false;
+		this.saldoPorcentaje=0;
+		this.saldoPositivo=false;
 	}
 	// finalizar la inversión
 	finalizar(){
 		this.dineroTotal= this.crypto.vender();
 		this.finalizada= true;
+		this.saldoPorcentaje=((this.dineroTotal-this.dineroInvertido)*100)/this.dineroInvertido;
+		if (this.dineroTotal>this.dineroInvertido) {
+			this.saldoPositivo=true;
+		}
+		this.fechaHoraFin= Date.now();
 	}
 }
 
