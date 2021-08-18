@@ -121,10 +121,10 @@ while (true) {
 	}
 	/* ################### Fin Bucle de actualización de precio ###################### */
 
-	/* ################### Historial de operaciones ###################### */
+	// Agrego la operación al historial
 	listaOperaciones.push(operacion);
-	/* ################### Fin Historial de operaciones ###################### */
 
+	// Reporto el resultado
 	if (operacion.dineroTotal < operacion.dineroInvertido) {
 		alert("La operación finalizó por alcanzar el Stop Loss \n Dinero disponible en dolares: " + operacion.dineroTotal);
 	} else if (operacion.dineroTotal > operacion.dineroInvertido) {
@@ -133,6 +133,7 @@ while (true) {
 		alert("La operación fue cancelada  \n Dinero disponible en dolares: " + operacion.dineroTotal);
 	}
 
+	// Presento la opción de seguir operando o de finalizar
 	let continuar = prompt("Nueva operación, ingrese ESC para cancelar o click en aceptar para seguir");
 	if (continuar == "ESC") {
 		break;
@@ -155,7 +156,7 @@ for (const elemento of listaOperaciones) {
 	console.log(elemento);
 }
 
-// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada
+// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
 if (localStorage.getItem("historial") === null) {
 	localStorage.setItem("historial", JSON.stringify(listaOperaciones));
 } else {
