@@ -59,7 +59,8 @@
 			</a>
 			<div class="w-100 px-2">
 				<div class="d-flex flex-column align-items-center w-100 mt-3 border-top-2 bordeMenu">
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="index.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="index.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-arrow-left-right iconosMenu"
 							viewBox="0 0 16 16">
@@ -68,7 +69,8 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Trading</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="historial.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="historial.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-clock-history iconosMenu"
 							viewBox="0 0 16 16">
@@ -181,6 +183,13 @@
 				<form accept-charset="UTF-8" action="action_page.js" autocomplete="off" method="GET"
 					target="_blank">
 					<fieldset>
+						<!-- Criptomoneda -->
+						<label class="form-label" for="takeProfit">Criptomoneda</label><br />
+						<div class="input-group mb-3">
+							<select id="cryptoSelect" class="form-select"
+								aria-label="Seleccionar Criptomoneda">
+							</select>
+						</div>
 						<!-- Dinero a invertir -->
 						<label class="form-label" for="invertir">Dinero a invertir</label><br />
 						<div class="input-group mb-3">
@@ -242,7 +251,8 @@
 	<!-- ############################ Fin Seccion Principal ############################ -->
 
 	<!-- Scripts -->
-	<script src="js/script.js"></script>
+	<!-- <script src="js/main.js"></script> -->
+	<script src="js/formulario.js"></script>
 
 	<!-- Scripts Boostrap -->
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
