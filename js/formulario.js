@@ -5,5 +5,5 @@ for (let coin of listaCryptos) {
 	let opcion= document.createElement("option");
 	opcion.value=coin;
 	opcion.text=coin;
-	seleccion.appendChild(opcion)
+	seleccion.appendChild(opcion);
 }
