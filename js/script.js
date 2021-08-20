@@ -52,7 +52,7 @@ class Inversion {
 		this.dineroInvertido = parseInt(dineroInvertido);
 		this.takeProfit = parseInt(takeProfit);
 		this.stopLoss = parseInt(stopLoss);
-		this.fechaHora = fechaHora.toDateString() + " " + fechaHora.toTimeString();
+		this.fechaHora = `${fechaHora.toDateString()} - ${(fechaHora.getHours() < 10 ? '0' : '') + fechaHora.getHours()}:${(fechaHora.getMinutes() < 10 ? '0' : '') + fechaHora.getMinutes()}:${(fechaHora.getSeconds() < 10 ? '0' : '') + fechaHora.getSeconds()}`;
 		this.fechaHoraFin = "";
 		this.crypto = crypto;
 		this.nombre = crypto.nombre;
@@ -71,8 +71,9 @@ class Inversion {
 			this.saldoPositivo = true;
 		}
 		let final= new Date();
-		this.fechaHoraFin = final.toDateString() + " " + final.toTimeString();
+		this.fechaHoraFin = `${fechaHora.toDateString()} - ${(fechaHora.getHours() < 10 ? '0' : '') + fechaHora.getHours()}:${(fechaHora.getMinutes() < 10 ? '0' : '') + fechaHora.getMinutes()}:${(fechaHora.getSeconds() < 10 ? '0' : '') + fechaHora.getSeconds()}`;
 	}
+	
 }
 
 /* ################### Bloque del programa ###################### */
