@@ -3,11 +3,10 @@ de dinero en dolares a invertir y un valor inicial de la criptomoneda
 Una vez ingresados los valores anteriores se va a solicitar la actualización del valor
 de la criptomoneda en dolares, dependiendo de la variación del precio de la criptomoneda se realiza
 la finalización de la operación ya sea porque sobrepasó el limite de ganancia (take profit)
-o porque descendió por debajo del limite de pérdida (stop loss), estos limites estan previamente
-fijados como valores constantes
+o porque descendió por debajo del limite de pérdida (stop loss)
 */
 
-/* ################### Definición de los Objetos ###################### */
+/* ################### Definición de los Clases ###################### */
 class Crypto {
 	constructor(nombre, precio) {
 		this.nombre = nombre;
@@ -70,38 +69,55 @@ class Inversion {
 		if (this.dineroTotal > this.dineroInvertido) {
 			this.saldoPositivo = true;
 		}
-		let final= new Date();
+		let final = new Date();
 		this.fechaHoraFin = `${final.toDateString()} - ${(final.getHours() < 10 ? '0' : '') + final.getHours()}:${(final.getMinutes() < 10 ? '0' : '') + final.getMinutes()}:${(final.getSeconds() < 10 ? '0' : '') + final.getSeconds()}`;
 	}
-	
+
 }
 
 /* ################### Bloque del programa ###################### */
 
 const listaOperaciones = [];
-while (true) {
+// while (true) {
 
+	let bontonInvertir = document.getElementById("botonInvertir");
+	bontonInvertir.onclick = iniciarOperacion();
+
+/* 	let formulario= document.getElementById("formulario");
+	formulario.onclick= iniciarOperacion(); */
+
+// }
+
+function iniciarOperacion(e) {
+
+	e.preventDefault();
 
 	/* ################### Ingreso de Datos ###################### */
-
-	let cryptoName = prompt("ingrese el nombre de la Criptomoneda a operar");
-	let dineroInvertido = parseInt(prompt("Ingrese la cantidad de dinero en dolares a invertir"));
-	let precioInicial = parseInt(prompt("ingrese el precio actual en dolares de la criptomoneda"));
-
-	// Porcentaje de aumento de precio para realizar una venta y obtener ganancia
-	let takeProfit = parseInt(prompt("Ingrese el porcentaje de ganancia en el que finaliza la operación"));
-	// Porcentaje de baja de precio para realizar una venta y dejar de perder dinero
-	let stopLoss = parseInt(prompt("Ingrese el porcentaje de pérdida en el que finaliza la operación"));
-
+	let cryptoName = document.getElementById("cryptoSelect").value;
+	let dineroInvertido= document.getElementById("dineroInput").value;
+	let takeProfit= document.getElementById("takeProfitInput").value;
+	let stopLoss= document.getElementById("stopLossInput").value;
+	let precioInicial= document.getElementById("precioInput").value;
 	/* ################### Fin Ingreso de Datos ###################### */
+
+	let valoresNumericos= [dineroInvertido,takeProfit,stopLoss,precioInicial];
+
+	for (const valor of valoresNumericos) {
+		let text;
+		if (isNaN(x) || x < 1 || x > 10) {
+		  text = "Input not valid";
+		} else {
+		  text = "Input OK";
+		}
+	}
+
 
 	const criptomoneda = new Crypto(cryptoName, precioInicial);
 	criptomoneda.comprar(dineroInvertido);
 
 	alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:" + dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
-	const fechaHora= new Date();
+	const fechaHora = new Date();
 	const operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
-
 
 	/* ################### Bucle de actualización de precio ###################### */
 
@@ -135,11 +151,11 @@ while (true) {
 	}
 
 	// Presento la opción de seguir operando o de finalizar
-	let continuar = prompt("Nueva operación, ingrese ESC para cancelar o click en aceptar para seguir");
-	if (continuar == "ESC") {
-		break;
-	}
-
+	// let continuar = prompt("Nueva operación, ingrese ESC para cancelar o click en aceptar para seguir");
+	// let continuar = document.getElementById("boton");
+	// if (continuar == "ESC") {
+	// 	break;
+	// }
 }
 
 // Muestro en consola las operaciones realizadas
@@ -167,7 +183,7 @@ if (localStorage.getItem("historial") === null) {
 
 /* ################### Muestro historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
 const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
-const listaHistoricaOrdenada= listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
 console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
 for (const item of listaHistoricaOrdenada) {
 	console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);

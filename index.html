@@ -180,21 +180,26 @@
 
 			<!-- ############################ Formulario de inversión ############################ -->
 			<div class="col-4">
-				<form accept-charset="UTF-8" action="action_page.js" autocomplete="off" method="GET"
+				<form id="formulario" accept-charset="UTF-8" autocomplete="off" method="GET"
 					target="_blank">
 					<fieldset>
 						<!-- Criptomoneda -->
-						<label class="form-label" for="takeProfit">Criptomoneda</label><br />
+						<label class="form-label" for="cryptoName">Criptomoneda / Precio en USD</label><br />
 						<div class="input-group mb-3">
 							<select id="cryptoSelect" class="form-select"
 								aria-label="Seleccionar Criptomoneda">
 							</select>
+							<input id="precioInput" type="text" class="form-control" name="invertir" required
+							placeholder="0.00" aria-label="Precio"
+							aria-describedby="input-group-right">
+							<span class="input-group-text"
+							id="input-group-right-example">USD</span>
 						</div>
 						<!-- Dinero a invertir -->
 						<label class="form-label" for="invertir">Dinero a invertir</label><br />
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" name="invertir"
-								placeholder="$ 0.00" aria-label="Username"
+							<input id="dineroInput" type="text" class="form-control" name="invertir" required
+								placeholder="0.00" aria-label="Username"
 								aria-describedby="input-group-right">
 							<span class="input-group-text"
 								id="input-group-right-example">USD</span>
@@ -202,15 +207,15 @@
 						<!-- Take Profit -->
 						<label class="form-label" for="takeProfit">Take Profit</label><br />
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" name="takeProfit"
-								placeholder="0" aria-label="Username"
+							<input id="takeProfitInput" type="text" class="form-control" name="takeProfit"
+								required placeholder="0" aria-label="Username"
 								aria-describedby="input-group-right">
 							<span class="input-group-text" id="takeProfit">%</span>
 						</div>
 						<!-- Stop Loss -->
 						<label class="form-label" for="stopLoss">Stop Loss</label><br />
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" name="stopLoss"
+							<input id="stopLossInput" type="text" class="form-control" name="stopLoss" required
 								placeholder="0" aria-label="Username"
 								aria-describedby="input-group-right">
 							<span class="input-group-text"
@@ -218,11 +223,26 @@
 						</div>
 
 						<!-- Boton de confirmación -->
-						<div class="mt-3 btn-group">
-							<button type="submit" class="btn btn-primary">Invertir</button>
-							<button type="reset"
-								class="btn btn-secondary">Finalizar</button>
+						<div class="my-3 btn-group w-100">
+							<button type="button" id="botonInvertir"
+								class="btn btn-primary w-50">Invertir</button>
+							<button type="reset" id="botonFinalizar"
+								class="btn btn-secondary w-50">Finalizar</button>
 						</div>
+						<!-- Boton de actualizar precio -->
+						<div class="input-group mt-3">
+							<span class="input-group-text"
+							id="input-group-right-example">$</span>
+							<input id="actualizaInput" type="text" class="form-control" name="invertir" 
+							placeholder="Ingresar nuevo precio" aria-label="Precio"
+							aria-describedby="input-group-right">
+							<button type="button" class="btn btn-outline-secondary" id="input-group-button-right">Actualizar</button>
+						      </div>
+						<!-- Boton de nueva operacion -->
+						<!-- <div class="mt-3">
+							<button type="submit" id="botonNuevaInversion"
+								class="btn btn-primary w-100">Nueva Inversion</button>
+						</div> -->
 					</fieldset>
 				</form>
 			</div>
