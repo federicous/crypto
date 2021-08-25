@@ -93,6 +93,9 @@ let dineroInvertido;
 let takeProfit;
 let stopLoss;
 let precioInicial;
+let criptomoneda;
+let fechaHora;
+let operacion;
 
 /* ################### Boton Invertir ###################### */
 let bontonInvertir = document.getElementById("botonInvertir");
@@ -101,6 +104,7 @@ bontonInvertir.addEventListener("click", invertir);
 function invertir() {
 	datosOperacion();
 	precioActualizado = precioInicial;
+	alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:" + dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
 	operar();
 }
 /* ################### Fin Boton Invertir ###################### */
@@ -136,19 +140,18 @@ function datosOperacion() {
 			text = "Input OK";
 		}
 	}
+	criptomoneda = new Crypto(cryptoName, precioInicial);
+	criptomoneda.comprar(dineroInvertido);
 
+	fechaHora = new Date();
+	operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 }
 
 
 function operar() {
 
 
-	const criptomoneda = new Crypto(cryptoName, precioInicial);
-	criptomoneda.comprar(dineroInvertido);
 
-	alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:" + dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
-	const fechaHora = new Date();
-	const operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 
 	/* ################### Bucle de actualización de precio ###################### */
 
