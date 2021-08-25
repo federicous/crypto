@@ -150,11 +150,7 @@ function datosOperacion() {
 
 function operar() {
 
-
-
-
 	/* ################### Bucle de actualización de precio ###################### */
-
 	if (precioActualizado == "ESC") {
 		operacion.cancelar();
 		alert("operacion cancelada");
@@ -167,11 +163,9 @@ function operar() {
 			// break;
 		}
 	}
-
 	/* ################### Fin Bucle de actualización de precio ###################### */
 
 	if (operacion.finalizada == true) {
-
 
 		// Agrego la operación al historial
 		listaOperaciones.push(operacion);
@@ -184,13 +178,6 @@ function operar() {
 		} else {
 			alert("La operación fue cancelada  \n Dinero disponible en dolares: " + operacion.dineroTotal);
 		}
-
-		// Presento la opción de seguir operando o de finalizar
-		// let continuar = prompt("Nueva operación, ingrese ESC para cancelar o click en aceptar para seguir");
-		// let continuar = document.getElementById("boton");
-		// if (continuar == "ESC") {
-		// 	break;
-		// }
 
 		// Muestro en consola las operaciones realizadas
 		console.log("Operaciones realizadas en la presente sesión:");
@@ -215,7 +202,7 @@ function operar() {
 			localStorage.setItem("historial", JSON.stringify(listaOld.concat(listaOperaciones)));
 		}
 
-		/* ################### Muestro historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
+		/* ################### Muestro por consola el historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
 		const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
 		const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
 		console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
