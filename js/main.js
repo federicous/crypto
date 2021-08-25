@@ -60,7 +60,7 @@ class Inversion {
 		this.finalizada = false;
 		this.saldoPorcentaje = 0;
 		this.saldoPositivo = false;
-		this.estado="Indefinido"
+		this.estado = "Indefinido"
 	}
 	// finalizar la inversión
 	finalizar() {
@@ -72,14 +72,14 @@ class Inversion {
 		}
 		let final = new Date();
 		this.fechaHoraFin = `${final.toDateString()} - ${(final.getHours() < 10 ? '0' : '') + final.getHours()}:${(final.getMinutes() < 10 ? '0' : '') + final.getMinutes()}:${(final.getSeconds() < 10 ? '0' : '') + final.getSeconds()}`;
-		this.estado="Finalizado";
+		this.estado = "Finalizado";
 	}
 	cancelar() {
 		this.dineroTotal = this.crypto.vender();
 		this.finalizada = true;
 		let final = new Date();
 		this.fechaHoraFin = `${final.toDateString()} - ${(final.getHours() < 10 ? '0' : '') + final.getHours()}:${(final.getMinutes() < 10 ? '0' : '') + final.getMinutes()}:${(final.getSeconds() < 10 ? '0' : '') + final.getSeconds()}`;
-		this.estado="Cancelado";
+		this.estado = "Cancelado";
 	}
 
 }
@@ -106,6 +106,7 @@ function invertir() {
 	precioActualizado = precioInicial;
 	alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:" + dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
 	operar();
+	guardar();
 }
 /* ################### Fin Boton Invertir ###################### */
 
@@ -117,8 +118,20 @@ function actualizar() {
 	let precioActual = document.getElementById("precioActual");
 	precioActualizado = precioActual.value;
 	operar();
+	guardar();
 }
 /* ################### Fin Boton Actualizar ###################### */
+
+/* ################### Boton Cancelar ###################### */
+let botonCancelar = document.getElementById("botonCancelar");
+botonCancelar.addEventListener("click", cancelar);
+
+function cancelar() {
+	operacion.cancelar();
+	alert("Operacion cancelada!!!");
+	guardar();
+}
+/* ################### Fin Boton Cancelar ###################### */
 
 function datosOperacion() {
 
@@ -147,7 +160,6 @@ function datosOperacion() {
 	operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 }
 
-
 function operar() {
 
 	/* ################### Bucle de actualización de precio ###################### */
@@ -160,10 +172,12 @@ function operar() {
 		let cambioPrecio = criptomoneda.porcentajeCambio();
 		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
 			operacion.finalizar();
-			// break;
 		}
 	}
 	/* ################### Fin Bucle de actualización de precio ###################### */
+}
+
+function guardar() {
 
 	if (operacion.finalizada == true) {
 
