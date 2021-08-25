@@ -60,6 +60,7 @@ class Inversion {
 		this.finalizada = false;
 		this.saldoPorcentaje = 0;
 		this.saldoPositivo = false;
+		this.estado="Indefinido"
 	}
 	// finalizar la inversión
 	finalizar() {
@@ -71,6 +72,14 @@ class Inversion {
 		}
 		let final = new Date();
 		this.fechaHoraFin = `${final.toDateString()} - ${(final.getHours() < 10 ? '0' : '') + final.getHours()}:${(final.getMinutes() < 10 ? '0' : '') + final.getMinutes()}:${(final.getSeconds() < 10 ? '0' : '') + final.getSeconds()}`;
+		this.estado="Finalizado";
+	}
+	cancelar() {
+		this.dineroTotal = this.crypto.vender();
+		this.finalizada = true;
+		let final = new Date();
+		this.fechaHoraFin = `${final.toDateString()} - ${(final.getHours() < 10 ? '0' : '') + final.getHours()}:${(final.getMinutes() < 10 ? '0' : '') + final.getMinutes()}:${(final.getSeconds() < 10 ? '0' : '') + final.getSeconds()}`;
+		this.estado="Cancelado";
 	}
 
 }
@@ -78,17 +87,43 @@ class Inversion {
 /* ################### Bloque del programa ###################### */
 
 const listaOperaciones = [];
+let precioActualizado = 0;
+let cryptoName;
+let dineroInvertido;
+let takeProfit;
+let stopLoss;
+let precioInicial;
 
+/* ################### Boton Invertir ###################### */
 let bontonInvertir = document.getElementById("botonInvertir");
+bontonInvertir.addEventListener("click", invertir);
 
-bontonInvertir.addEventListener("click", function () {
+function invertir() {
+	datosOperacion();
+	precioActualizado = precioInicial;
+	operar();
+}
+/* ################### Fin Boton Invertir ###################### */
+
+/* ################### Boton Actualizar ###################### */
+let botonActualizaInput = document.getElementById("botonActualizaInput");
+botonActualizaInput.addEventListener("click", actualizar);
+
+function actualizar() {
+	let precioActual = document.getElementById("precioActual");
+	precioActualizado = precioActual.value;
+	operar();
+}
+/* ################### Fin Boton Actualizar ###################### */
+
+function datosOperacion() {
 
 	/* ################### Lectura de Datos ###################### */
-	let cryptoName = document.getElementById("cryptoSelect").value;
-	let dineroInvertido = document.getElementById("dineroInput").value;
-	let takeProfit = document.getElementById("takeProfitInput").value;
-	let stopLoss = document.getElementById("stopLossInput").value;
-	let precioInicial = document.getElementById("precioInput").value;
+	cryptoName = document.getElementById("cryptoSelect").value;
+	dineroInvertido = document.getElementById("dineroInput").value;
+	takeProfit = document.getElementById("takeProfitInput").value;
+	stopLoss = document.getElementById("stopLossInput").value;
+	precioInicial = document.getElementById("precioInput").value;
 	/* ################### Fin Lectura de Datos ###################### */
 
 	let valoresNumericos = [dineroInvertido, takeProfit, stopLoss, precioInicial];
@@ -102,12 +137,10 @@ bontonInvertir.addEventListener("click", function () {
 		}
 	}
 
-	/* ################### Escuchar finalización ###################### */
-	// let botonFinalizar = document.getElementById("botonFinalizar");
-	// botonFinalizar.onclick = () => {
-	// 	return break
-	// };
-	/* ################### Fin Escuchar finalización ###################### */
+}
+
+
+function operar() {
 
 
 	const criptomoneda = new Crypto(cryptoName, precioInicial);
@@ -118,73 +151,74 @@ bontonInvertir.addEventListener("click", function () {
 	const operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 
 	/* ################### Bucle de actualización de precio ###################### */
-	
-	while (true) {
-		let precioActualizado = prompt("ingrese el nuevo precio, o bien ESC para finalizar la operación");
-		if (precioActualizado == "ESC") {
-			break;
-		} else {
-			let precioNuevo = parseInt(precioActualizado);
-			criptomoneda.actualizar(precioNuevo);
-			let cambioPrecio = criptomoneda.porcentajeCambio();
-			if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
-				operacion.finalizar();
-				break;
-			}
-		}
 
+	if (precioActualizado == "ESC") {
+		operacion.cancelar();
+		alert("operacion cancelada");
+	} else {
+		let precioNuevo = parseInt(precioActualizado);
+		criptomoneda.actualizar(precioNuevo);
+		let cambioPrecio = criptomoneda.porcentajeCambio();
+		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
+			operacion.finalizar();
+			// break;
+		}
 	}
+
 	/* ################### Fin Bucle de actualización de precio ###################### */
 
-	// Agrego la operación al historial
-	listaOperaciones.push(operacion);
+	if (operacion.finalizada == true) {
 
-	// Reporto el resultado
-	if (operacion.dineroTotal < operacion.dineroInvertido) {
-		alert("La operación finalizó por alcanzar el Stop Loss \n Dinero disponible en dolares: " + operacion.dineroTotal);
-	} else if (operacion.dineroTotal > operacion.dineroInvertido) {
-		alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + operacion.dineroTotal);
-	} else {
-		alert("La operación fue cancelada  \n Dinero disponible en dolares: " + operacion.dineroTotal);
+
+		// Agrego la operación al historial
+		listaOperaciones.push(operacion);
+
+		// Reporto el resultado
+		if (operacion.dineroTotal < operacion.dineroInvertido) {
+			alert("La operación finalizó por alcanzar el Stop Loss \n Dinero disponible en dolares: " + operacion.dineroTotal);
+		} else if (operacion.dineroTotal > operacion.dineroInvertido) {
+			alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + operacion.dineroTotal);
+		} else {
+			alert("La operación fue cancelada  \n Dinero disponible en dolares: " + operacion.dineroTotal);
+		}
+
+		// Presento la opción de seguir operando o de finalizar
+		// let continuar = prompt("Nueva operación, ingrese ESC para cancelar o click en aceptar para seguir");
+		// let continuar = document.getElementById("boton");
+		// if (continuar == "ESC") {
+		// 	break;
+		// }
+
+		// Muestro en consola las operaciones realizadas
+		console.log("Operaciones realizadas en la presente sesión:");
+		for (const elemento of listaOperaciones) {
+			console.log(elemento);
+		}
+
+		// Ordeno de mayor a menor segun el porcentaje de ganancias
+		let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+
+		// Muestro en consola las operaciones Ordenadas
+		console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
+		for (const elemento of listaOperaciones) {
+			console.log(elemento);
+		}
+
+		// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
+		if (localStorage.getItem("historial") === null) {
+			localStorage.setItem("historial", JSON.stringify(listaOperaciones));
+		} else {
+			const listaOld = JSON.parse(localStorage.getItem("historial"));
+			localStorage.setItem("historial", JSON.stringify(listaOld.concat(listaOperaciones)));
+		}
+
+		/* ################### Muestro historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
+		const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
+		const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+		console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
+		for (const item of listaHistoricaOrdenada) {
+			console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
+			console.log(item);
+		}
 	}
-
-	// Presento la opción de seguir operando o de finalizar
-	// let continuar = prompt("Nueva operación, ingrese ESC para cancelar o click en aceptar para seguir");
-	// let continuar = document.getElementById("boton");
-	// if (continuar == "ESC") {
-	// 	break;
-	// }
-
-	// Muestro en consola las operaciones realizadas
-	console.log("Operaciones realizadas en la presente sesión:");
-	for (const elemento of listaOperaciones) {
-		console.log(elemento);
-	}
-
-	// Ordeno de mayor a menor segun el porcentaje de ganancias
-	let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
-
-	// Muestro en consola las operaciones Ordenadas
-	console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
-	for (const elemento of listaOperaciones) {
-		console.log(elemento);
-	}
-
-	// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
-	if (localStorage.getItem("historial") === null) {
-		localStorage.setItem("historial", JSON.stringify(listaOperaciones));
-	} else {
-		const listaOld = JSON.parse(localStorage.getItem("historial"));
-		localStorage.setItem("historial", JSON.stringify(listaOld.concat(listaOperaciones)));
-	}
-
-	/* ################### Muestro historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
-	const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
-	const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
-	console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
-	for (const item of listaHistoricaOrdenada) {
-		console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
-		console.log(item);
-	}
-
-});
+};
