@@ -80,34 +80,25 @@ class Inversion {
 const listaOperaciones = [];
 // while (true) {
 
-	let bontonInvertir = document.getElementById("botonInvertir");
-	bontonInvertir.onclick = iniciarOperacion();
+let bontonInvertir = document.getElementById("botonInvertir");
+bontonInvertir.addEventListener("click", function () {
 
-/* 	let formulario= document.getElementById("formulario");
-	formulario.onclick= iniciarOperacion(); */
-
-// }
-
-function iniciarOperacion(e) {
-
-	e.preventDefault();
-
-	/* ################### Ingreso de Datos ###################### */
+	/* ################### Lectura de Datos ###################### */
 	let cryptoName = document.getElementById("cryptoSelect").value;
-	let dineroInvertido= document.getElementById("dineroInput").value;
-	let takeProfit= document.getElementById("takeProfitInput").value;
-	let stopLoss= document.getElementById("stopLossInput").value;
-	let precioInicial= document.getElementById("precioInput").value;
-	/* ################### Fin Ingreso de Datos ###################### */
+	let dineroInvertido = document.getElementById("dineroInput").value;
+	let takeProfit = document.getElementById("takeProfitInput").value;
+	let stopLoss = document.getElementById("stopLossInput").value;
+	let precioInicial = document.getElementById("precioInput").value;
+	/* ################### Fin Lectura de Datos ###################### */
 
-	let valoresNumericos= [dineroInvertido,takeProfit,stopLoss,precioInicial];
+	let valoresNumericos = [dineroInvertido, takeProfit, stopLoss, precioInicial];
 
-	for (const valor of valoresNumericos) {
+	for (const x of valoresNumericos) {
 		let text;
 		if (isNaN(x) || x < 1 || x > 10) {
-		  text = "Input not valid";
+			text = "Input not valid";
 		} else {
-		  text = "Input OK";
+			text = "Input OK";
 		}
 	}
 
@@ -156,36 +147,36 @@ function iniciarOperacion(e) {
 	// if (continuar == "ESC") {
 	// 	break;
 	// }
-}
 
-// Muestro en consola las operaciones realizadas
-console.log("Operaciones realizadas en la presente sesión:");
-for (const elemento of listaOperaciones) {
-	console.log(elemento);
-}
+	// Muestro en consola las operaciones realizadas
+	console.log("Operaciones realizadas en la presente sesión:");
+	for (const elemento of listaOperaciones) {
+		console.log(elemento);
+	}
 
-// Ordeno de mayor a menor segun el porcentaje de ganancias
-let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+	// Ordeno de mayor a menor segun el porcentaje de ganancias
+	let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
 
-// Muestro en consola las operaciones Ordenadas
-console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
-for (const elemento of listaOperaciones) {
-	console.log(elemento);
-}
+	// Muestro en consola las operaciones Ordenadas
+	console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
+	for (const elemento of listaOperaciones) {
+		console.log(elemento);
+	}
 
-// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
-if (localStorage.getItem("historial") === null) {
-	localStorage.setItem("historial", JSON.stringify(listaOperaciones));
-} else {
-	const listaOld = JSON.parse(localStorage.getItem("historial"));
-	localStorage.setItem("historial", JSON.stringify(listaOld.concat(listaOperaciones)));
-}
+	// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
+	if (localStorage.getItem("historial") === null) {
+		localStorage.setItem("historial", JSON.stringify(listaOperaciones));
+	} else {
+		const listaOld = JSON.parse(localStorage.getItem("historial"));
+		localStorage.setItem("historial", JSON.stringify(listaOld.concat(listaOperaciones)));
+	}
 
-/* ################### Muestro historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
-const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
-const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
-console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
-for (const item of listaHistoricaOrdenada) {
-	console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
-	console.log(item);
-}
+	/* ################### Muestro historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
+	const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
+	const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+	console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
+	for (const item of listaHistoricaOrdenada) {
+		console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
+		console.log(item);
+	}
+});
