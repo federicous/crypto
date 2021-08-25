@@ -78,9 +78,9 @@ class Inversion {
 /* ################### Bloque del programa ###################### */
 
 const listaOperaciones = [];
-// while (true) {
 
 let bontonInvertir = document.getElementById("botonInvertir");
+
 bontonInvertir.addEventListener("click", function () {
 
 	/* ################### Lectura de Datos ###################### */
@@ -102,6 +102,13 @@ bontonInvertir.addEventListener("click", function () {
 		}
 	}
 
+	/* ################### Escuchar finalización ###################### */
+	// let botonFinalizar = document.getElementById("botonFinalizar");
+	// botonFinalizar.onclick = () => {
+	// 	return break
+	// };
+	/* ################### Fin Escuchar finalización ###################### */
+
 
 	const criptomoneda = new Crypto(cryptoName, precioInicial);
 	criptomoneda.comprar(dineroInvertido);
@@ -111,7 +118,7 @@ bontonInvertir.addEventListener("click", function () {
 	const operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 
 	/* ################### Bucle de actualización de precio ###################### */
-
+	
 	while (true) {
 		let precioActualizado = prompt("ingrese el nuevo precio, o bien ESC para finalizar la operación");
 		if (precioActualizado == "ESC") {
@@ -179,4 +186,5 @@ bontonInvertir.addEventListener("click", function () {
 		console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
 		console.log(item);
 	}
+
 });
