@@ -77,6 +77,10 @@ class Inversion {
 	cancelar() {
 		this.dineroTotal = this.crypto.vender();
 		this.finalizada = true;
+		this.saldoPorcentaje = ((this.dineroTotal - this.dineroInvertido) * 100) / this.dineroInvertido;
+		if (this.dineroTotal > this.dineroInvertido) {
+			this.saldoPositivo = true;
+		}
 		let final = new Date();
 		this.fechaHoraFin = `${final.toDateString()} - ${(final.getHours() < 10 ? '0' : '') + final.getHours()}:${(final.getMinutes() < 10 ? '0' : '') + final.getMinutes()}:${(final.getSeconds() < 10 ? '0' : '') + final.getSeconds()}`;
 		this.estado = "Cancelado";
@@ -96,6 +100,9 @@ let precioInicial;
 let criptomoneda;
 let fechaHora;
 let operacion;
+bloquearBoton("botonActualizaInput");
+bloquearBoton("botonCancelar");
+bloquearBoton("precioActual");
 
 /* ################### Boton Invertir ###################### */
 let bontonInvertir = document.getElementById("botonInvertir");
@@ -107,6 +114,11 @@ function invertir() {
 	alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:" + dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
 	operar();
 	guardar();
+	// bloquearBoton("bontonInvertir");
+	bontonInvertir.disabled = true;
+	desbloquearBoton("botonActualizaInput");
+	desbloquearBoton("botonCancelar");
+	desbloquearBoton("precioActual");
 }
 /* ################### Fin Boton Invertir ###################### */
 
@@ -115,10 +127,12 @@ let botonActualizaInput = document.getElementById("botonActualizaInput");
 botonActualizaInput.addEventListener("click", actualizar);
 
 function actualizar() {
-	let precioActual = document.getElementById("precioActual");
-	precioActualizado = precioActual.value;
-	operar();
-	guardar();
+	if (operacion.finalizada == false) {
+		let precioActual = document.getElementById("precioActual");
+		precioActualizado = precioActual.value;
+		operar();
+		guardar();
+	}
 }
 /* ################### Fin Boton Actualizar ###################### */
 
@@ -127,9 +141,12 @@ let botonCancelar = document.getElementById("botonCancelar");
 botonCancelar.addEventListener("click", cancelar);
 
 function cancelar() {
-	operacion.cancelar();
-	alert("Operacion cancelada!!!");
-	guardar();
+	if (operacion.finalizada == false) {
+		operacion.cancelar();
+		alert("Operacion cancelada!!!");
+		guardar();
+		reiniciarForm();
+	}
 }
 /* ################### Fin Boton Cancelar ###################### */
 
@@ -161,8 +178,6 @@ function datosOperacion() {
 }
 
 function operar() {
-
-	/* ################### Bucle de actualización de precio ###################### */
 	if (precioActualizado == "ESC") {
 		operacion.cancelar();
 		alert("operacion cancelada");
@@ -172,9 +187,9 @@ function operar() {
 		let cambioPrecio = criptomoneda.porcentajeCambio();
 		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
 			operacion.finalizar();
+			reiniciarForm();
 		}
 	}
-	/* ################### Fin Bucle de actualización de precio ###################### */
 }
 
 function guardar() {
@@ -226,3 +241,19 @@ function guardar() {
 		}
 	}
 };
+
+function bloquearBoton(botonId) {
+	document.getElementById(botonId).disabled = true;
+}
+
+function desbloquearBoton(botonId) {
+	document.getElementById(botonId).disabled = false;
+}
+
+function reiniciarForm() {
+	document.getElementById("formulario").reset();
+	document.getElementById("botonInvertir").disabled = false;
+	document.getElementById("botonCancelar").disabled = true;
+	document.getElementById("botonActualizaInput").disabled = true;
+	document.getElementById("precioActual").disabled = true;
+}
