@@ -1,3 +1,5 @@
+/* ################## Genero la lista de criptomonedas para seleccionar ##################### */
+
 let listaCryptos = ["BTC", "ETH", "ADA", "LTC", "DOT", "MATIC", "NEO", "ATOM", "VET", "ICX"];
 let seleccion= document.getElementById("cryptoSelect");
 

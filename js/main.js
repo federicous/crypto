@@ -114,7 +114,6 @@ function invertir() {
 	alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:" + dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
 	operar();
 	guardar();
-	// bloquearBoton("bontonInvertir");
 	bontonInvertir.disabled = true;
 	desbloquearBoton("botonActualizaInput");
 	desbloquearBoton("botonCancelar");

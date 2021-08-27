@@ -1,3 +1,5 @@
+/* #################### Genero una tabla con los datos de las inversiones ####################### */
+
 let historialInversiones = JSON.parse(localStorage.getItem("historial"));
 let tabla= document.getElementById("tableBody");
 
