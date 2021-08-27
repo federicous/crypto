@@ -103,8 +103,6 @@ let operacion;
 bloquearBoton("botonActualizaInput");
 bloquearBoton("botonCancelar");
 bloquearBoton("precioActual");
-let aviso= document.getElementById("aviso");
-aviso.hidden=true;
 
 /* ################### Boton Invertir ###################### */
 let bontonInvertir = document.getElementById("botonInvertir");
@@ -166,13 +164,11 @@ function datosOperacion() {
 
 	for (const x of valoresNumericos) {
 		let text;
-		if (isNaN(x) || x < 0) {
-			let aviso= document.getElementById("aviso");
-			aviso.hidden=false;
-			aviso.innerText="completar campo: " + x;
-			aviso.classList.add("alert-warning");
-			cancelar();
-		} 
+		if (isNaN(x) || x < 1 || x > 10) {
+			text = "Input not valid";
+		} else {
+			text = "Input OK";
+		}
 	}
 	criptomoneda = new Crypto(cryptoName, precioInicial);
 	criptomoneda.comprar(dineroInvertido);
