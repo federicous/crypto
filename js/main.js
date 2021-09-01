@@ -1,6 +1,6 @@
 /* El siguiente programa simula una inversión en criptomonedas comenzando con una cantidad
-de dinero en dolares a invertir y un valor inicial de la criptomoneda
-Una vez ingresados los valores anteriores se va a solicitar la actualización del valor
+de dinero en dolares a invertir, un valor inicial de la criptomoneda, el Stop Loss y el Take Profit
+Una vez ingresados los valores anteriores se va a requerir la actualización periodica del valor
 de la criptomoneda en dolares, dependiendo de la variación del precio de la criptomoneda se realiza
 la finalización de la operación ya sea porque sobrepasó el limite de ganancia (take profit)
 o porque descendió por debajo del limite de pérdida (stop loss)
@@ -88,8 +88,7 @@ class Inversion {
 
 }
 
-/* ################### Bloque del programa ###################### */
-
+/* ######## Variables y valores por defecto ######## */
 const listaOperaciones = [];
 let precioActualizado = 0;
 let cryptoName;
@@ -104,6 +103,8 @@ let contadorActualizaciones;
 bloquearBoton("botonActualizaInput");
 bloquearBoton("botonCancelar");
 bloquearBoton("precioActual");
+
+/* ##################### BLOQUE DEL PROGRAMA ###################### */
 
 /* ################### Boton Invertir ###################### */
 let bontonInvertir = document.getElementById("botonInvertir");
@@ -124,7 +125,7 @@ function invertir() {
 		desbloquearBoton("botonActualizaInput");
 		desbloquearBoton("botonCancelar");
 		desbloquearBoton("precioActual");
-		contadorActualizaciones=0;
+		contadorActualizaciones = 0;
 	}
 }
 /* ################### Fin Boton Invertir ###################### */
@@ -159,11 +160,9 @@ function cancelar() {
 /* ################### Fin Boton Cancelar ###################### */
 
 
-
 /* ################### FUNCIONES ###################### */
 
 function datosOperacion() {
-
 	/* ################### Lectura de Datos ###################### */
 	cryptoName = document.getElementById("cryptoSelect").value;
 	dineroInvertido = document.getElementById("dineroInput").value;
@@ -172,16 +171,13 @@ function datosOperacion() {
 	precioInicial = document.getElementById("precioInput").value;
 	/* ################### Fin Lectura de Datos ###################### */
 
-
 	criptomoneda = new Crypto(cryptoName, precioInicial);
 	criptomoneda.comprar(dineroInvertido);
-
 	fechaHora = new Date();
 	operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 }
 
 function validacion() {
-
 	cryptoName = document.getElementById("cryptoSelect");
 	dineroInvertido = document.getElementById("dineroInput");
 	takeProfit = document.getElementById("takeProfitInput");
@@ -209,7 +205,7 @@ function validaNuevoPrecio() {
 		aviso(`${precioActual.name} No válido!!`, "alert");
 		return false;
 	}
-	contadorActualizaciones+=1;
+	contadorActualizaciones += 1;
 	aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
 	return true;
 }
