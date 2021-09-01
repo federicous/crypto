@@ -115,7 +115,8 @@ function invertir() {
 	if (validacion()) {
 		datosOperacion();
 		precioActualizado = precioInicial;
-		aviso("Operación en curso")
+		let historialInversiones = JSON.parse(localStorage.getItem("historial"));
+		aviso(`Operación en curso Nº ${historialInversiones.length}`)
 		visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
 		operar();
 		guardar();
