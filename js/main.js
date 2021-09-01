@@ -109,9 +109,11 @@ let bontonInvertir = document.getElementById("botonInvertir");
 bontonInvertir.addEventListener("click", invertir);
 
 function invertir() {
+	quitarAviso();
 	datosOperacion();
 	precioActualizado = precioInicial;
-	alert("Datos de la operación:\nCriptomoneda:" + cryptoName + " (" + criptomoneda.cantidad + ")" + "\nDinero invertido:" + dineroInvertido + "\nPrecio inicial:" + precioInicial + "\nTake Profit= " + takeProfit + "% \nStop Loss= " + stopLoss + "%")
+	aviso("Operación en curso")
+	visualizarDatos("Compra:", `${criptomoneda.cantidad} ${cryptoName}`);
 	operar();
 	guardar();
 	bontonInvertir.disabled = true;
@@ -142,7 +144,7 @@ botonCancelar.addEventListener("click", cancelar);
 function cancelar() {
 	if (operacion.finalizada == false) {
 		operacion.cancelar();
-		alert("Operacion cancelada!!!");
+		aviso("Operacion Cancelada!!!","alert");
 		guardar();
 		reiniciarForm();
 	}
@@ -199,12 +201,12 @@ function guardar() {
 		listaOperaciones.push(operacion);
 
 		// Reporto el resultado
-		if (operacion.dineroTotal < operacion.dineroInvertido) {
-			alert("La operación finalizó por alcanzar el Stop Loss \n Dinero disponible en dolares: " + operacion.dineroTotal);
-		} else if (operacion.dineroTotal > operacion.dineroInvertido) {
-			alert("La operación finalizó por alcanzar el Take Profit \n Dinero disponible en dolares: " + operacion.dineroTotal);
+		if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
+			visualizarDatos("Alcanzó el Stop Loss", `Dinero total: $${operacion.dineroTotal}`);
+		} else if (operacion.dineroTotal > operacion.dineroInvertido && operacion.estado != "Cancelado") {
+			visualizarDatos("Alcanzó el Take Profit", `Dinero total: $${operacion.dineroTotal}`);
 		} else {
-			alert("La operación fue cancelada  \n Dinero disponible en dolares: " + operacion.dineroTotal);
+			visualizarDatos("La operación fue cancelada", `Dinero total: $${operacion.dineroTotal}`);
 		}
 
 		// Muestro en consola las operaciones realizadas
@@ -255,4 +257,46 @@ function reiniciarForm() {
 	document.getElementById("botonCancelar").disabled = true;
 	document.getElementById("botonActualizaInput").disabled = true;
 	document.getElementById("precioActual").disabled = true;
+	quitarAviso();
+}
+
+function aviso(mensaje, tipo) {
+	if (tipo == "alert") {
+		$("#formulario").append(`
+		<div id="aviso" class="alert alert-danger d-flex align-items-center mt-3" role="alert">
+ 	 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+ 	  	 		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+ 	 		</svg>
+		  	<div>
+		   	 ${mensaje}
+		  	</div>
+		</div>
+		`)
+	} else {
+		$("#formulario").append(`
+		<div id="aviso" class="alert alert-primary d-flex align-items-center mt-3" role="alert">
+ 	 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+ 	  	 		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+ 	 		</svg>
+		  	<div>
+		   	 ${mensaje}
+		  	</div>
+		</div>
+		`)
+	}
+}
+
+function quitarAviso() {
+	$("#aviso").remove();
+}
+
+function visualizarDatos(titulo, datos) {
+	$("#datos").remove();
+	$("#formulario").append(`<div id="datos" class="card text-dark bg-light my-3 w-100">
+	<div class="card-header">${titulo}</div>
+	<div class="card-body">
+	  <p class="card-text">${datos}
+		</p>
+	</div>
+      </div>`)
 }
