@@ -151,6 +151,10 @@ function cancelar() {
 }
 /* ################### Fin Boton Cancelar ###################### */
 
+
+
+/* ################### FUNCIONES ###################### */
+
 function datosOperacion() {
 
 	/* ################### Lectura de Datos ###################### */
