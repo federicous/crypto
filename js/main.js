@@ -100,6 +100,7 @@ let precioInicial;
 let criptomoneda;
 let fechaHora;
 let operacion;
+let contadorActualizaciones;
 bloquearBoton("botonActualizaInput");
 bloquearBoton("botonCancelar");
 bloquearBoton("precioActual");
@@ -115,13 +116,14 @@ function invertir() {
 		datosOperacion();
 		precioActualizado = precioInicial;
 		aviso("Operación en curso")
-		visualizarDatos("Compra:", `${criptomoneda.cantidad} ${cryptoName}`);
+		visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
 		operar();
 		guardar();
 		bontonInvertir.disabled = true;
 		desbloquearBoton("botonActualizaInput");
 		desbloquearBoton("botonCancelar");
 		desbloquearBoton("precioActual");
+		contadorActualizaciones=0;
 	}
 }
 /* ################### Fin Boton Invertir ###################### */
@@ -206,6 +208,8 @@ function validaNuevoPrecio() {
 		aviso(`${precioActual.name} No válido!!`, "alert");
 		return false;
 	}
+	contadorActualizaciones+=1;
+	aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
 	return true;
 }
 
@@ -322,7 +326,7 @@ function quitarAviso() {
 
 function visualizarDatos(titulo, datos) {
 	$(".datos").remove();
-	$("#formulario").append(`<div class="datos card text-dark bg-light my-3 w-100">
+	$("#zonaDatos").append(`<div class="datos card text-dark bg-light my-3 w-100">
 	<div class="card-header">${titulo}</div>
 	<div class="card-body">
 	  <p class="card-text">${datos}
