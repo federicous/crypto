@@ -89,7 +89,7 @@ class Inversion {
 }
 
 /* ######## Variables y valores por defecto ######## */
-const listaOperaciones = [];
+// let listaOperaciones = [];
 let precioActualizado = 0;
 let cryptoName;
 let dineroInvertido;
@@ -117,7 +117,11 @@ function invertir() {
 		datosOperacion();
 		precioActualizado = precioInicial;
 		let historialInversiones = JSON.parse(localStorage.getItem("historial"));
-		aviso(`Operación en curso Nº ${historialInversiones.length}`)
+		if (historialInversiones!= null) {
+			aviso(`Operación en curso Nº ${historialInversiones.length+1}`);
+		} else{
+			aviso(`Operación en curso Nº 1`);
+		}
 		visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
 		operar();
 		guardar();
@@ -225,7 +229,9 @@ function guardar() {
 	if (operacion.finalizada == true) {
 
 		// Agrego la operación al historial
-		listaOperaciones.push(operacion);
+		// listaOperaciones.push(operacion);
+		// alert("guardado");
+		// listaOperaciones=[operacion];
 
 		// Reporto el resultado
 		if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
@@ -240,36 +246,36 @@ function guardar() {
 		}
 
 		// Muestro en consola las operaciones realizadas
-		console.log("Operaciones realizadas en la presente sesión:");
-		for (const elemento of listaOperaciones) {
-			console.log(elemento);
-		}
+		// console.log("Operaciones realizadas en la presente sesión:");
+		// for (const elemento of listaOperaciones) {
+		// 	console.log(elemento);
+		// }
 
 		// Ordeno de mayor a menor segun el porcentaje de ganancias
-		let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
-
+/* 		let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+ */
 		// Muestro en consola las operaciones Ordenadas
-		console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
+/* 		console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
 		for (const elemento of listaOperaciones) {
 			console.log(elemento);
-		}
+		} */
 
 		// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
 		if (localStorage.getItem("historial") === null) {
-			localStorage.setItem("historial", JSON.stringify(listaOperaciones));
+			localStorage.setItem("historial", JSON.stringify([operacion]));
 		} else {
 			const listaOld = JSON.parse(localStorage.getItem("historial"));
-			localStorage.setItem("historial", JSON.stringify(listaOld.concat(listaOperaciones)));
+			localStorage.setItem("historial", JSON.stringify(listaOld.concat([operacion])));
 		}
 
 		/* ################### Muestro por consola el historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
-		const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
+/* 		const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
 		const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
 		console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
 		for (const item of listaHistoricaOrdenada) {
 			console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
 			console.log(item);
-		}
+		} */
 	}
 };
 
