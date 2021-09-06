@@ -100,12 +100,13 @@ let criptomoneda;
 let fechaHora;
 let operacion;
 let contadorActualizaciones;
-bloquearBoton("botonActualizaInput");
-bloquearBoton("botonCancelar");
-bloquearBoton("precioActual");
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
 $(document).ready(function () {
+
+	bloquearBoton("botonActualizaInput");
+	bloquearBoton("botonCancelar");
+	bloquearBoton("precioActual");
 
 	/* ################### Boton Invertir ###################### */
 	let bontonInvertir = document.getElementById("botonInvertir");
