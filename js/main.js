@@ -105,200 +105,201 @@ bloquearBoton("botonCancelar");
 bloquearBoton("precioActual");
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
+$(document).ready(function () {
 
-/* ################### Boton Invertir ###################### */
-let bontonInvertir = document.getElementById("botonInvertir");
-bontonInvertir.addEventListener("click", invertir);
+	/* ################### Boton Invertir ###################### */
+	let bontonInvertir = document.getElementById("botonInvertir");
+	bontonInvertir.addEventListener("click", invertir);
 
-function invertir() {
-	quitarAviso();
-	ocultarDatos();
-	if (validacion()) {
-		datosOperacion();
-		precioActualizado = precioInicial;
-		let historialInversiones = JSON.parse(localStorage.getItem("historial"));
-		if (historialInversiones!= null) {
-			aviso(`Operación en curso Nº ${historialInversiones.length+1}`);
-		} else{
-			aviso(`Operación en curso Nº 1`);
-		}
-		visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
-		operar();
-		guardar();
-		bontonInvertir.disabled = true;
-		desbloquearBoton("botonActualizaInput");
-		desbloquearBoton("botonCancelar");
-		desbloquearBoton("precioActual");
-		contadorActualizaciones = 0;
-	}
-}
-/* ################### Fin Boton Invertir ###################### */
-
-/* ################### Boton Actualizar ###################### */
-let botonActualizaInput = document.getElementById("botonActualizaInput");
-botonActualizaInput.addEventListener("click", actualizar);
-
-function actualizar() {
-	if (validaNuevoPrecio()) {
-		if (operacion.finalizada == false) {
-			let precioActual = document.getElementById("precioActual");
-			precioActualizado = precioActual.value;
+	function invertir() {
+		quitarAviso();
+		ocultarDatos();
+		if (validacion()) {
+			datosOperacion();
+			precioActualizado = precioInicial;
+			let historialInversiones = JSON.parse(localStorage.getItem("historial"));
+			if (historialInversiones != null) {
+				aviso(`Operación en curso Nº ${historialInversiones.length+1}`);
+			} else {
+				aviso(`Operación en curso Nº 1`);
+			}
+			visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
 			operar();
+			guardar();
+			bontonInvertir.disabled = true;
+			desbloquearBoton("botonActualizaInput");
+			desbloquearBoton("botonCancelar");
+			desbloquearBoton("precioActual");
+			contadorActualizaciones = 0;
+		}
+	}
+	/* ################### Fin Boton Invertir ###################### */
+
+	/* ################### Boton Actualizar ###################### */
+	let botonActualizaInput = document.getElementById("botonActualizaInput");
+	botonActualizaInput.addEventListener("click", actualizar);
+
+	function actualizar() {
+		if (validaNuevoPrecio()) {
+			if (operacion.finalizada == false) {
+				let precioActual = document.getElementById("precioActual");
+				precioActualizado = precioActual.value;
+				operar();
+				guardar();
+			}
+		}
+	}
+	/* ################### Fin Boton Actualizar ###################### */
+
+	/* ################### Boton Cancelar ###################### */
+	let botonCancelar = document.getElementById("botonCancelar");
+	botonCancelar.addEventListener("click", cancelar);
+
+	function cancelar() {
+		if (operacion.finalizada == false) {
+			operacion.cancelar();
+			reiniciarForm();
 			guardar();
 		}
 	}
-}
-/* ################### Fin Boton Actualizar ###################### */
+	/* ################### Fin Boton Cancelar ###################### */
 
-/* ################### Boton Cancelar ###################### */
-let botonCancelar = document.getElementById("botonCancelar");
-botonCancelar.addEventListener("click", cancelar);
 
-function cancelar() {
-	if (operacion.finalizada == false) {
-		operacion.cancelar();
-		reiniciarForm();
-		guardar();
+	/* ################### FUNCIONES ###################### */
+
+	function datosOperacion() {
+		/* ################### Lectura de Datos ###################### */
+		cryptoName = document.getElementById("cryptoSelect").value;
+		dineroInvertido = document.getElementById("dineroInput").value;
+		takeProfit = document.getElementById("takeProfitInput").value;
+		stopLoss = document.getElementById("stopLossInput").value;
+		precioInicial = document.getElementById("precioInput").value;
+		/* ################### Fin Lectura de Datos ###################### */
+
+		criptomoneda = new Crypto(cryptoName, precioInicial);
+		criptomoneda.comprar(dineroInvertido);
+		fechaHora = new Date();
+		operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 	}
-}
-/* ################### Fin Boton Cancelar ###################### */
 
+	function validacion() {
+		cryptoName = document.getElementById("cryptoSelect");
+		dineroInvertido = document.getElementById("dineroInput");
+		takeProfit = document.getElementById("takeProfitInput");
+		stopLoss = document.getElementById("stopLossInput");
+		precioInicial = document.getElementById("precioInput");
+		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
+		quitarAviso();
+		let contador = 0;
+		for (const x of valoresNumericos) {
+			if (isNaN(x.value) || x.value < 1) {
+				aviso(`${x.name} No válido!!`, "alert");
+				contador += 1;
+			}
+		}
+		if (contador != 0) {
+			return false;
+		}
+		return true;
+	}
 
-/* ################### FUNCIONES ###################### */
+	function validaNuevoPrecio() {
+		quitarAviso();
+		let precioActual = document.getElementById("precioActual");
+		if (isNaN(precioActual.value) || precioActual.value < 1) {
+			aviso(`${precioActual.name} No válido!!`, "alert");
+			return false;
+		}
+		contadorActualizaciones += 1;
+		aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
+		return true;
+	}
 
-function datosOperacion() {
-	/* ################### Lectura de Datos ###################### */
-	cryptoName = document.getElementById("cryptoSelect").value;
-	dineroInvertido = document.getElementById("dineroInput").value;
-	takeProfit = document.getElementById("takeProfitInput").value;
-	stopLoss = document.getElementById("stopLossInput").value;
-	precioInicial = document.getElementById("precioInput").value;
-	/* ################### Fin Lectura de Datos ###################### */
-
-	criptomoneda = new Crypto(cryptoName, precioInicial);
-	criptomoneda.comprar(dineroInvertido);
-	fechaHora = new Date();
-	operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
-}
-
-function validacion() {
-	cryptoName = document.getElementById("cryptoSelect");
-	dineroInvertido = document.getElementById("dineroInput");
-	takeProfit = document.getElementById("takeProfitInput");
-	stopLoss = document.getElementById("stopLossInput");
-	precioInicial = document.getElementById("precioInput");
-	let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
-	quitarAviso();
-	let contador = 0;
-	for (const x of valoresNumericos) {
-		if (isNaN(x.value) || x.value < 1) {
-			aviso(`${x.name} No válido!!`, "alert");
-			contador += 1;
+	function operar() {
+		let precioNuevo = parseInt(precioActualizado);
+		criptomoneda.actualizar(precioNuevo);
+		let cambioPrecio = criptomoneda.porcentajeCambio();
+		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
+			operacion.finalizar();
+			reiniciarForm();
 		}
 	}
-	if (contador != 0) {
-		return false;
-	}
-	return true;
-}
 
-function validaNuevoPrecio() {
-	quitarAviso();
-	let precioActual = document.getElementById("precioActual");
-	if (isNaN(precioActual.value) || precioActual.value < 1) {
-		aviso(`${precioActual.name} No válido!!`, "alert");
-		return false;
-	}
-	contadorActualizaciones += 1;
-	aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
-	return true;
-}
+	function guardar() {
 
-function operar() {
-	let precioNuevo = parseInt(precioActualizado);
-	criptomoneda.actualizar(precioNuevo);
-	let cambioPrecio = criptomoneda.porcentajeCambio();
-	if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
-		operacion.finalizar();
-		reiniciarForm();
-	}
-}
+		if (operacion.finalizada == true) {
 
-function guardar() {
+			// Agrego la operación al historial
+			// listaOperaciones.push(operacion);
+			// alert("guardado");
+			// listaOperaciones=[operacion];
 
-	if (operacion.finalizada == true) {
+			// Reporto el resultado
+			if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
+				aviso("Operacion Finalizada!!!");
+				visualizarDatos("Alcanzó el Stop Loss", `Dinero total: $${operacion.dineroTotal}`);
+			} else if (operacion.dineroTotal > operacion.dineroInvertido && operacion.estado != "Cancelado") {
+				aviso("Operacion Finalizada!!!");
+				visualizarDatos("Alcanzó el Take Profit", `Dinero total: $${operacion.dineroTotal}`);
+			} else {
+				aviso("Operacion Cancelada!!!", "alert");
+				visualizarDatos("La operación fue cancelada", `Dinero total: $${operacion.dineroTotal}`);
+			}
 
-		// Agrego la operación al historial
-		// listaOperaciones.push(operacion);
-		// alert("guardado");
-		// listaOperaciones=[operacion];
+			// Muestro en consola las operaciones realizadas
+			// console.log("Operaciones realizadas en la presente sesión:");
+			// for (const elemento of listaOperaciones) {
+			// 	console.log(elemento);
+			// }
 
-		// Reporto el resultado
-		if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
-			aviso("Operacion Finalizada!!!");
-			visualizarDatos("Alcanzó el Stop Loss", `Dinero total: $${operacion.dineroTotal}`);
-		} else if (operacion.dineroTotal > operacion.dineroInvertido && operacion.estado != "Cancelado") {
-			aviso("Operacion Finalizada!!!");
-			visualizarDatos("Alcanzó el Take Profit", `Dinero total: $${operacion.dineroTotal}`);
-		} else {
-			aviso("Operacion Cancelada!!!", "alert");
-			visualizarDatos("La operación fue cancelada", `Dinero total: $${operacion.dineroTotal}`);
+			// Ordeno de mayor a menor segun el porcentaje de ganancias
+			/* 		let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+			 */
+			// Muestro en consola las operaciones Ordenadas
+			/* 		console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
+					for (const elemento of listaOperaciones) {
+						console.log(elemento);
+					} */
+
+			// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
+			if (localStorage.getItem("historial") === null) {
+				localStorage.setItem("historial", JSON.stringify([operacion]));
+			} else {
+				const listaOld = JSON.parse(localStorage.getItem("historial"));
+				localStorage.setItem("historial", JSON.stringify(listaOld.concat([operacion])));
+			}
+
+			/* ################### Muestro por consola el historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
+			/* 		const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
+					const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
+					console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
+					for (const item of listaHistoricaOrdenada) {
+						console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
+						console.log(item);
+					} */
 		}
+	};
 
-		// Muestro en consola las operaciones realizadas
-		// console.log("Operaciones realizadas en la presente sesión:");
-		// for (const elemento of listaOperaciones) {
-		// 	console.log(elemento);
-		// }
-
-		// Ordeno de mayor a menor segun el porcentaje de ganancias
-/* 		let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
- */
-		// Muestro en consola las operaciones Ordenadas
-/* 		console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
-		for (const elemento of listaOperaciones) {
-			console.log(elemento);
-		} */
-
-		// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
-		if (localStorage.getItem("historial") === null) {
-			localStorage.setItem("historial", JSON.stringify([operacion]));
-		} else {
-			const listaOld = JSON.parse(localStorage.getItem("historial"));
-			localStorage.setItem("historial", JSON.stringify(listaOld.concat([operacion])));
-		}
-
-		/* ################### Muestro por consola el historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
-/* 		const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
-		const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
-		console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
-		for (const item of listaHistoricaOrdenada) {
-			console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
-			console.log(item);
-		} */
+	function bloquearBoton(botonId) {
+		document.getElementById(botonId).disabled = true;
 	}
-};
 
-function bloquearBoton(botonId) {
-	document.getElementById(botonId).disabled = true;
-}
+	function desbloquearBoton(botonId) {
+		document.getElementById(botonId).disabled = false;
+	}
 
-function desbloquearBoton(botonId) {
-	document.getElementById(botonId).disabled = false;
-}
+	function reiniciarForm() {
+		document.getElementById("formulario").reset();
+		document.getElementById("botonInvertir").disabled = false;
+		document.getElementById("botonCancelar").disabled = true;
+		document.getElementById("botonActualizaInput").disabled = true;
+		document.getElementById("precioActual").disabled = true;
+		quitarAviso();
+	}
 
-function reiniciarForm() {
-	document.getElementById("formulario").reset();
-	document.getElementById("botonInvertir").disabled = false;
-	document.getElementById("botonCancelar").disabled = true;
-	document.getElementById("botonActualizaInput").disabled = true;
-	document.getElementById("precioActual").disabled = true;
-	quitarAviso();
-}
-
-function aviso(mensaje, tipo) {
-	if (tipo == "alert") {
-		$("#formulario").append(`
+	function aviso(mensaje, tipo) {
+		if (tipo == "alert") {
+			$("#formulario").append(`
 		<div class="avisos alert alert-danger alert-dismissible fade show d-flex align-items-center mt-3" role="alert">
  	 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
  	  	 		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -309,8 +310,8 @@ function aviso(mensaje, tipo) {
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
 		`)
-	} else {
-		$("#formulario").append(`
+		} else {
+			$("#formulario").append(`
 		<div class="avisos alert alert-primary d-flex align-items-center mt-3" role="alert">
  	 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
  	  	 		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -320,24 +321,26 @@ function aviso(mensaje, tipo) {
 		  	</div>
 		</div>
 		`)
+		}
 	}
-}
 
-function quitarAviso() {
-	$(".avisos").remove();
-}
+	function quitarAviso() {
+		$(".avisos").remove();
+	}
 
-function visualizarDatos(titulo, datos) {
-	$(".datos").remove();
-	$("#zonaDatos").append(`<div class="datos card text-dark bg-light my-3 w-100">
+	function visualizarDatos(titulo, datos) {
+		$(".datos").remove();
+		$("#zonaDatos").append(`<div class="datos card text-dark bg-light my-3 w-100">
 	<div class="card-header">${titulo}</div>
 	<div class="card-body">
 	  <p class="card-text">${datos}
 		</p>
 	</div>
       </div>`)
-}
+	}
 
-function ocultarDatos() {
-	$(".datos").remove();
-}
+	function ocultarDatos() {
+		$(".datos").remove();
+	}
+
+});
