@@ -38,7 +38,7 @@ $(document).ready(function () {
 	});
 
 
-	/* ########### Evolucion de porcentaje de ganancia ########## */
+	/* ########### Grafico Doughnut ########## */
 
 	for (const operacion of historialInversiones) {
 		if (operacion.estado !== "Cancelado") {

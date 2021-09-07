@@ -13,4 +13,4 @@ for (let op = 0; op < historialInversiones.length; op++) {
 			<td>${historialInversiones[op].estado}</td>`;
 	tabla.appendChild(nuevaFila);
 }
-	$('.table').tablesorter();
+	// $('.table').tablesorter();

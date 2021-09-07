@@ -89,7 +89,6 @@ class Inversion {
 }
 
 /* ######## Variables y valores por defecto ######## */
-// let listaOperaciones = [];
 let precioActualizado = 0;
 let cryptoName;
 let dineroInvertido;
@@ -104,15 +103,12 @@ let contadorActualizaciones;
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
 $(document).ready(function () {
 
-	bloquearBoton("botonActualizaInput");
-	bloquearBoton("botonCancelar");
-	bloquearBoton("precioActual");
+	bloquearBoton("#botonActualizaInput");
+	bloquearBoton("#botonCancelar");
+	bloquearBoton("#precioActual");
 
 	/* ################### Boton Invertir ###################### */
-	let bontonInvertir = document.getElementById("botonInvertir");
-	bontonInvertir.addEventListener("click", invertir);
-
-	function invertir() {
+	$("#botonInvertir").click(function invertir() {
 		quitarAviso();
 		ocultarDatos();
 		if (validacion()) {
@@ -127,42 +123,36 @@ $(document).ready(function () {
 			visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
 			operar();
 			guardar();
-			bontonInvertir.disabled = true;
-			desbloquearBoton("botonActualizaInput");
-			desbloquearBoton("botonCancelar");
-			desbloquearBoton("precioActual");
+			$(this).disabled = true;
+			desbloquearBoton("#botonActualizaInput");
+			desbloquearBoton("#botonCancelar");
+			desbloquearBoton("#precioActual");
 			contadorActualizaciones = 0;
 		}
-	}
+	});
 	/* ################### Fin Boton Invertir ###################### */
 
 	/* ################### Boton Actualizar ###################### */
-	let botonActualizaInput = document.getElementById("botonActualizaInput");
-	botonActualizaInput.addEventListener("click", actualizar);
-
-	function actualizar() {
+	$("#botonActualizaInput").click(function actualizar() {
 		if (validaNuevoPrecio()) {
 			if (operacion.finalizada == false) {
-				let precioActual = document.getElementById("precioActual");
-				precioActualizado = precioActual.value;
+				let precioActual = $("#precioActual");
+				precioActualizado = precioActual.val();
 				operar();
 				guardar();
 			}
 		}
-	}
+	});
 	/* ################### Fin Boton Actualizar ###################### */
 
 	/* ################### Boton Cancelar ###################### */
-	let botonCancelar = document.getElementById("botonCancelar");
-	botonCancelar.addEventListener("click", cancelar);
-
-	function cancelar() {
+	$("#botonCancelar").click(function cancelar() {
 		if (operacion.finalizada == false) {
 			operacion.cancelar();
 			reiniciarForm();
 			guardar();
 		}
-	}
+	});
 	/* ################### Fin Boton Cancelar ###################### */
 
 
@@ -170,11 +160,11 @@ $(document).ready(function () {
 
 	function datosOperacion() {
 		/* ################### Lectura de Datos ###################### */
-		cryptoName = document.getElementById("cryptoSelect").value;
-		dineroInvertido = document.getElementById("dineroInput").value;
-		takeProfit = document.getElementById("takeProfitInput").value;
-		stopLoss = document.getElementById("stopLossInput").value;
-		precioInicial = document.getElementById("precioInput").value;
+		cryptoName = $("#cryptoSelect").val();
+		dineroInvertido = $("#dineroInput").val();
+		takeProfit = $("#takeProfitInput").val();
+		stopLoss = $("#stopLossInput").val();
+		precioInicial = $("#precioInput").val();
 		/* ################### Fin Lectura de Datos ###################### */
 
 		criptomoneda = new Crypto(cryptoName, precioInicial);
@@ -184,17 +174,17 @@ $(document).ready(function () {
 	}
 
 	function validacion() {
-		cryptoName = document.getElementById("cryptoSelect");
-		dineroInvertido = document.getElementById("dineroInput");
-		takeProfit = document.getElementById("takeProfitInput");
-		stopLoss = document.getElementById("stopLossInput");
-		precioInicial = document.getElementById("precioInput");
+		cryptoName = $("#cryptoSelect");
+		dineroInvertido = $("#dineroInput");
+		takeProfit = $("#takeProfitInput");
+		stopLoss = $("#stopLossInput");
+		precioInicial = $("#precioInput");
 		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
 		quitarAviso();
 		let contador = 0;
 		for (const x of valoresNumericos) {
-			if (isNaN(x.value) || x.value < 1) {
-				aviso(`${x.name} No válido!!`, "alert");
+			if (isNaN(x.val()) || x.val() < 1) {
+				aviso(`${x.attr("name")} No válido!!`, "alert");
 				contador += 1;
 			}
 		}
@@ -206,8 +196,8 @@ $(document).ready(function () {
 
 	function validaNuevoPrecio() {
 		quitarAviso();
-		let precioActual = document.getElementById("precioActual");
-		if (isNaN(precioActual.value) || precioActual.value < 1) {
+		let precioActual = $("#precioActual");
+		if (isNaN(precioActual.val()) || precioActual.val() < 1) {
 			aviso(`${precioActual.name} No válido!!`, "alert");
 			return false;
 		}
@@ -230,11 +220,6 @@ $(document).ready(function () {
 
 		if (operacion.finalizada == true) {
 
-			// Agrego la operación al historial
-			// listaOperaciones.push(operacion);
-			// alert("guardado");
-			// listaOperaciones=[operacion];
-
 			// Reporto el resultado
 			if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
 				aviso("Operacion Finalizada!!!");
@@ -247,20 +232,6 @@ $(document).ready(function () {
 				visualizarDatos("La operación fue cancelada", `Dinero total: $${operacion.dineroTotal}`);
 			}
 
-			// Muestro en consola las operaciones realizadas
-			// console.log("Operaciones realizadas en la presente sesión:");
-			// for (const elemento of listaOperaciones) {
-			// 	console.log(elemento);
-			// }
-
-			// Ordeno de mayor a menor segun el porcentaje de ganancias
-			/* 		let listaOrdenada = listaOperaciones.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
-			 */
-			// Muestro en consola las operaciones Ordenadas
-			/* 		console.log("Operaciones realizadas en la presente sesión ordenadas segun porcentaje de ganancias:");
-					for (const elemento of listaOperaciones) {
-						console.log(elemento);
-					} */
 
 			// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
 			if (localStorage.getItem("historial") === null) {
@@ -269,32 +240,23 @@ $(document).ready(function () {
 				const listaOld = JSON.parse(localStorage.getItem("historial"));
 				localStorage.setItem("historial", JSON.stringify(listaOld.concat([operacion])));
 			}
-
-			/* ################### Muestro por consola el historial de operaciones ordenado de mayor a menor segun el porcentaje de ganancias ###################### */
-			/* 		const listaOperacionesHistorica = JSON.parse(localStorage.getItem("historial"));
-					const listaHistoricaOrdenada = listaOperacionesHistorica.sort((a, b) => b.saldoPorcentaje - a.saldoPorcentaje);
-					console.log("Lista historica Ordenada de mayor a menor segun el porcentaje de ganancias");
-					for (const item of listaHistoricaOrdenada) {
-						console.log("Porcentaje de ganancia: " + item.saldoPorcentaje + " | Fecha y hora de operacion: " + item.fechaHora);
-						console.log(item);
-					} */
 		}
 	};
 
 	function bloquearBoton(botonId) {
-		document.getElementById(botonId).disabled = true;
+		$(botonId).disabled = true;
 	}
 
 	function desbloquearBoton(botonId) {
-		document.getElementById(botonId).disabled = false;
+		$(botonId).disabled = false;
 	}
 
 	function reiniciarForm() {
-		document.getElementById("formulario").reset();
-		document.getElementById("botonInvertir").disabled = false;
-		document.getElementById("botonCancelar").disabled = true;
-		document.getElementById("botonActualizaInput").disabled = true;
-		document.getElementById("precioActual").disabled = true;
+		$("#formulario").trigger("reset");
+		$("#botonInvertir").disabled = false;
+		$("#botonCancelar").disabled = true;
+		$("#botonActualizaInput").disabled = true;
+		$("#precioActual").disabled = true;
 		quitarAviso();
 	}
 
