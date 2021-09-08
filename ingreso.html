@@ -23,9 +23,9 @@
 
 		<a class="d-flex justify-content-center align-items-center w-100 px-3 mt-3" href="#">
 			<svg class="logoPrincipal fill-current" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-				xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="512"
-				height="512" x="0" y="0" viewBox="0 0 682 682.66673"
-				style="enable-background:new 0 0 512 512" xml:space="preserve">
+				xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="512" height="512" x="0"
+				y="0" viewBox="0 0 682 682.66673" style="enable-background:new 0 0 512 512"
+				xml:space="preserve">
 				<g transform="matrix(1,0,0,1,170,15)">
 					<path xmlns="http://www.w3.org/2000/svg"
 						d="m174.023438 274.285156c134.585937 0 171.429687-27.015625 171.429687-125.714844 0-102.476562-100.238281-148.570312-171.429687-148.570312-71.1875 0-171.425782 46.09375-171.425782 148.570312 0 98.699219 36.84375 125.714844 171.425782 125.714844zm0-228.574218c88.867187 0 148.574218 53.179687 148.574218 102.859374 0 74.023438-41.660156 102.859376-148.574218 102.859376-106.914063 0-148.570313-28.835938-148.570313-102.859376 0-49.679687 59.703125-102.859374 148.570313-102.859374zm0 0"
@@ -56,7 +56,19 @@
 		</a>
 	</div>
 
-	<div class="container"></div>
+	<div class="container d-flex justify-content-center mt-3">
+		<form id="formulario" class="w-50" accept-charset="UTF-8" autocomplete="off" method="GET"
+			target="_blank">
+			<fieldset>
+				<label class="form-label" for="cryptoName">Usuario</label><br />
+				<input id="usuario" class="form-control mb-3 ingresoInput" aria-label="Seleccionar Criptomoneda">
+				</input>
+				<label class="form-label" for="cryptoName">Password</label><br />
+				<input id="clave" type="text" class="form-control ingresoInput" name="Precio" required
+					aria-label="Precio" aria-describedby="input-group-right">
+			</fieldset>
+		</form>
+	</div>
 
 	<!-- Scripts Boostrap -->
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"

@@ -24,6 +24,9 @@ ul {
 .logoTexto {
 	font-size: 4rem;
 }
+.ingresoInput {
+	background-color: #D1D5DB;
+}
 /* Fin pagina de ingreso */
 .iconosMenu {
 	width: 1.9rem;
