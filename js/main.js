@@ -27,7 +27,7 @@ class Crypto {
 	}
 	// retorna el dinero en dolares de la venta del total de las crypto
 	vender() {
-		return this.precio[this.precio.length - 1] * this.cantidad;
+		return (this.precio[this.precio.length - 1] * this.cantidad);
 	}
 	// agrega más cantidad de crypto por medio de ingresar la cantidad dinero a comprar
 	comprar(masDinero) {
@@ -143,6 +143,11 @@ $(document).ready(function () {
 			}
 		}
 	});
+	// $("#precioActual").keydown(() => {$("#botonActualizar").trigger("click")});
+	$("#precioActual").keypress((e) => {
+		if(e.which == 13) {$("#botonActualizaInput").trigger("click")
+	     }
+	  });
 	/* ################### Fin Boton Actualizar ###################### */
 
 	/* ################### Boton Cancelar ###################### */
