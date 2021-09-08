@@ -143,9 +143,8 @@ $(document).ready(function () {
 			}
 		}
 	});
-	// $("#precioActual").keydown(() => {$("#botonActualizar").trigger("click")});
 	$("#precioActual").keypress((e) => {
-		if(e.which == 13) {$("#botonActualizaInput").trigger("click")
+		if(e.which == 13) {$("#botonActualizaInput").trigger("click");
 	     }
 	  });
 	/* ################### Fin Boton Actualizar ###################### */
