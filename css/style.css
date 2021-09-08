@@ -15,7 +15,16 @@ ul {
 	height: 2rem;
 	min-width: 1.5rem;
 }
-
+/* Pagina de Ingreso */
+.logoPrincipal {
+	width: 6rem;
+	height: 6rem;
+	min-width: 1.5rem;
+}
+.logoTexto {
+	font-size: 4rem;
+}
+/* Fin pagina de ingreso */
 .iconosMenu {
 	width: 1.9rem;
 	height: 3rem;
