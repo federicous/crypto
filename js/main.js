@@ -100,8 +100,30 @@ let fechaHora;
 let operacion;
 let contadorActualizaciones;
 
+
+
+
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
 $(document).ready(function () {
+
+	/* ############## Datos API ################# */
+	cryptoName = $("#cryptoSelect").val();
+	let URLGET = `https://api.coinbase.com/v2/prices/${cryptoName}-USD/buy`
+	$("#cryptoSelect").change(() => {
+		cryptoName = $("#cryptoSelect").val();
+		URLGET = `https://api.coinbase.com/v2/prices/${cryptoName}-USD/buy`
+	});
+
+	setInterval(() => {
+		console.log("Ejecutar cada 5 seg");
+		$.get(URLGET, function (respuesta, estado) {
+			if (estado === "success") {
+				$("#precioInput").attr("value", respuesta.data.amount);
+			}
+		});
+	}, 5000);
+	/* ############## Fin Datos API ################# */
+
 
 	bloquearBoton("#botonActualizaInput");
 	bloquearBoton("#botonCancelar");
@@ -144,9 +166,10 @@ $(document).ready(function () {
 		}
 	});
 	$("#precioActual").keypress((e) => {
-		if(e.which == 13) {$("#botonActualizaInput").trigger("click");
-	     }
-	  });
+		if (e.which == 13) {
+			$("#botonActualizaInput").trigger("click");
+		}
+	});
 	/* ################### Fin Boton Actualizar ###################### */
 
 	/* ################### Boton Cancelar ###################### */
