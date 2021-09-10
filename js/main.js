@@ -107,7 +107,7 @@ let contadorActualizaciones;
 $(document).ready(function () {
 
 	/* ############## Datos API ################# */
-	cryptoName = $("#cryptoSelect").val();
+	cryptoName = 'BTC'; /* valor por defecto seleccionado */
 	let URLGET = `https://api.coinbase.com/v2/prices/${cryptoName}-USD/buy`
 	$("#cryptoSelect").change(() => {
 		cryptoName = $("#cryptoSelect").val();
