@@ -22,7 +22,7 @@ $(function () {
 				seleccion.appendChild(opcion);
 			}
 			$("option[value='BTC']").attr("selected", "selected");
-			$("#cryptoSelect").attr('value','BTC'); /* crypto por defecto */
+			// $("#cryptoSelect").attr('value','BTC'); /* crypto por defecto */
 			$("#cryptoSelect").trigger("change");
 		};
 	});

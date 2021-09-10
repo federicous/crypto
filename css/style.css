@@ -15,18 +15,29 @@ ul {
 	height: 2rem;
 	min-width: 1.5rem;
 }
+
 /* Pagina de Ingreso */
 .logoPrincipal {
-	width: 6rem;
+	/* width: 6rem;
 	height: 6rem;
-	min-width: 1.5rem;
+	min-width: 1.5rem; */
+	width: clamp(2.5rem, 10vw, 6.5rem);
+	height: clamp(2.5rem, 10vw, 6.5rem);
 }
+
 .logoTexto {
-	font-size: 4rem;
+	/* font-size: 4rem; */
+	font-size: clamp(2.5rem, 10vw, 5.5rem);
 }
+
 .ingresoInput {
 	background-color: #9CA3AF;
 }
+.credenciales {
+	/* width: clamp(2.5rem, 10vw, 4.5rem); */
+	width: clamp(15.5rem, 25vw, 20.5rem);
+}
+
 /* Fin pagina de ingreso */
 .iconosMenu {
 	width: 1.9rem;
@@ -47,25 +58,31 @@ ul {
 }
 
 .menuItems:hover {
-	background-color: #374151; /* background-color: $bg-gray-700; */
-	color: #D1D5DB; /* $text-gray-300 */
+	background-color: #374151;
+	/* background-color: $bg-gray-700; */
+	color: #D1D5DB;
+	/* $text-gray-300 */
 }
 
 .accesoCuenta {
 	height: 4rem;
 	width: 100%;
-	background-color: #1F2937; /* bg-gray-800  */
+	background-color: #1F2937;
+	/* bg-gray-800  */
 }
 
 .accesoCuenta:hover {
-	background-color: #374151; /* bg-gray-700  */
-	color: #D1D5DB; /* text-gray-300 */
+	background-color: #374151;
+	/* bg-gray-700  */
+	color: #D1D5DB;
+	/* text-gray-300 */
 }
 
 .nuevoMensaje {
 	height: 0.5rem;
 	width: 0.5rem;
-	background-color: #6366F1; /* .bg-indigo-500 */
+	background-color: #6366F1;
+	/* .bg-indigo-500 */
 	top: 480px;
 	left: 10px;
 }
@@ -80,12 +97,15 @@ a {
 }
 
 .navBar {
-	background-color: #111827; /* bg-gray-900 */
-	color: #9CA3AF; /* text-gray-400  */
+	background-color: #111827;
+	/* bg-gray-900 */
+	color: #9CA3AF;
+	/* text-gray-400  */
 }
 
 .bordeMenu {
-border-top-width: 0.5px;
-border-top-style: solid;
-border-color: #374151; /* .border-gray-700 */
+	border-top-width: 0.5px;
+	border-top-style: solid;
+	border-color: #374151;
+	/* .border-gray-700 */
 }
