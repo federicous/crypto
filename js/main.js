@@ -210,13 +210,6 @@ $(document).ready(function () {
 		quitarAviso();
 		let contador = 0;
 		for (const x of valoresNumericos) {
-			console.log("datos depuracion");
-			console.log(x);
-			console.log(x.value);
-			console.log(x.val());
-			console.log(x.attr("name"));
-			console.log(isNaN(x.val()));
-			console.log(x.val() < 0);
 			if (isNaN(x.val()) || (x.val() < 0) || x.val()=="") {
 				aviso(`${x.attr("name")} No válido!!`, "alert");
 				contador += 1;
@@ -282,12 +275,12 @@ $(document).ready(function () {
 	}
 
 	function desbloquearBoton(botonId) {
-		$(botonId).attr("disabled","false");
+		$(botonId).removeAttr("disabled");
 	}
 
 	function reiniciarForm() {
 		$("#formulario").trigger("reset");
-		$("#botonInvertir").attr("disabled","false");
+		$("#botonInvertir").removeAttr("disabled");
 		$("#botonCancelar").attr("disabled","true");
 		$("#botonActualizaInput").attr("disabled","true");
 		$("#precioActual").attr("disabled","true");
