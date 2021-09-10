@@ -11,11 +11,11 @@ class Crypto {
 	constructor(nombre, precio) {
 		this.nombre = nombre;
 		this.cantidad = 0;
-		this.precio = [parseInt(precio)];
+		this.precio = [parseFloat(precio)];
 	}
 	// permite actualizar el precio de la crypto
 	actualizar(precioNuevo) {
-		this.precio.push(parseInt(precioNuevo));
+		this.precio.push(parseFloat(precioNuevo));
 	}
 	// devuelve el ultimo precio actualizado
 	precioActual() {
@@ -31,7 +31,7 @@ class Crypto {
 	}
 	// agrega más cantidad de crypto por medio de ingresar la cantidad dinero a comprar
 	comprar(masDinero) {
-		this.cantidad = this.cantidad + (parseInt(masDinero) / this.precio[this.precio.length - 1])
+		this.cantidad = this.cantidad + (parseFloat(masDinero) / this.precio[this.precio.length - 1])
 	}
 	// muestra en consola los valores que fue teniendo la crypto
 	historial() {
@@ -48,15 +48,15 @@ class Crypto {
 
 class Inversion {
 	constructor(dineroInvertido, takeProfit, stopLoss, fechaHora, crypto) {
-		this.dineroInvertido = parseInt(dineroInvertido);
-		this.takeProfit = parseInt(takeProfit);
-		this.stopLoss = parseInt(stopLoss);
+		this.dineroInvertido = parseFloat(dineroInvertido);
+		this.takeProfit = parseFloat(takeProfit);
+		this.stopLoss = parseFloat(stopLoss);
 		this.fechaHora = `${fechaHora.toDateString()} - ${(fechaHora.getHours() < 10 ? '0' : '') + fechaHora.getHours()}:${(fechaHora.getMinutes() < 10 ? '0' : '') + fechaHora.getMinutes()}:${(fechaHora.getSeconds() < 10 ? '0' : '') + fechaHora.getSeconds()}`;
 		this.fechaHoraFin = "";
 		this.crypto = crypto;
 		this.nombre = crypto.nombre;
 		this.precioInicial = crypto.precioActual();
-		this.dineroTotal = parseInt(dineroInvertido);
+		this.dineroTotal = parseFloat(dineroInvertido);
 		this.finalizada = false;
 		this.saldoPorcentaje = 0;
 		this.saldoPositivo = false;
@@ -107,7 +107,7 @@ let contadorActualizaciones;
 $(document).ready(function () {
 
 	/* ############## Datos API ################# */
-	cryptoName = 'BTC'; /* valor por defecto seleccionado */
+	// cryptoName = 'BTC'; /* valor por defecto seleccionado */
 	let URLGET = `https://api.coinbase.com/v2/prices/${cryptoName}-USD/buy`
 	$("#cryptoSelect").change(() => {
 		cryptoName = $("#cryptoSelect").val();
@@ -210,7 +210,7 @@ $(document).ready(function () {
 		quitarAviso();
 		let contador = 0;
 		for (const x of valoresNumericos) {
-			if (isNaN(x.val()) || x.val() < 1) {
+			if (isNaN(x.val()) || x.val() < 0) {
 				aviso(`${x.attr("name")} No válido!!`, "alert");
 				contador += 1;
 			}
@@ -234,7 +234,7 @@ $(document).ready(function () {
 	}
 
 	function operar() {
-		let precioNuevo = parseInt(precioActualizado);
+		let precioNuevo = parseFloat(precioActualizado);
 		criptomoneda.actualizar(precioNuevo);
 		let cambioPrecio = criptomoneda.porcentajeCambio();
 		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
@@ -285,6 +285,7 @@ $(document).ready(function () {
 		$("#botonActualizaInput").disabled = true;
 		$("#precioActual").disabled = true;
 		quitarAviso();
+		$("#cryptoSelect").trigger("change");
 	}
 
 	function aviso(mensaje, tipo) {
