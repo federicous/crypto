@@ -85,6 +85,9 @@ class Inversion {
 		this.fechaHoraFin = `${final.toDateString()} - ${(final.getHours() < 10 ? '0' : '') + final.getHours()}:${(final.getMinutes() < 10 ? '0' : '') + final.getMinutes()}:${(final.getSeconds() < 10 ? '0' : '') + final.getSeconds()}`;
 		this.estado = "Cancelado";
 	}
+	enCurso() {
+		this.estado = "enCurso";
+	}
 
 }
 
@@ -119,6 +122,7 @@ $(document).ready(function () {
 		$.get(URLGET, function (respuesta, estado) {
 			if (estado === "success") {
 				$("#precioInput").attr("value", respuesta.data.amount);
+				$("#precioInput").trigger("change");
 			}
 		});
 	}, 5000);
@@ -143,6 +147,7 @@ $(document).ready(function () {
 				aviso(`Operación en curso Nº 1`);
 			}
 			visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
+			operacion.enCurso();
 			operar();
 			guardar();
 			$(this).attr("disabled","true");
@@ -169,6 +174,18 @@ $(document).ready(function () {
 		if (e.which == 13) {
 			$("#botonActualizaInput").trigger("click");
 		}
+	});
+	$("#precioInput").change(()=>{
+			console.log("antes if");
+			if (((operacion!=null) && operacion.finalizada == false) && (operacion.estado == "enCurso")) {
+			quitarAviso();
+			console.log("despues if");
+				precioActualizado = $("#precioInput").val();
+				contadorActualizaciones += 1;
+				aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
+				operar();
+				guardar();
+			}
 	});
 	/* ################### Fin Boton Actualizar ###################### */
 
