@@ -118,7 +118,7 @@ $(document).ready(function () {
 	});
 
 	setInterval(() => {
-		console.log("Ejecutar cada 5 seg");
+		// console.log("Ejecutar cada 5 seg");
 		$.get(URLGET, function (respuesta, estado) {
 			if (estado === "success") {
 				$("#precioInput").attr("value", respuesta.data.amount);
@@ -176,10 +176,10 @@ $(document).ready(function () {
 		}
 	});
 	$("#precioInput").change(()=>{
-			console.log("antes if");
+			// console.log("antes if");
 			if (((operacion!=null) && operacion.finalizada == false) && (operacion.estado == "enCurso")) {
 			quitarAviso();
-			console.log("despues if");
+			// console.log("despues if");
 				precioActualizado = $("#precioInput").val();
 				contadorActualizaciones += 1;
 				aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
