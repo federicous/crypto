@@ -138,3 +138,9 @@ a {
 .tradingViewGrafico {
 	height: 500px;
 }
+.seccionFormulario {
+	flex: 30%;
+}
+.seccionGrafico {
+	flex: 70%;
+}

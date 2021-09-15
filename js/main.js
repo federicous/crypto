@@ -64,9 +64,9 @@ class Inversion {
 	}
 	// finalizar la inversión
 	finalizar() {
-		this.dineroTotal = this.crypto.vender();
+		this.dineroTotal = Number((this.crypto.vender()).toFixed(2));
 		this.finalizada = true;
-		this.saldoPorcentaje = ((this.dineroTotal - this.dineroInvertido) * 100) / this.dineroInvertido;
+		this.saldoPorcentaje = Number((((this.dineroTotal - this.dineroInvertido) * 100) / this.dineroInvertido).toFixed(4));
 		if (this.dineroTotal > this.dineroInvertido) {
 			this.saldoPositivo = true;
 		}
@@ -75,9 +75,9 @@ class Inversion {
 		this.estado = "Finalizado";
 	}
 	cancelar() {
-		this.dineroTotal = this.crypto.vender();
+		this.dineroTotal = Number((this.crypto.vender()).toFixed(2));
 		this.finalizada = true;
-		this.saldoPorcentaje = ((this.dineroTotal - this.dineroInvertido) * 100) / this.dineroInvertido;
+		this.saldoPorcentaje = Number((((this.dineroTotal - this.dineroInvertido) * 100) / this.dineroInvertido).toFixed(4));
 		if (this.dineroTotal > this.dineroInvertido) {
 			this.saldoPositivo = true;
 		}
