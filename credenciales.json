@@ -1,10 +1,17 @@
-{
-  "cuentas": [
-    {"usuario": "demo","clave":"demo"},
-    {"usuario": "admin","clave":"admin"},
-    {"usuario": "fede","clave":"test"},
-    {"usuario": "pepe","clave":"Alv3rj4"}    
-  ]
-
-}
-
+[{
+    "usuario": "demo",
+    "clave": "demo"
+  },
+  {
+    "usuario": "admin",
+    "clave": "admin"
+  },
+  {
+    "usuario": "fede",
+    "clave": "test"
+  },
+  {
+    "usuario": "pepe",
+    "clave": "Alv3rj4"
+  }
+]
