@@ -102,23 +102,20 @@ let criptomoneda;
 let fechaHora;
 let operacion;
 let contadorActualizaciones;
-
-
-
+let URLGET;
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
 $(document).ready(function () {
 
-	/* ############## Datos API ################# */
-	// cryptoName = 'BTC'; /* valor por defecto seleccionado */
-	let URLGET = `https://api.coinbase.com/v2/prices/${cryptoName}-USD/buy`
+	bloquearBoton("#botonCancelar");
+
+	/* ############## Obtener precio periodicamente con la API ################# */
 	$("#cryptoSelect").change(() => {
 		cryptoName = $("#cryptoSelect").val();
 		URLGET = `https://api.coinbase.com/v2/prices/${cryptoName}-USD/buy`
 	});
 
 	setInterval(() => {
-		// console.log("Ejecutar cada 5 seg");
 		$.get(URLGET, function (respuesta, estado) {
 			if (estado === "success") {
 				$("#precioInput").attr("value", respuesta.data.amount);
@@ -126,12 +123,18 @@ $(document).ready(function () {
 			}
 		});
 	}, 5000);
-	/* ############## Fin Datos API ################# */
 
-
-	bloquearBoton("#botonActualizaInput");
-	bloquearBoton("#botonCancelar");
-	bloquearBoton("#precioActual");
+	$("#precioInput").change(() => {
+		if (((operacion != null) && operacion.finalizada == false) && (operacion.estado == "enCurso")) {
+			quitarAviso();
+			precioActualizado = $("#precioInput").val();
+			contadorActualizaciones += 1;
+			aviso(`Actualización de precio - Nº ${contadorActualizaciones}`);
+			operar();
+			guardar();
+		}
+	});
+	/* ############## Fin Obtener precio periodicamente con la API ################# */
 
 	/* ################### Boton Invertir ###################### */
 	$("#botonInvertir").click(function invertir() {
@@ -150,44 +153,12 @@ $(document).ready(function () {
 			operacion.enCurso();
 			operar();
 			guardar();
-			$(this).attr("disabled","true");
-			desbloquearBoton("#botonActualizaInput");
+			$(this).attr("disabled", "true");
 			desbloquearBoton("#botonCancelar");
-			desbloquearBoton("#precioActual");
 			contadorActualizaciones = 0;
 		}
 	});
 	/* ################### Fin Boton Invertir ###################### */
-
-	/* ################### Boton Actualizar ###################### */
-	$("#botonActualizaInput").click(function actualizar() {
-		if (validaNuevoPrecio()) {
-			if (operacion.finalizada == false) {
-				let precioActual = $("#precioActual");
-				precioActualizado = precioActual.val();
-				operar();
-				guardar();
-			}
-		}
-	});
-	$("#precioActual").keypress((e) => {
-		if (e.which == 13) {
-			$("#botonActualizaInput").trigger("click");
-		}
-	});
-	$("#precioInput").change(()=>{
-			// console.log("antes if");
-			if (((operacion!=null) && operacion.finalizada == false) && (operacion.estado == "enCurso")) {
-			quitarAviso();
-			// console.log("despues if");
-				precioActualizado = $("#precioInput").val();
-				contadorActualizaciones += 1;
-				aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
-				operar();
-				guardar();
-			}
-	});
-	/* ################### Fin Boton Actualizar ###################### */
 
 	/* ################### Boton Cancelar ###################### */
 	$("#botonCancelar").click(function cancelar() {
@@ -227,7 +198,7 @@ $(document).ready(function () {
 		quitarAviso();
 		let contador = 0;
 		for (const x of valoresNumericos) {
-			if (isNaN(x.val()) || (x.val() < 0) || x.val()=="") {
+			if (isNaN(x.val()) || (x.val() < 0) || x.val() == "") {
 				aviso(`${x.attr("name")} No válido!!`, "alert");
 				contador += 1;
 			}
@@ -235,18 +206,6 @@ $(document).ready(function () {
 		if (contador != 0) {
 			return false;
 		}
-		return true;
-	}
-
-	function validaNuevoPrecio() {
-		quitarAviso();
-		let precioActual = $("#precioActual");
-		if (isNaN(precioActual.val()) || precioActual.val() < 1) {
-			aviso(`${precioActual.name} No válido!!`, "alert");
-			return false;
-		}
-		contadorActualizaciones += 1;
-		aviso(`Precio actualizando - Nº ${contadorActualizaciones}`);
 		return true;
 	}
 
@@ -288,7 +247,7 @@ $(document).ready(function () {
 	};
 
 	function bloquearBoton(botonId) {
-		$(botonId).attr("disabled","true");
+		$(botonId).attr("disabled", "true");
 	}
 
 	function desbloquearBoton(botonId) {
@@ -298,9 +257,7 @@ $(document).ready(function () {
 	function reiniciarForm() {
 		$("#formulario").trigger("reset");
 		$("#botonInvertir").removeAttr("disabled");
-		$("#botonCancelar").attr("disabled","true");
-		$("#botonActualizaInput").attr("disabled","true");
-		$("#precioActual").attr("disabled","true");
+		$("#botonCancelar").attr("disabled", "true");
 		quitarAviso();
 		$("#cryptoSelect").trigger("change");
 	}

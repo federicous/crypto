@@ -16,7 +16,7 @@ ul {
 	min-width: 1.5rem;
 }
 
-/* Pagina de Ingreso */
+/* ################# Pagina de Ingreso ##################### */
 .logoPrincipal {
 	/* width: 6rem;
 	height: 6rem;
@@ -25,9 +25,11 @@ ul {
 	width: clamp(2.5rem, 10vw, 6.5rem);
 	height: clamp(2.5rem, 10vw, 6.5rem);
 }
+
 .ojos {
 	display: none;
 }
+
 .logoTexto {
 	/* font-size: 4rem; */
 	display: none;
@@ -37,26 +39,32 @@ ul {
 .ingresoInput {
 	background-color: #9CA3AF;
 }
+
 .credenciales {
 	/* width: clamp(2.5rem, 10vw, 4.5rem); */
 	display: none;
 	width: clamp(15.5rem, 25vw, 20.5rem);
 }
+
 .seccionLogo {
 	background-color: #111827;
 	/* bg-gray-900 */
 	color: #9CA3AF;
 	/* text-gray-400  */
 }
+
 .botonInicio {
 	display: none;
 	background-color: #0a58ca;
 	border-color: #0a58ca;
 }
+
 .accesoPrueba {
 	display: none;
 }
-/* Fin pagina de ingreso */
+
+/* ################ Fin pagina de ingreso ################ */
+
 .iconosMenu {
 	width: 1.9rem;
 	height: 3rem;
