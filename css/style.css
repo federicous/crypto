@@ -135,3 +135,6 @@ a {
 	border-color: #374151;
 	/* .border-gray-700 */
 }
+.tradingViewGrafico {
+	height: 500px;
+}

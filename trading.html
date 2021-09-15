@@ -83,7 +83,8 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Historial</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="estadisticas.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="estadisticas.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-file-bar-graph iconosMenu"
 							viewBox="0 0 16 16">
@@ -184,16 +185,15 @@
 					target="_blank">
 					<fieldset>
 						<!-- Criptomoneda -->
-						<label class="form-label" for="cryptoName">Criptomoneda / Precio en
-							USD</label><br />
+						<label class="form-label" for="cryptoName">Criptomoneda / Precio de compra</label><br />
 						<div class="input-group mb-3">
 							<select id="cryptoSelect" class="form-select" selected="BTC"
 								aria-label="Seleccionar Criptomoneda">
 							</select>
 							<input id="precioInput" type="text" class="form-control"
 								name="Precio" required placeholder="0.00"
-								aria-label="Precio"
-								aria-describedby="input-group-right" readonly>
+								aria-label="Precio" aria-describedby="input-group-right"
+								readonly>
 							<span class="input-group-text"
 								id="input-group-right-example">USD</span>
 						</div>
@@ -252,21 +252,7 @@
 			<!-- ############################ FIN Formulario de inversión ############################ -->
 
 			<!-- ############################ Grafico Crypto ############################ -->
-			<div class="col-8">
-				<div
-					style="height:560px; background-color: #FFFFFF; overflow:hidden; box-sizing: border-box; border: 1px solid #56667F; border-radius: 4px; text-align: right; line-height:14px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #56667F;padding:1px;padding: 0px; margin: 0px; width: 100%;">
-					<div style="height:540px; padding:0px; margin:0px; width: 100%;"><iframe
-							src="https://widget.coinlib.io/widget?type=chart&theme=light&coin_id=859&pref_coin_id=1505"
-							width="100%" height="536px" scrolling="auto" marginwidth="0"
-							marginheight="0" frameborder="0" border="0"
-							style="border:0;margin:0;padding:0;line-height:14px;"></iframe>
-					</div>
-					<div
-						style="color: #FFFFFF; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;">
-						<a href="https://coinlib.io" target="_blank"
-							style="font-weight: 500; color: #FFFFFF; text-decoration:none; font-size:11px">Cryptocurrency
-							Prices</a>&nbsp;by Coinlib</div>
-				</div>
+			<div id="tradingView" class="col-8">
 			</div>
 			<!-- ############################ FIN Grafico Crypto ############################ -->
 		</div>
@@ -275,9 +261,14 @@
 
 	<!-- JQuery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	
+
 	<!-- Animaciones -->
 	<script src="js/animaciones.js"></script>
+
+	<!-- trading view -->
+	<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+	<script src="js/tradingView.js"></script>
+
 
 	<!-- Scripts -->
 	<script src="js/formulario.js"></script>
