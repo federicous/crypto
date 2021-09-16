@@ -112,6 +112,7 @@ $(document).ready(function () {
 	/* ############## Obtener precio periodicamente con la API ################# */
 	$("#cryptoSelect").change(() => {
 		cryptoName = $("#cryptoSelect").val();
+		$(".unidades").text(cryptoName);
 		URLGET = `https://api.coinbase.com/v2/prices/${cryptoName}-USD/buy`
 	});
 
@@ -127,10 +128,10 @@ $(document).ready(function () {
 	$("#precioInput").change(() => {
 		if (((operacion != null) && operacion.finalizada == false) && (operacion.estado == "enCurso")) {
 			quitarAviso();
-			precioActualizado = $("#precioInput").val();
+			precioActualizado = parseFloat($("#precioInput").val());
 			contadorActualizaciones += 1;
 			aviso(`Actualización de precio - Nº ${contadorActualizaciones}`);
-			operar();
+			operarNumerico();
 			guardar();
 		}
 	});
@@ -140,7 +141,7 @@ $(document).ready(function () {
 	$("#botonInvertir").click(function invertir() {
 		quitarAviso();
 		ocultarDatos();
-		if (validacion()) {
+		if (validacionNumerico()) {
 			datosOperacion();
 			precioActualizado = precioInicial;
 			let historialInversiones = JSON.parse(localStorage.getItem("historial"));
@@ -151,7 +152,7 @@ $(document).ready(function () {
 			}
 			visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
 			operacion.enCurso();
-			operar();
+			operarNumerico();
 			guardar();
 			$(this).attr("disabled", "true");
 			desbloquearBoton("#botonCancelar");
@@ -176,10 +177,10 @@ $(document).ready(function () {
 	function datosOperacion() {
 		/* ################### Lectura de Datos ###################### */
 		cryptoName = $("#cryptoSelect").val();
-		dineroInvertido = $("#dineroInput").val();
-		takeProfit = $("#takeProfitInput").val();
-		stopLoss = $("#stopLossInput").val();
-		precioInicial = $("#precioInput").val();
+		dineroInvertido = parseFloat($("#dineroInput").val());
+		takeProfit = parseFloat($("#takeProfitInput").val());
+		stopLoss = parseFloat($("#stopLossInput").val());
+		precioInicial = parseFloat($("#precioInput").val());
 		/* ################### Fin Lectura de Datos ###################### */
 
 		criptomoneda = new Crypto(cryptoName, precioInicial);
@@ -209,11 +210,49 @@ $(document).ready(function () {
 		return true;
 	}
 
+	function validacionNumerico() {
+		cryptoName = $("#cryptoSelect");
+		dineroInvertido = $("#dineroInput");
+		takeProfit = $("#takeProfitInput");
+		stopLoss = $("#stopLossInput");
+		precioInicial = $("#precioInput");
+		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
+		quitarAviso();
+		let contador = 0;
+		for (const x of valoresNumericos) {
+			if (isNaN(x.val()) || (x.val() < 0) || x.val() == "") {
+				aviso(`${x.attr("name")} No válido!!`, "alert");
+				contador += 1;
+			}
+		}
+		if (isFinite(parseFloat(takeProfit.val())) && (parseFloat(takeProfit.val())<=parseFloat(precioInicial.val()))) {
+			aviso(`Take Profit debe ser mayor al precio de compra (${precioInicial.val()})`, "alert");
+			contador +=1;
+		}
+		if (isFinite(parseFloat(stopLoss.val())) && (parseFloat(stopLoss.val())>=parseFloat(precioInicial.val()))) {
+			aviso(`Stop Loss debe ser menor al precio de compra (${precioInicial.val()})`, "alert");
+			contador +=1;
+		}
+		console.log(contador);
+		if (contador != 0) {
+			return false;
+		}
+		return true;
+	}
+
 	function operar() {
 		let precioNuevo = parseFloat(precioActualizado);
 		criptomoneda.actualizar(precioNuevo);
 		let cambioPrecio = criptomoneda.porcentajeCambio();
 		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
+			operacion.finalizar();
+			reiniciarForm();
+		}
+	}
+
+	function operarNumerico() {
+		criptomoneda.actualizar(precioActualizado);
+		if ((precioActualizado >= takeProfit) || (precioActualizado<= stopLoss)) {
 			operacion.finalizar();
 			reiniciarForm();
 		}
