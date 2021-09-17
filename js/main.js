@@ -1,9 +1,9 @@
 /* El siguiente programa simula una inversión en criptomonedas comenzando con una cantidad
 de dinero en dolares a invertir, un valor inicial de la criptomoneda, el Stop Loss y el Take Profit
-Una vez ingresados los valores anteriores se va a requerir la actualización periodica del valor
-de la criptomoneda en dolares, dependiendo de la variación del precio de la criptomoneda se realiza
-la finalización de la operación ya sea porque sobrepasó el limite de ganancia (take profit)
-o porque descendió por debajo del limite de pérdida (stop loss)
+Una vez ingresados los valores anteriores se va a ir actualizando periodicamente del valor
+de la criptomoneda en dolares de forma automática, y dependiendo de la variación del precio de 
+la criptomoneda se realiza la finalización de la operación ya sea porque sobrepasó el limite 
+de ganancia (take profit) o porque descendió por debajo del limite de pérdida (stop loss)
 */
 
 /* ################### Definición de los Clases ###################### */
