@@ -179,7 +179,7 @@
 
 		<div class="row pt-2 px-2">
 
-			<!-- ############################ Tabla Historial ############################ -->
+			<!-- ############################ Seleccion de grafico ############################ -->
 			<div>
 				<!-- Criptomoneda -->
 				<label class="form-label" for="cryptoName">Criptomoneda / Precio de compra</label><br />
@@ -190,14 +190,22 @@
 					<select id="cryptoSelect2" class="form-select" selected="USD"
 						aria-label="Seleccionar Criptomoneda">
 					</select>
+					<button type="button" id="botonAplicar"
+						class="btn btn-primary">Aplicar</button>
 
 				</div>
 			</div>
-			<!-- ############################ FIN Tabla Historial ############################ -->
-
+			<!-- ############################ FIN Seleccion de grafico ############################ -->
+			
+			<!-- ############################ Grafico Crypto ############################ -->
+			<div id="tradingView" class="seccionGrafico">
+			</div>
+			<!-- ############################ FIN Grafico Crypto ############################ -->
 		</div>
 	</div>
-	<!-- ############################ Fin Seccion Principal ############################ -->
+	<!-- ############################ Fin Seccion Principal ############################ --
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 	<!-- Scripts -->
 	<script src="js/mercados.js"></script>
