@@ -14,8 +14,10 @@
 // 	tabla.appendChild(nuevaFila);
 // }
 // $('.table').tablesorter();
+console.log("hola");
 
 let tabla = document.getElementById("tableBody");
+console.log(tabla);
 $.get("./data/cuentas.json", function (respuesta, estado) {
 	if (estado === "success") {
 		const listaCuentas = JSON.parse(respuesta);
