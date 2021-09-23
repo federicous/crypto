@@ -15,13 +15,14 @@
 // }
 // $('.table').tablesorter();
 console.log("hola");
+let usuarioActivo="admin";
 let precioMoneda;
 let tabla = document.getElementById("tableBody");
 console.log(tabla);
 $.get("./data/cuentas.json", function (respuesta, estado) {
 	if (estado === "success") {
 		for (const user of respuesta) {
-			if (user.usuario == "admin") {
+			if (user.usuario == usuarioActivo) {
 				console.log(user);
 				for (const moneda in user.wallet) {
 					console.log(user.wallet[moneda]);
@@ -34,7 +35,7 @@ $.get("./data/cuentas.json", function (respuesta, estado) {
 							nuevaFila.innerHTML = `
 							<td>${moneda}</td>
 							<td>${user.wallet[moneda]}</td>
-							<td>${parseFloat(user.wallet[moneda])*precioMoneda}</td>`;
+							<td>$${parseFloat(user.wallet[moneda])*precioMoneda}</td>`;
 							tabla.appendChild(nuevaFila);
 						}
 					});
