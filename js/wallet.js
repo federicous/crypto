@@ -15,7 +15,7 @@
 // }
 // $('.table').tablesorter();
 console.log("hola");
-
+let precioMoneda;
 let tabla = document.getElementById("tableBody");
 console.log(tabla);
 $.get("./data/cuentas.json", function (respuesta, estado) {
@@ -26,12 +26,19 @@ $.get("./data/cuentas.json", function (respuesta, estado) {
 				for (const moneda in user.wallet) {
 					console.log(user.wallet[moneda]);
 					console.log(moneda);
-					let nuevaFila = document.createElement("tr");
-					nuevaFila.innerHTML = `
-					<td>${moneda}</td>
-					<td>${user.wallet[moneda]}</td>
-					<td>${user.wallet}</td>`;
-					tabla.appendChild(nuevaFila);
+					URLGET = `https://api.coinbase.com/v2/prices/${moneda}-USD/buy`
+					$.get(URLGET, function (respuesta, estado) {
+						if (estado === "success") {
+							precioMoneda= parseFloat(respuesta.data.amount);
+							let nuevaFila = document.createElement("tr");
+							nuevaFila.innerHTML = `
+							<td>${moneda}</td>
+							<td>${user.wallet[moneda]}</td>
+							<td>${parseFloat(user.wallet[moneda])*precioMoneda}</td>`;
+							tabla.appendChild(nuevaFila);
+						}
+					});
+
 				}
 			}
 
