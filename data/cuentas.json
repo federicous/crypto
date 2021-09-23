@@ -1,0 +1,46 @@
+[
+	{
+	"usuario": "demo",
+	"clave": "demo",
+	"wallet": {
+	  "BTC": "100",
+	  "USD": "1000",
+	  "ADA": "200",
+	  "DOT": "500"
+	},
+	"historial":[]
+      },
+      {
+	"usuario": "admin",
+	"clave": "admin",    
+	"wallet": {
+	  "BTC": "20",
+	  "USD": "5000",
+	  "ETH": "800",
+	  "DOT": "1000"
+	},
+	"historial":[]
+      },
+      {
+	"usuario": "fede",
+	"clave": "test",
+	"wallet": {
+	  "BTC": "10",
+	  "USD": "10000",
+	  "ADA": "550",
+	  "DOT": "2000"
+	},
+	"historial":[]
+      },
+      {
+	"usuario": "pepe",
+	"clave": "Alv3rj4",
+	"wallet": {
+	  "BTC": "100",
+	  "USD": "1000",
+	  "ADA": "200",
+	  "DOT": "500"
+	},
+	"historial":[]
+      }
+    ]

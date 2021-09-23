@@ -20,19 +20,17 @@ let tabla = document.getElementById("tableBody");
 console.log(tabla);
 $.get("./data/cuentas.json", function (respuesta, estado) {
 	if (estado === "success") {
-		const listaCuentas = JSON.parse(respuesta);
-		console.log(listaCuentas);
 		for (const user of respuesta) {
 			if (user.usuario == "admin") {
 				console.log(user);
 				for (const moneda in user.wallet) {
-
-
+					console.log(user.wallet[moneda]);
+					console.log(moneda);
 					let nuevaFila = document.createElement("tr");
 					nuevaFila.innerHTML = `
 					<td>${moneda}</td>
-					<td>${Object.values(moneda)}</td>
-					<td>${user}</td>`;
+					<td>${user.wallet[moneda]}</td>
+					<td>${user.wallet}</td>`;
 					tabla.appendChild(nuevaFila);
 				}
 			}
