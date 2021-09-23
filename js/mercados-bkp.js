@@ -2,40 +2,41 @@ let cryptoSeleccion;
 
 /* ################## Genero la lista de criptomonedas para seleccionar ##################### */
 
-$(function () {
-
-	let currencies;
-	let currenciesList = [];
-	const URLGETCUR = "https://api.pro.coinbase.com/currencies"
-	$.get(URLGETCUR, function (respuesta, estado) {
-		if (estado === "success") {
-			currencies = respuesta;
-			for (const moneda of currencies) {
-				if (moneda.details.type == "crypto") {
-					currenciesList.push(moneda.id);
-				}
+let currencies;
+let currenciesList = [];
+const URLGETCUR = "https://api.pro.coinbase.com/currencies"
+$.get(URLGETCUR, function (respuesta, estado) {
+	if (estado === "success") {
+		currencies = respuesta;
+		for (const moneda of currencies) {
+			if (moneda.details.type == "crypto") {
+				currenciesList.push(moneda.id);
 			}
-			currenciesList.sort();
-			let seleccion = document.getElementById("cryptoSelect");
+		}
+		currenciesList.sort();
+		let seleccion = document.getElementById("cryptoSelect");
+		let seleccion2 = document.getElementById("cryptoSelect2");
 
-			for (let coin of currenciesList) {
-				let opcion = document.createElement("option");
-				opcion.value = coin;
-				opcion.text = coin;
-				seleccion.appendChild(opcion);
-			}
-			$("option[value='BTC']").attr("selected", "selected");
-			$("#cryptoSelect").trigger("change");
-		};
-	});
+		for (let coin of currenciesList) {
+			let opcion = document.createElement("option");
+			let opcion2 = document.createElement("option");
+			opcion.value = coin;
+			opcion2.value = coin;
+			opcion.text = coin;
+			opcion2.text = coin;
+			seleccion.appendChild(opcion);
+			seleccion2.appendChild(opcion2);
+		}
+		$("#cryptoSelect option[value='BTC']").attr("selected", "selected");
+		$("#cryptoSelect2 option[value='USDT']").attr("selected", "selected");
+		$("#cryptoSelect").trigger("change");
+		$("#cryptoSelect2").trigger("change");
+	};
 });
-
-
-
-
 
 $("#cryptoSelect").change(() => {
 	cryptoSeleccion = $("#cryptoSelect").val();
+	cryptoSeleccion2 = $("#cryptoSelect2").val();
 	$("#tradingViewSection").append(`
 	<!-- TradingView Widget BEGIN -->
 	<div class="tradingview-widget-container">
