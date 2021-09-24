@@ -169,28 +169,18 @@
 		<!-- ############################ Titulo Seccion ############################ -->
 		<div class="row px-2">
 			<div class="row m-0 p-0 overflow-hidden text-gray-900">
-				<h1 class="font-bold fs-3 py-3">Wallet</h1>
+				<h1 class="font-bold fs-3 py-3">Mercados</h1>
 			</div>
 		</div>
 		<!-- ############################ FIN Titulo Seccion ############################ -->
 
 		<div class="row pt-2 px-2">
 
-			<!-- ############################ Tabla wallet ############################ -->
-			<div>
-				<table class="table">
-					<thead>
-					  <tr>
-					    <th>Criptomoneda</th>
-					    <th>Cantidad</th>
-					    <th>En dolares aprox.</th>
-					  </tr>
-					</thead>
-					<tbody id="tableBody">
-					</tbody>
-				      </table>
+
+			<!-- ############################ Grafico Crypto ############################ -->
+			<div id="tradingView" class="seccionGrafico">
 			</div>
-			<!-- ############################ FIN Tabla wallet ############################ -->
+			<!-- ############################ FIN Grafico Crypto ############################ -->
 
 		</div>
 	</div>
@@ -200,7 +190,8 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
 	<!-- Scripts -->
-	<script src="js/wallet.js"></script>
+	<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+	<script src="js/mercados.js"></script>
 
 	<!-- Scripts Boostrap -->
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
