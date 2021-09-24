@@ -172,7 +172,7 @@
 		<!-- ############################ Titulo Seccion ############################ -->
 		<div class="row px-2">
 			<div class="row m-0 p-0 overflow-hidden text-gray-900">
-				<h1 class="font-bold fs-3 py-3">Wallet</h1>
+				<h1 class="font-bold fs-3 py-3">Exchange</h1>
 			</div>
 		</div>
 		<!-- ############################ FIN Titulo Seccion ############################ -->
@@ -185,58 +185,53 @@
 					target="_blank">
 					<fieldset>
 						<!-- Criptomoneda -->
-						<label class="form-label" for="cryptoName">Criptomoneda / Precio de
-							compra</label><br />
+						<label class="form-label" for="cryptoName">Intercambiar: </label><br />
 						<div class="input-group mb-3">
 							<select id="cryptoSelect" class="form-select" selected="BTC"
 								aria-label="Seleccionar Criptomoneda">
 							</select>
 							<span class="input-group-text"
-								id="input-group-right-example">
+								id="input-group-right-example">Convertir 
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
 									<path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
 									<path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
 								      </svg>
 							</span>
-							<select id="cryptoSelect" class="form-select" selected="BTC"
+							<select id="cryptoSelect2" class="form-select" selected="BTC"
 								aria-label="Seleccionar Criptomoneda">
 							</select>
 						</div>
 						<!-- Dinero a invertir -->
-						<label class="form-label" for="invertir">Dinero a invertir</label><br />
+						<label class="form-label" for="invertir">Cantidad a convertir</label><br />
 						<div class="input-group mb-3">
 							<input id="dineroInput" type="text" class="form-control"
-								name="Dinero a invertir" required placeholder="0.00"
+								name="Dinero a invertir" required placeholder="0"
 								aria-label="Dinero a invertir"
 								aria-describedby="input-group-right">
 							<span class="input-group-text"
-								id="input-group-right-example">USD</span>
+								id="input-group-right-example"></span>
 						</div>
 						<div class="d-flex">
 							<!-- Take Profit -->
 							<div class="me-2">
-								<label class="form-label" for="takeProfit">Take
-									Profit</label><br />
+								<label class="form-label" for="takeProfit">Disponible</label><br />
 								<div class="input-group mb-3">
 									<input id="takeProfitInput" type="text"
 										class="form-control" name="takeProfit"
-										required placeholder="0"
 										aria-label="Take Profit"
-										aria-describedby="input-group-right">
+										aria-describedby="input-group-right" readonly>
 									<span class="input-group-text unidades"
 										id="takeProfit"></span>
 								</div>
 							</div>
 							<!-- Stop Loss -->
 							<div>
-								<label class="form-label" for="stopLoss">Stop
-									Loss</label><br />
+								<label class="form-label" for="stopLoss">Disponible</label><br />
 								<div class="input-group mb-3">
 									<input id="stopLossInput" type="text"
 										class="form-control" name="stopLoss"
-										required placeholder="0"
 										aria-label="Stop Loss"
-										aria-describedby="input-group-right">
+										aria-describedby="input-group-right" readonly>
 									<span class="input-group-text unidades"
 										id="stopLoss"></span>
 								</div>
@@ -246,9 +241,8 @@
 						<!-- Boton de confirmación -->
 						<div class="my-3 btn-group w-100">
 							<button type="button" id="botonInvertir"
-								class="btn btn-primary w-50">Invertir</button>
-							<button type="reset" id="botonCancelar"
-								class="btn btn-secondary w-50">Cancelar</button>
+								class="btn btn-primary w-50">Convertir</button>
+
 						</div>
 					</fieldset>
 				</form>

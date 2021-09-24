@@ -4,6 +4,7 @@
 	"clave": "demo",
 	"wallet": {
 	  "BTC": "100",
+	  "ETH": "100",
 	  "ADA": "200",
 	  "DOT": "500"
 	},

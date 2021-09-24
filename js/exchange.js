@@ -28,7 +28,30 @@ $(function () {
 	});
 
 
+	let currencies;
+	let currenciesList2 = [];
+	const URLGETCUR = "https://api.pro.coinbase.com/currencies"
+	$.get(URLGETCUR, function (respuesta, estado) {
+		if (estado === "success") {
+			currencies = respuesta;
+			for (const moneda of currencies) {
+				if (moneda.details.type == "crypto") {
+					currenciesList2.push(moneda.id);
+				}
+			}
+			currenciesList2.sort();
+			let seleccion = document.getElementById("cryptoSelect2");
 
+			for (let coin of currenciesList2) {
+				let opcion = document.createElement("option");
+				opcion.value = coin;
+				opcion.text = coin;
+				seleccion.appendChild(opcion);
+			}
+			$("#cryptoSelect option[value='BTC']").attr("selected", "selected");
+			$("#cryptoSelect2").trigger("change");
+		};
+	});
 
 
 	/* 	let currencies;
