@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 	<meta charset="UTF-8">
@@ -59,7 +59,8 @@
 			</a>
 			<div class="w-100 px-2">
 				<div class="d-flex flex-column align-items-center w-100 mt-3 border-top-2 bordeMenu">
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="trading.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="trading.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-arrow-left-right iconosMenu"
 							viewBox="0 0 16 16">
@@ -68,7 +69,8 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Trading</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="historial.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="historial.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-clock-history iconosMenu"
 							viewBox="0 0 16 16">
@@ -81,7 +83,8 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Historial</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="estadisticas.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="estadisticas.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-file-bar-graph iconosMenu"
 							viewBox="0 0 16 16">
@@ -176,19 +179,31 @@
 
 		<div class="row pt-2 px-2">
 
+			<!-- ############################ Seleccion de grafico ############################ -->
+			<div>
+				<!-- Criptomoneda -->
+				<label class="form-label" for="cryptoName">Criptomoneda / Precio de compra</label><br />
+				<div class="input-group mb-3">
+					<select id="cryptoSelect" class="form-select" selected="BTC"
+						aria-label="Seleccionar Criptomoneda">
+					</select>
+					<!-- <button type="button" id="botonAplicar"
+						class="btn btn-primary">Aplicar</button> -->
 
+				</div>
+			</div>
+			<!-- ############################ FIN Seleccion de grafico ############################ -->
+			
 			<!-- ############################ Grafico Crypto ############################ -->
-			<div id="tradingView" class="seccionGrafico">
+			<div id="tradingViewSection" class="seccionGrafico">
 			</div>
 			<!-- ############################ FIN Grafico Crypto ############################ -->
-
 		</div>
 	</div>
-	<!-- ############################ Fin Seccion Principal ############################ -->
-
+	<!-- ############################ Fin Seccion Principal ############################ --
 	<!-- JQuery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	
+
 	<!-- Scripts -->
 	<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 	<script src="js/mercados.js"></script>
