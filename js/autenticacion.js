@@ -9,6 +9,9 @@ $("#usuario").change(() => {
 $("#clave").change(() => {
 	$(".avisos").remove();
 })
+$("#accesoDemo").click(()=>{
+	localStorage.setItem("usuario", JSON.stringify("demo"));
+})
 
 $(".botonIngreso").click(() => {
 	usuarioIngresado = $("#usuario").val();
@@ -21,6 +24,7 @@ $(".botonIngreso").click(() => {
 				if (user.usuario == usuarioIngresado && user.clave == claveIngresada) {
 					window.location.href = "./trading.html"
 					encontrado = true;
+					localStorage.setItem("usuario", JSON.stringify(usuarioIngresado));
 				}
 			}
 			if (encontrado != true) {

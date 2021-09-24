@@ -59,8 +59,7 @@
 			</a>
 			<div class="w-100 px-2">
 				<div class="d-flex flex-column align-items-center w-100 mt-3 border-top-2 bordeMenu">
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
-						href="trading.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="trading.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-arrow-left-right iconosMenu"
 							viewBox="0 0 16 16">
@@ -69,8 +68,7 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Trading</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
-						href="historial.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="historial.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-clock-history iconosMenu"
 							viewBox="0 0 16 16">
@@ -83,8 +81,7 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Historial</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
-						href="estadisticas.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="estadisticas.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-file-bar-graph iconosMenu"
 							viewBox="0 0 16 16">
@@ -106,7 +103,7 @@
 					</a>
 				</div>
 				<div class="d-flex flex-column items-center w-full mt-2 bordeMenu">
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="wallet.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="#">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-wallet2 iconosMenu"
 							viewBox="0 0 16 16">
@@ -172,107 +169,38 @@
 		<!-- ############################ Titulo Seccion ############################ -->
 		<div class="row px-2">
 			<div class="row m-0 p-0 overflow-hidden text-gray-900">
-				<h1 class="font-bold fs-3 py-3">Trading</h1>
+				<h1 class="font-bold fs-3 py-3">Wallet</h1>
 			</div>
 		</div>
 		<!-- ############################ FIN Titulo Seccion ############################ -->
 
-		<div class="row pt-2 px-2 d-flex flex-md-column flex-lg-row">
+		<div class="row pt-2 px-2">
 
-			<!-- ############################ Formulario de inversión ############################ -->
-			<div class="seccionFormulario">
-				<form id="formulario" accept-charset="UTF-8" autocomplete="off" method="GET"
-					target="_blank">
-					<fieldset>
-						<!-- Criptomoneda -->
-						<label class="form-label" for="cryptoName">Criptomoneda / Precio de compra</label><br />
-						<div class="input-group mb-3">
-							<select id="cryptoSelect" class="form-select" selected="BTC"
-								aria-label="Seleccionar Criptomoneda">
-							</select>
-							<input id="precioInput" type="text" class="form-control"
-								name="Precio" required placeholder="0.00"
-								aria-label="Precio" aria-describedby="input-group-right"
-								readonly>
-							<span class="input-group-text"
-								id="input-group-right-example">USD</span>
-						</div>
-						<!-- Dinero a invertir -->
-						<label class="form-label" for="invertir">Dinero a invertir</label><br />
-						<div class="input-group mb-3">
-							<input id="dineroInput" type="text" class="form-control"
-								name="Dinero a invertir" required placeholder="0.00"
-								aria-label="Dinero a invertir"
-								aria-describedby="input-group-right">
-							<span class="input-group-text"
-								id="input-group-right-example">USD</span>
-						</div>
-						<div class="d-flex">
-							<!-- Take Profit -->
-							<div class="me-2">
-								<label class="form-label" for="takeProfit">Take
-									Profit</label><br />
-								<div class="input-group mb-3">
-									<input id="takeProfitInput" type="text"
-										class="form-control" name="takeProfit"
-										required placeholder="0"
-										aria-label="Take Profit"
-										aria-describedby="input-group-right">
-									<span class="input-group-text unidades"
-										id="takeProfit"></span>
-								</div>
-							</div>
-							<!-- Stop Loss -->
-							<div>
-								<label class="form-label" for="stopLoss">Stop
-									Loss</label><br />
-								<div class="input-group mb-3">
-									<input id="stopLossInput" type="text"
-										class="form-control" name="stopLoss"
-										required placeholder="0"
-										aria-label="Stop Loss"
-										aria-describedby="input-group-right">
-									<span class="input-group-text unidades"
-										id="stopLoss"></span>
-								</div>
-							</div>
-						</div>
-
-						<!-- Boton de confirmación -->
-						<div class="my-3 btn-group w-100">
-							<button type="button" id="botonInvertir"
-								class="btn btn-primary w-50">Invertir</button>
-							<button type="reset" id="botonCancelar"
-								class="btn btn-secondary w-50">Cancelar</button>
-						</div>
-					</fieldset>
-				</form>
-				<div id="zonaDatos"></div>
+			<!-- ############################ Tabla wallet ############################ -->
+			<div>
+				<table class="table">
+					<thead>
+					  <tr>
+					    <th>Criptomoneda</th>
+					    <th>Cantidad</th>
+					    <th>En dolares aprox.</th>
+					  </tr>
+					</thead>
+					<tbody id="tableBody">
+					</tbody>
+				      </table>
 			</div>
-			<!-- ############################ FIN Formulario de inversión ############################ -->
+			<!-- ############################ FIN Tabla wallet ############################ -->
 
-			<!-- ############################ Grafico Crypto ############################ -->
-			<div id="tradingView" class="seccionGrafico">
-			</div>
-			<!-- ############################ FIN Grafico Crypto ############################ -->
 		</div>
 	</div>
 	<!-- ############################ Fin Seccion Principal ############################ -->
 
 	<!-- JQuery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-	<!-- Animaciones -->
-	<script src="js/animaciones.js"></script>
-
-	<!-- trading view -->
-	<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-	<script src="js/tradingView.js"></script>
-
-
+	
 	<!-- Scripts -->
-	<script src="js/formulario.js"></script>
-	<script src="js/main.js"></script>
+	<script src="js/wallet.js"></script>
 
 	<!-- Scripts Boostrap -->
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"

@@ -1,4 +1,4 @@
-/* #################### Genero una tabla con las cantidades de criptomonedas del usuario actual ####################### */
+/* #################### Genero una grafica por cada criptomonedas que posee el usuario actual ####################### */
 
 let usuarioActivo=JSON.parse(localStorage.getItem("usuario"));
 let precioMoneda;
