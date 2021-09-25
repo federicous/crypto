@@ -177,7 +177,7 @@
 		</div>
 		<!-- ############################ FIN Titulo Seccion ############################ -->
 
-		<div class="row pt-2 px-2">
+		<div class="row pt-2 px-2 container">
 
 			<!-- ############################ Formulario de inversión ############################ -->
 			<div class="seccionFormulario">
@@ -208,31 +208,31 @@
 								name="Dinero a invertir" required placeholder="0"
 								aria-label="Dinero a invertir"
 								aria-describedby="input-group-right">
-							<span class="input-group-text"
+							<span class="input-group-text unidadOrigen"
 								id="input-group-right-example"></span>
 						</div>
 						<div class="d-flex">
 							<!-- Take Profit -->
-							<div class="me-2">
-								<label class="form-label" for="takeProfit">Disponible</label><br />
+							<div class="me-2 w-50">
+								<label class="form-label" for="takeProfit">Disponible Origen</label><br />
 								<div class="input-group mb-3">
-									<input id="takeProfitInput" type="text"
+									<input id="origenInput" type="text"
 										class="form-control" name="takeProfit"
 										aria-label="Take Profit"
 										aria-describedby="input-group-right" readonly>
-									<span class="input-group-text unidades"
+									<span class="input-group-text unidadOrigen"
 										id="takeProfit"></span>
 								</div>
 							</div>
 							<!-- Stop Loss -->
-							<div>
-								<label class="form-label" for="stopLoss">Disponible</label><br />
+							<div class="w-50">
+								<label class="form-label" for="stopLoss">Disponible Destino</label><br />
 								<div class="input-group mb-3">
-									<input id="stopLossInput" type="text"
+									<input id="destinoInput" type="text"
 										class="form-control" name="stopLoss"
 										aria-label="Stop Loss"
 										aria-describedby="input-group-right" readonly>
-									<span class="input-group-text unidades"
+									<span class="input-group-text unidadDestino"
 										id="stopLoss"></span>
 								</div>
 							</div>
