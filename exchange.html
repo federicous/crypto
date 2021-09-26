@@ -95,7 +95,8 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Estadísticas</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="mercados.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="mercados.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-graph-up iconosMenu"
 							viewBox="0 0 16 16">
@@ -106,7 +107,8 @@
 					</a>
 				</div>
 				<div class="d-flex flex-column items-center w-full mt-2 bordeMenu">
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="wallet.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="wallet.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-wallet2 iconosMenu"
 							viewBox="0 0 16 16">
@@ -115,7 +117,8 @@
 						</svg>
 						<span class="ml-2 menuItemsText fw-normal">Wallet</span>
 					</a>
-					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded" href="exchange.html">
+					<a class="d-flex align-items-center menuItems px-3 mt-2 rounded"
+						href="exchange.html">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-currency-exchange iconosMenu"
 							viewBox="0 0 16 16">
@@ -191,49 +194,95 @@
 								aria-label="Seleccionar Criptomoneda">
 							</select>
 							<span class="input-group-text"
-								id="input-group-right-example">Convertir 
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-									<path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-									<path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-								      </svg>
+								id="input-group-right-example">Convertir
+								<svg xmlns="http://www.w3.org/2000/svg" width="16"
+									height="16" fill="currentColor"
+									class="bi bi-chevron-double-right"
+									viewBox="0 0 16 16">
+									<path fill-rule="evenodd"
+										d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+									<path fill-rule="evenodd"
+										d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+								</svg>
 							</span>
 							<select id="cryptoSelect2" class="form-select" selected="BTC"
 								aria-label="Seleccionar Criptomoneda">
 							</select>
 						</div>
 						<!-- Dinero a invertir -->
-						<label class="form-label" for="invertir">Cantidad a convertir</label><br />
+						<label class="form-label" for="invertir">Cantidad a
+							convertir</label><br />
 						<div class="input-group mb-3">
-							<input id="dineroInput" type="text" class="form-control"
-								name="Dinero a invertir" required placeholder="0"
-								aria-label="Dinero a invertir"
-								aria-describedby="input-group-right">
-							<span class="input-group-text unidadOrigen"
-								id="input-group-right-example"></span>
+							<div class="input-group">
+								<input id="dineroInput" type="text" class="form-control"
+									name="Dinero a invertir" required
+									placeholder="0" aria-label="Dinero a invertir"
+									aria-describedby="input-group-right">
+								<span class="input-group-text unidadOrigen"
+									id="input-group-right-example"></span>
+							</div>
+							<div class="input-group">
+								<input id="dineroInputUSD" type="text" class="form-control"
+									name="Dinero a invertir" required
+									placeholder="0" aria-label="Dinero a invertir"
+									aria-describedby="input-group-right">
+								<span class="input-group-text unidadOrigenUSD"
+									id="input-group-right-example">USD</span>
+							</div>
 						</div>
 						<div class="d-flex">
 							<!-- Take Profit -->
 							<div class="me-2 w-50">
-								<label class="form-label" for="takeProfit">Disponible Origen</label><br />
-								<div class="input-group mb-3">
-									<input id="origenInput" type="text"
-										class="form-control" name="takeProfit"
-										aria-label="Take Profit"
-										aria-describedby="input-group-right" readonly>
-									<span class="input-group-text unidadOrigen"
-										id="takeProfit"></span>
+								<label class="form-label" for="takeProfit">Disponible
+									Origen</label><br />
+								<div class="input-group mb-3 d-block">
+									<div class="input-group">
+										<input id="origenInput" type="text"
+											class="form-control"
+											name="takeProfit"
+											aria-label="Take Profit"
+											aria-describedby="input-group-right"
+											readonly>
+										<span class="input-group-text unidadOrigen"
+											id="takeProfit"></span>
+									</div>
+									<div class="input-group">
+										<input id="origenInputUSD" type="text"
+											class="form-control"
+											name="takeProfit"
+											aria-label="Take Profit"
+											aria-describedby="input-group-right"
+											readonly>
+										<span class="input-group-text unidadOrigenUSD"
+											id="takeProfitUSD">USD</span>
+									</div>
 								</div>
 							</div>
 							<!-- Stop Loss -->
 							<div class="w-50">
-								<label class="form-label" for="stopLoss">Disponible Destino</label><br />
+								<label class="form-label" for="stopLoss">Disponible
+									Destino</label><br />
 								<div class="input-group mb-3">
-									<input id="destinoInput" type="text"
-										class="form-control" name="stopLoss"
-										aria-label="Stop Loss"
-										aria-describedby="input-group-right" readonly>
-									<span class="input-group-text unidadDestino"
-										id="stopLoss"></span>
+									<div class="input-group">
+										<input id="destinoInput" type="text"
+											class="form-control"
+											name="stopLoss"
+											aria-label="Stop Loss"
+											aria-describedby="input-group-right"
+											readonly>
+										<span class="input-group-text unidadDestino"
+											id="stopLoss"></span>
+									</div>
+									<div class="input-group">
+										<input id="destinoInputUSD" type="text"
+											class="form-control"
+											name="stopLoss"
+											aria-label="Stop Loss"
+											aria-describedby="input-group-right"
+											readonly>
+										<span class="input-group-text unidadDestinoUSD"
+											id="stopLoss">USD</span>
+									</div>
 								</div>
 							</div>
 						</div>
