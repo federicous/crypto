@@ -215,7 +215,7 @@
 						<div class="input-group mb-3">
 							<div class="input-group">
 								<input id="dineroInput" type="text" class="form-control"
-									name="Dinero a invertir" required
+									name="Dinero a convertir" required
 									placeholder="0" aria-label="Dinero a invertir"
 									aria-describedby="input-group-right">
 								<span class="input-group-text unidadOrigen"
@@ -223,7 +223,7 @@
 							</div>
 							<div class="input-group">
 								<input id="dineroInputUSD" type="text" class="form-control"
-									name="Dinero a invertir" required
+									name="Dinero a convertir" required
 									placeholder="0" aria-label="Dinero a invertir"
 									aria-describedby="input-group-right">
 								<span class="input-group-text unidadOrigenUSD"
@@ -233,55 +233,55 @@
 						<div class="d-flex">
 							<!-- Take Profit -->
 							<div class="me-2 w-50">
-								<label class="form-label" for="takeProfit">Disponible
+								<label class="form-label" for="disponible origen">Disponible
 									Origen</label><br />
 								<div class="input-group mb-3 d-block">
 									<div class="input-group">
 										<input id="origenInput" type="text"
 											class="form-control"
-											name="takeProfit"
+											name="disponible origen"
 											aria-label="Take Profit"
 											aria-describedby="input-group-right"
 											readonly>
 										<span class="input-group-text unidadOrigen"
-											id="takeProfit"></span>
+											id="disponible"></span>
 									</div>
 									<div class="input-group">
 										<input id="origenInputUSD" type="text"
 											class="form-control"
-											name="takeProfit"
+											name="disponible origen"
 											aria-label="Take Profit"
 											aria-describedby="input-group-right"
 											readonly>
 										<span class="input-group-text unidadOrigenUSD"
-											id="takeProfitUSD">USD</span>
+											id="disponibleUSD">USD</span>
 									</div>
 								</div>
 							</div>
 							<!-- Stop Loss -->
 							<div class="w-50">
-								<label class="form-label" for="stopLoss">Disponible
+								<label class="form-label" for="disponible destino">Disponible
 									Destino</label><br />
 								<div class="input-group mb-3">
 									<div class="input-group">
 										<input id="destinoInput" type="text"
 											class="form-control"
-											name="stopLoss"
+											name="disponible destino"
 											aria-label="Stop Loss"
 											aria-describedby="input-group-right"
 											readonly>
 										<span class="input-group-text unidadDestino"
-											id="stopLoss"></span>
+											id="disponible destino"></span>
 									</div>
 									<div class="input-group">
 										<input id="destinoInputUSD" type="text"
 											class="form-control"
-											name="stopLoss"
+											name="disponible destino"
 											aria-label="Stop Loss"
 											aria-describedby="input-group-right"
 											readonly>
 										<span class="input-group-text unidadDestinoUSD"
-											id="stopLoss">USD</span>
+											id="disponible destino">USD</span>
 									</div>
 								</div>
 							</div>
@@ -289,7 +289,7 @@
 
 						<!-- Boton de confirmación -->
 						<div class="my-3 btn-group w-100">
-							<button type="button" id="botonInvertir"
+							<button type="button" id="botonConvertir"
 								class="btn btn-primary w-50">Convertir</button>
 
 						</div>
