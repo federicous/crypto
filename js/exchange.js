@@ -144,12 +144,12 @@ $(function () {
 
 	}, 5000);
 
-let resultadoOrigen;
-let resultadoDestino;
-let cantidadOrigen;
-let cantidadDestino;		
-let cantidadConvertir;
-let cantidadConvertirName;
+	let resultadoOrigen;
+	let resultadoDestino;
+	let cantidadOrigen;
+	let cantidadDestino;
+	let cantidadConvertir;
+	let cantidadConvertirName;
 
 
 	$("#botonConvertir").click(() => {
@@ -165,12 +165,31 @@ let cantidadConvertirName;
 			cryptoDestinoUSD = JSON.parse(localStorage.getItem("cryptoDestinoUSD"));
 			console.log(cryptoOrigenUSD);
 			console.log(cryptoDestinoUSD);
-			resultadoOrigen=cantidadOrigen-cantidadConvertir;
-			let dolaresEnviar=(cantidadConvertir*cryptoOrigenUSD/cantidadOrigen);
-			let dolaresTotal=parseFloat(cryptoDestinoUSD)+parseFloat(dolaresEnviar);
-			resultadoDestino=(dolaresTotal*cantidadDestino/cryptoDestinoUSD);
+			resultadoOrigen = cantidadOrigen - cantidadConvertir;
+			let dolaresEnviar = (cantidadConvertir * cryptoOrigenUSD / cantidadOrigen);
+			let dolaresTotal = parseFloat(cryptoDestinoUSD) + parseFloat(dolaresEnviar);
+			resultadoDestino = (dolaresTotal * cantidadDestino / cryptoDestinoUSD);
 			console.log(resultadoOrigen);
 			console.log(resultadoDestino);
+
+			$.get("./data/cuentas.json", function (respuesta, estado) {
+				if (estado === "success") {
+					console.log(respuesta);
+					for (let i = 0; i < respuesta.length; i++) {
+						if (respuesta[i].usuario == usuarioActivo) {
+							respuesta[i].cryptoNameDestino = resultadoDestino;
+							break;
+						}
+					}
+					$.post(".data/cuentas.json", respuesta, function (data, status) {
+						console.log("Data: " + data + "\nStatus: " + status);
+
+					})
+				}
+
+			});
+
+
 		}
 	});
 
