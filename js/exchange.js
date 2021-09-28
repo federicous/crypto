@@ -1,4 +1,12 @@
-$(function () {
+	$.get("./data/cuentas.json", function (respuesta, estado) {
+		if (estado === "success") {
+			localStorage.setItem("cuentas", JSON.stringify(respuesta));
+
+		}
+
+	});
+	let cuentas = JSON.parse(localStorage.getItem("cuentas"));
+	console.log(cuentas);
 
 	/* ################ Lista de criptomonedas disponibles en la wallet ################# */
 	let currenciesList = [];
@@ -6,7 +14,7 @@ $(function () {
 	let precioMoneda;
 	$.get("./data/cuentas.json", function (respuesta, estado) {
 		if (estado === "success") {
-			for (const user of respuesta) {
+			for (const user of cuentas) {
 				if (user.usuario == usuarioActivo) {
 					for (const moneda in user.wallet) {
 						currenciesList.push(moneda);
@@ -27,6 +35,10 @@ $(function () {
 		}
 
 	});
+
+$(function () {
+
+
 
 	/* ###################### Lista de criptomonedas posibles de intercambio ##################### */
 
@@ -65,9 +77,8 @@ $(function () {
 		$(".unidadOrigen").text(cryptoNameOrigen);
 		URLGETORIGEN = `https://api.coinbase.com/v2/prices/${cryptoNameOrigen}-USD/buy`
 
-		$.get("./data/cuentas.json", function (respuesta, estado) {
-			if (estado === "success") {
-				for (const user of respuesta) {
+
+				for (const user of cuentas) {
 					if (user.usuario == usuarioActivo) {
 						for (const moneda in user.wallet) {
 							if (moneda == cryptoNameOrigen) {
@@ -79,9 +90,7 @@ $(function () {
 					}
 
 				}
-			}
 
-		});
 	});
 
 	let monedaPresente = false;
@@ -90,9 +99,7 @@ $(function () {
 		$(".unidadDestino").text(cryptoNameDestino);
 		URLGETDESTINO = `https://api.coinbase.com/v2/prices/${cryptoNameDestino}-USD/buy`
 
-		$.get("./data/cuentas.json", function (respuesta, estado) {
-			if (estado === "success") {
-				for (const user of respuesta) {
+				for (const user of cuentas) {
 					if (user.usuario == usuarioActivo) {
 						for (const moneda in user.wallet) {
 							// console.log(moneda);
@@ -113,9 +120,7 @@ $(function () {
 					}
 
 				}
-			}
 
-		});
 	});
 
 	/* ##################### Actualizacion de precios en dolares ######################### */
@@ -172,22 +177,19 @@ $(function () {
 			console.log(resultadoOrigen);
 			console.log(resultadoDestino);
 
-			$.get("./data/cuentas.json", function (respuesta, estado) {
-				if (estado === "success") {
-					console.log(respuesta);
-					for (let i = 0; i < respuesta.length; i++) {
-						if (respuesta[i].usuario == usuarioActivo) {
-							respuesta[i].cryptoNameDestino = resultadoDestino;
+
+					console.log(cuentas);
+					for (let i = 0; i < cuentas.length; i++) {
+						if (cuentas[i].usuario == usuarioActivo) {
+							cuentas[i].cryptoNameDestino = resultadoDestino;
 							break;
 						}
 					}
-					$.post(".data/cuentas.json", respuesta, function (data, status) {
-						console.log("Data: " + data + "\nStatus: " + status);
+					// $.post(".data/cuentas.json", respuesta, function (data, status) {
+					// 	console.log("Data: " + data + "\nStatus: " + status);
 
-					})
-				}
+					// })
 
-			});
 
 
 		}
