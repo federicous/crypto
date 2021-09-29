@@ -1,6 +1,6 @@
 let coinbaseOrigen;
 let coinbaseDestino;
-let cryptoNameOrigen;
+let cryptoNameOrigen="BTC";
 let cryptoNameDestino;
 let URLGETORIGEN;
 let URLGETDESTINO;
@@ -111,7 +111,7 @@ $(function () {
 				opcion.text = coin;
 				seleccion.appendChild(opcion);
 			}
-			$("#cryptoSelect option[value='BTC']").attr("selected", "selected");
+			// $("#cryptoSelect option[value='BTC']").attr("selected", "selected");
 			$("#cryptoSelect2").trigger("change");
 		};
 	});
@@ -233,7 +233,7 @@ function listaCryptoWallet() {
 				opcion.text = coin;
 				seleccion.append(opcion);
 			}
-			$("#cryptoSelect option[value='BTC']").attr("selected", "selected");
+			$("#cryptoSelect").val(cryptoNameOrigen);
 			$("#cryptoSelect").trigger("change");
 		}
 	}
