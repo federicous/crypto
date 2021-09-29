@@ -1,3 +1,25 @@
+let coinbaseOrigen;
+let coinbaseDestino;
+let cryptoNameOrigen;
+let cryptoNameDestino;
+let URLGETORIGEN;
+let URLGETDESTINO;
+let cuentas;
+let resultadoOrigen;
+let resultadoDestino;
+let cantidadOrigen;
+let cantidadDestino;
+let cantidadConvertir;
+let cantidadConvertirName;
+let cryptoOrigenUSD;
+let cryptoDestinoUSD;
+let cryptoDestinoCotizacion;
+let cryptoOrigenCotizacion;
+let monedaPresente = false;
+let currenciesList = [];
+let usuarioActivo = JSON.parse(localStorage.getItem("usuario"));
+
+$(function () {
 	$.get("./data/cuentas.json", function (respuesta, estado) {
 		if (estado === "success") {
 			localStorage.setItem("cuentas", JSON.stringify(respuesta));
@@ -5,40 +27,67 @@
 		}
 
 	});
-	let cuentas = JSON.parse(localStorage.getItem("cuentas"));
+	cuentas = JSON.parse(localStorage.getItem("cuentas"));
 	console.log(cuentas);
 
-	/* ################ Lista de criptomonedas disponibles en la wallet ################# */
-	let currenciesList = [];
-	let usuarioActivo = JSON.parse(localStorage.getItem("usuario"));
-	let precioMoneda;
-	$.get("./data/cuentas.json", function (respuesta, estado) {
-		if (estado === "success") {
-			for (const user of cuentas) {
-				if (user.usuario == usuarioActivo) {
-					for (const moneda in user.wallet) {
-						currenciesList.push(moneda);
+	/* ################### Eventos de seleccion de criptomonedas a intercambiar ################# */
+	$("#cryptoSelect").change(() => {
+		cryptoNameOrigen = $("#cryptoSelect").val();
+		$(".unidadOrigen").text(cryptoNameOrigen);
+		URLGETORIGEN = `https://api.coinbase.com/v2/prices/${cryptoNameOrigen}-USD/buy`
+		console.log(URLGETORIGEN);
 
+
+		for (const user of cuentas) {
+			if (user.usuario == usuarioActivo) {
+				for (const moneda in user.wallet) {
+					if (moneda == cryptoNameOrigen) {
+						localStorage.setItem("cryptoOrigenCantidad", JSON.stringify(user.wallet[moneda]));
+						coinbaseOrigen = JSON.parse(localStorage.getItem("cryptoOrigenCantidad"));
 					}
-					currenciesList.sort();
-					let seleccion = document.getElementById("cryptoSelect");
-					for (let coin of currenciesList) {
-						let opcion = document.createElement("option");
-						opcion.value = coin;
-						opcion.text = coin;
-						seleccion.appendChild(opcion);
-					}
-					$("#cryptoSelect option[value='BTC']").attr("selected", "selected");
-					$("#cryptoSelect").trigger("change")
+
 				}
 			}
+
 		}
 
 	});
 
-$(function () {
+	$("#cryptoSelect2").change(() => {
+		cryptoNameDestino = $("#cryptoSelect2").val();
+		$(".unidadDestino").text(cryptoNameDestino);
+		URLGETDESTINO = `https://api.coinbase.com/v2/prices/${cryptoNameDestino}-USD/buy`
+
+		for (const user of cuentas) {
+			if (user.usuario == usuarioActivo) {
+				for (const moneda in user.wallet) {
+					// console.log(moneda);
+					if (moneda == cryptoNameDestino) {
+						localStorage.setItem("cryptoDestinoCantidad", JSON.stringify(user.wallet[moneda]));
+						coinbaseDestino = JSON.parse(localStorage.getItem("cryptoDestinoCantidad"));
+						monedaPresente = true;
+					}
+
+				}
+				/* Si la moneda no esta presente en la cartera aparece con cantidad "0" */
+				if (monedaPresente == false) {
+					localStorage.setItem("cryptoDestinoCantidad", JSON.stringify("0"));
+					console.log(cryptoNameDestino);
+					coinbaseDestino = JSON.parse(localStorage.getItem("cryptoDestinoCantidad"));
+
+				}
+			}
+
+		}
+
+	});
 
 
+
+	/* ################ Lista de criptomonedas disponibles en la wallet ################# */
+
+
+	listaCryptoWallet();
 
 	/* ###################### Lista de criptomonedas posibles de intercambio ##################### */
 
@@ -67,65 +116,8 @@ $(function () {
 		};
 	});
 
-	let cryptoNameOrigen;
-	let cryptoNameDestino;
-	let URLGETORIGEN;
-	let URLGETDESTINO;
-	/* ################### Eventos de seleccion de criptomonedas a intercambiar ################# */
-	$("#cryptoSelect").change(() => {
-		cryptoNameOrigen = $("#cryptoSelect").val();
-		$(".unidadOrigen").text(cryptoNameOrigen);
-		URLGETORIGEN = `https://api.coinbase.com/v2/prices/${cryptoNameOrigen}-USD/buy`
-
-
-				for (const user of cuentas) {
-					if (user.usuario == usuarioActivo) {
-						for (const moneda in user.wallet) {
-							if (moneda == cryptoNameOrigen) {
-								localStorage.setItem("cryptoOrigenCantidad", JSON.stringify(user.wallet[moneda]));
-								coinbaseOrigen = JSON.parse(localStorage.getItem("cryptoOrigenCantidad"));
-							}
-
-						}
-					}
-
-				}
-
-	});
-
-	let monedaPresente = false;
-	$("#cryptoSelect2").change(() => {
-		cryptoNameDestino = $("#cryptoSelect2").val();
-		$(".unidadDestino").text(cryptoNameDestino);
-		URLGETDESTINO = `https://api.coinbase.com/v2/prices/${cryptoNameDestino}-USD/buy`
-
-				for (const user of cuentas) {
-					if (user.usuario == usuarioActivo) {
-						for (const moneda in user.wallet) {
-							// console.log(moneda);
-							if (moneda == cryptoNameDestino) {
-								localStorage.setItem("cryptoDestinoCantidad", JSON.stringify(user.wallet[moneda]));
-								coinbaseDestino = JSON.parse(localStorage.getItem("cryptoDestinoCantidad"));
-								monedaPresente = true;
-							}
-
-						}
-						/* Si la moneda no esta presente en la cartera aparece con cantidad "0" */
-						if (monedaPresente == false) {
-							localStorage.setItem("cryptoDestinoCantidad", JSON.stringify("0"));
-							console.log(cryptoNameDestino);
-							coinbaseDestino = JSON.parse(localStorage.getItem("cryptoDestinoCantidad"));
-
-						}
-					}
-
-				}
-
-	});
 
 	/* ##################### Actualizacion de precios en dolares ######################### */
-	let coinbaseOrigen;
-	let coinbaseDestino;
 	setInterval(() => {
 		$.get(URLGETORIGEN, function (respuesta, estado) {
 			if (estado === "success") {
@@ -134,6 +126,7 @@ $(function () {
 				$("#origenInputUSD").attr("value", `${coinbaseOrigen*respuesta.data.amount}`);
 				$("#origenInput").trigger("change");
 				localStorage.setItem("cryptoOrigenUSD", JSON.stringify(`${coinbaseOrigen*respuesta.data.amount}`));
+				localStorage.setItem("cryptoOrigenCotizacion", JSON.stringify(`${respuesta.data.amount}`));
 			}
 		});
 		$.get(URLGETDESTINO, function (respuesta, estado) {
@@ -144,18 +137,13 @@ $(function () {
 				$("#destinoInput").trigger("change");
 				// console.log(respuesta.data.amount);
 				localStorage.setItem("cryptoDestinoUSD", JSON.stringify(`${coinbaseDestino*respuesta.data.amount}`));
+				localStorage.setItem("cryptoDestinoCotizacion", JSON.stringify(`${respuesta.data.amount}`));
 			}
 		});
 
 	}, 5000);
 
-	let resultadoOrigen;
-	let resultadoDestino;
-	let cantidadOrigen;
-	let cantidadDestino;
-	let cantidadConvertir;
-	let cantidadConvertirName;
-
+	/* ################# Evento Boton Convertir ################ */
 
 	$("#botonConvertir").click(() => {
 		quitarAviso();
@@ -168,37 +156,90 @@ $(function () {
 			cantidadOrigen = JSON.parse(localStorage.getItem("cryptoOrigenCantidad"));
 			cryptoOrigenUSD = JSON.parse(localStorage.getItem("cryptoOrigenUSD"));
 			cryptoDestinoUSD = JSON.parse(localStorage.getItem("cryptoDestinoUSD"));
+			cryptoDestinoCotizacion = JSON.parse(localStorage.getItem("cryptoDestinoCotizacion"));
+			cryptoOrigenCotizacion = JSON.parse(localStorage.getItem("cryptoOrigenCotizacion"));
+
+			if (cantidadOrigen == "0") {
+				aviso(`No hay fondos suficientes`, "alert");
+				return;
+			}
+			if (parseFloat(cantidadOrigen) < parseFloat(cantidadConvertir)) {
+				aviso(`El monto debe ser menor a ${cantidadOrigen}`, "alert");
+				return;
+			}
+
+			/* Si no existe en la wallet la agrego con valor "0" */
+			console.log(currenciesList.indexOf(cryptoNameDestino));
+			if (currenciesList.indexOf(cryptoNameDestino) == "-1") {
+				for (let i = 0; i < cuentas.length; i++) {
+					if (cuentas[i].usuario == usuarioActivo) {
+						cuentas[i].wallet[cryptoNameDestino] = "0";
+						console.log(cuentas);
+						break;
+					}
+				}
+			}
+
+			/* Realizo los calculos de la conversión */
 			console.log(cryptoOrigenUSD);
 			console.log(cryptoDestinoUSD);
 			resultadoOrigen = cantidadOrigen - cantidadConvertir;
-			let dolaresEnviar = (cantidadConvertir * cryptoOrigenUSD / cantidadOrigen);
+			let dolaresEnviar = (cantidadConvertir * cryptoOrigenCotizacion);
 			let dolaresTotal = parseFloat(cryptoDestinoUSD) + parseFloat(dolaresEnviar);
-			resultadoDestino = (dolaresTotal * cantidadDestino / cryptoDestinoUSD);
+			resultadoDestino = (dolaresTotal / cryptoDestinoCotizacion);
 			console.log(resultadoOrigen);
 			console.log(resultadoDestino);
 
 
-					console.log(cuentas);
-					for (let i = 0; i < cuentas.length; i++) {
-						if (cuentas[i].usuario == usuarioActivo) {
-							cuentas[i].cryptoNameDestino = resultadoDestino;
-							break;
-						}
-					}
-					// $.post(".data/cuentas.json", respuesta, function (data, status) {
-					// 	console.log("Data: " + data + "\nStatus: " + status);
+			/* Guardo los valores en LocalStorage */
+			console.log(cuentas);
+			for (let i = 0; i < cuentas.length; i++) {
+				if (cuentas[i].usuario == usuarioActivo) {
+					cuentas[i].wallet[cryptoNameDestino] = `${resultadoDestino}`;
+					cuentas[i].wallet[cryptoNameOrigen] = `${resultadoOrigen}`;
+					break;
+				}
+			}
+			localStorage.setItem("cuentas", JSON.stringify(cuentas));
 
-					// })
-
-
+			/* Aplico los valores en pantalla */
+			$("#cryptoSelect2").trigger("change");
+			$("#cryptoSelect").trigger("change");
 
 		}
+		// Actualizo la lista de criptomonedas disponibles
+		listaCryptoWallet();
 	});
 
 });
 
+/* ########################## Funciones ############################### */
 
+// Funcion para crear lista de criptomonedas disponibles
+function listaCryptoWallet() {
+	currenciesList = [];
+	for (const user of cuentas) {
+		if (user.usuario == usuarioActivo) {
+			for (const moneda in user.wallet) {
+				currenciesList.push(moneda);
 
+			}
+			currenciesList.sort();
+			let seleccion = $("#cryptoSelect");
+			seleccion.empty();
+			for (let coin of currenciesList) {
+				let opcion = document.createElement("option");
+				opcion.value = coin;
+				opcion.text = coin;
+				seleccion.append(opcion);
+			}
+			$("#cryptoSelect option[value='BTC']").attr("selected", "selected");
+			$("#cryptoSelect").trigger("change");
+		}
+	}
+}
+
+// Funcion para crear aviso
 function aviso(mensaje, tipo) {
 	if (tipo == "alert") {
 		$("#formulario").append(`
@@ -226,6 +267,7 @@ function aviso(mensaje, tipo) {
 	}
 }
 
+// Funcion para quitar avisos
 function quitarAviso() {
 	$(".avisos").remove();
 }
