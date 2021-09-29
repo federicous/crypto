@@ -1,6 +1,6 @@
 let coinbaseOrigen;
 let coinbaseDestino;
-let cryptoNameOrigen="BTC";
+let cryptoNameOrigen;
 let cryptoNameDestino;
 let URLGETORIGEN;
 let URLGETDESTINO;
@@ -57,7 +57,7 @@ $(function () {
 		cryptoNameDestino = $("#cryptoSelect2").val();
 		$(".unidadDestino").text(cryptoNameDestino);
 		URLGETDESTINO = `https://api.coinbase.com/v2/prices/${cryptoNameDestino}-USD/buy`
-
+		monedaPresente=false;
 		for (const user of cuentas) {
 			if (user.usuario == usuarioActivo) {
 				for (const moneda in user.wallet) {
@@ -112,6 +112,7 @@ $(function () {
 				seleccion.appendChild(opcion);
 			}
 			// $("#cryptoSelect option[value='BTC']").attr("selected", "selected");
+			$("#cryptoSelect2").val(cryptoNameDestino || "BTC");
 			$("#cryptoSelect2").trigger("change");
 		};
 	});
@@ -149,6 +150,10 @@ $(function () {
 		quitarAviso();
 		cantidadConvertir = $("#dineroInput").val();
 		cantidadConvertirName = $("#dineroInput").attr("name");
+		if (cryptoNameOrigen==cryptoNameDestino) {
+			aviso(`Elegir criptomonedas diferentes`, "alert");
+			return;
+		}
 		if (isNaN(cantidadConvertir) || (cantidadConvertir < 0) || cantidadConvertir == "") {
 			aviso(`${cantidadConvertirName} No válido!!`, "alert");
 		} else {
@@ -233,7 +238,7 @@ function listaCryptoWallet() {
 				opcion.text = coin;
 				seleccion.append(opcion);
 			}
-			$("#cryptoSelect").val(cryptoNameOrigen);
+			$("#cryptoSelect").val(cryptoNameOrigen || "BTC");
 			$("#cryptoSelect").trigger("change");
 		}
 	}
