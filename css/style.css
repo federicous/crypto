@@ -131,6 +131,18 @@ a {
 	min-width: max-content;
 }
 
+nav {
+	background-color: #111827;
+	/* bg-gray-900 */
+	color: #9CA3AF;
+	/* text-gray-400  */
+	min-width: max-content;
+}
+@media only screen and (max-width: 960px) {
+	.navBar {
+		display: none !important;
+	}
+}
 .bordeMenu {
 	border-top-width: 0.5px;
 	border-top-style: solid;
@@ -142,10 +154,10 @@ a {
 	height: 500px;
 }
 .seccionFormulario {
-	flex: 30%;
-	min-width: 350px;
+	flex: 25%;
+	min-width: 300px;
 }
 .seccionGrafico {
-	flex: 70%;
-	min-width: 350px;
+	flex: 65%;
+	min-width: 100px;
 }
