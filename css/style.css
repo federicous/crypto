@@ -130,6 +130,13 @@ a {
 	/* text-gray-400  */
 	min-width: max-content;
 }
+.navBarSecondary {
+	background-color: #111827;
+	/* bg-gray-900 */
+	color: #9CA3AF;
+	/* text-gray-400  */
+	min-width: max-content;
+}
 
 nav {
 	background-color: #111827;
@@ -138,9 +145,18 @@ nav {
 	/* text-gray-400  */
 	min-width: max-content;
 }
+.secondaryMenu {
+	display: none;
+}
 @media only screen and (max-width: 960px) {
 	.navBar {
 		display: none !important;
+	}
+	.mainSection {
+		flex-wrap: wrap;
+	}
+	.secondaryMenu {
+		display: block;
 	}
 }
 .bordeMenu {
