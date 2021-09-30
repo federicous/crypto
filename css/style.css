@@ -175,5 +175,5 @@ nav {
 }
 .seccionGrafico {
 	flex: 65%;
-	min-width: 100px;
+	/* min-width: 100px; */
 }
