@@ -76,10 +76,11 @@ ul {
 .menuItems {
 	height: 3rem;
 	width: 100%;
+	margin-top: 0.85rem;
 }
 
 .menuItemsText {
-	font-size: .875rem;
+	font-size: .95rem;
 	line-height: 1.25rem;
 }
 
@@ -127,6 +128,7 @@ a {
 	/* bg-gray-900 */
 	color: #9CA3AF;
 	/* text-gray-400  */
+	min-width: max-content;
 }
 
 .bordeMenu {
@@ -134,13 +136,16 @@ a {
 	border-top-style: solid;
 	border-color: #374151;
 	/* .border-gray-700 */
+	margin-top: 0.85rem;
 }
 .tradingViewGrafico {
 	height: 500px;
 }
 .seccionFormulario {
 	flex: 30%;
+	min-width: 350px;
 }
 .seccionGrafico {
 	flex: 70%;
+	min-width: 350px;
 }
