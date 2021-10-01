@@ -8,7 +8,8 @@
 	  "ADA": "200",
 	  "DOT": "500"
 	},
-	"historial":[]
+	"historial":[],
+	"dolares":"5000"
       },
       {
 	"usuario": "admin",
@@ -19,7 +20,8 @@
 	  "DOT": "1000",
 	  "ATOM": "1000"
 	},
-	"historial":[]
+	"historial":[],
+	"dolares":"2000"
       },
       {
 	"usuario": "fede",
@@ -29,7 +31,8 @@
 	  "ADA": "550",
 	  "DOT": "2000"
 	},
-	"historial":[]
+	"historial":[],
+	"dolares":"10000"
       },
       {
 	"usuario": "pepe",
@@ -39,6 +42,7 @@
 	  "ADA": "200",
 	  "DOT": "500"
 	},
-	"historial":[]
+	"historial":[],
+	"dolares":"7000"
       }
     ]

@@ -105,6 +105,7 @@ let contadorActualizaciones;
 let URLGET;
 let cuentas;
 let usuarioActivo;
+let dineroDisponible;
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
 	
@@ -180,7 +181,18 @@ $(document).ready(function () {
 	});
 	/* ################### Fin Boton Cancelar ###################### */
 
-
+	/* ################### Muestro dinero disponible ###################### */
+	for (let i = 0; i < cuentas.length; i++) {
+		if (cuentas[i].usuario == usuarioActivo) {
+			// historialInversiones= cuentas[i].historial;
+			dineroDisponible= cuentas[i].dolares;
+			console.log(dineroDisponible);
+			break;
+		}
+	}
+	aviso(`Dinero disponible: ${dineroDisponible} USD`);
+	/* ################### Fin Muestro dinero disponible ###################### */
+	
 	/* ################### FUNCIONES ###################### */
 
 	function datosOperacion() {
@@ -227,6 +239,9 @@ $(document).ready(function () {
 		precioInicial = $("#precioInput");
 		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
 		quitarAviso();
+		if (parseFloat(dineroInvertido.val())>parseFloat()) {
+			
+		}
 		let contador = 0;
 		for (const x of valoresNumericos) {
 			if (isNaN(x.val()) || (x.val() < 0) || x.val() == "") {
