@@ -108,17 +108,18 @@ let usuarioActivo;
 let dineroDisponible;
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
-	
+
 /* Lectura de los datos de las cuentas */
 cuentas = JSON.parse(localStorage.getItem("cuentas"));
-	
+
 /* Cargo el usuario activo */
 usuarioActivo = JSON.parse(localStorage.getItem("usuario"));
 
 $(document).ready(function () {
 
 	bloquearBoton("#botonCancelar");
-
+	mostrarDineroDisponible();
+	
 	/* ############## Obtener precio periodicamente con la API ################# */
 	$("#cryptoSelect").change(() => {
 		cryptoName = $("#cryptoSelect").val();
@@ -182,18 +183,36 @@ $(document).ready(function () {
 	/* ################### Fin Boton Cancelar ###################### */
 
 	/* ################### Muestro dinero disponible ###################### */
-	for (let i = 0; i < cuentas.length; i++) {
-		if (cuentas[i].usuario == usuarioActivo) {
-			// historialInversiones= cuentas[i].historial;
-			dineroDisponible= cuentas[i].dolares;
-			console.log(dineroDisponible);
-			break;
+	function mostrarDineroDisponible() {
+		quitarAviso();
+		for (let i = 0; i < cuentas.length; i++) {
+			if (cuentas[i].usuario == usuarioActivo) {
+				// historialInversiones= cuentas[i].historial;
+				dineroDisponible = cuentas[i].dolares;
+				console.log(dineroDisponible);
+				break;
+			}
 		}
+		aviso(`Dinero disponible: ${dineroDisponible} USD`);
 	}
-	aviso(`Dinero disponible: ${dineroDisponible} USD`);
 	/* ################### Fin Muestro dinero disponible ###################### */
-	
+
 	/* ################### FUNCIONES ###################### */
+
+	/* ################### Muestro dinero disponible ###################### */
+	function mostrarDineroDisponible() {
+		quitarAviso();
+		for (let i = 0; i < cuentas.length; i++) {
+			if (cuentas[i].usuario == usuarioActivo) {
+				// historialInversiones= cuentas[i].historial;
+				dineroDisponible = cuentas[i].dolares;
+				console.log(dineroDisponible);
+				break;
+			}
+		}
+		aviso(`Dinero disponible: ${dineroDisponible} USD`);
+	}
+	/* ################### Fin Muestro dinero disponible ###################### */
 
 	function datosOperacion() {
 		/* ################### Lectura de Datos ###################### */
@@ -239,8 +258,8 @@ $(document).ready(function () {
 		precioInicial = $("#precioInput");
 		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
 		quitarAviso();
-		if (parseFloat(dineroInvertido.val())>parseFloat()) {
-			
+		if (parseFloat(dineroInvertido.val()) > parseFloat()) {
+
 		}
 		let contador = 0;
 		for (const x of valoresNumericos) {
@@ -249,13 +268,13 @@ $(document).ready(function () {
 				contador += 1;
 			}
 		}
-		if (isFinite(parseFloat(takeProfit.val())) && (parseFloat(takeProfit.val())<=parseFloat(precioInicial.val()))) {
+		if (isFinite(parseFloat(takeProfit.val())) && (parseFloat(takeProfit.val()) <= parseFloat(precioInicial.val()))) {
 			aviso(`Take Profit debe ser mayor al precio de compra (${precioInicial.val()})`, "alert");
-			contador +=1;
+			contador += 1;
 		}
-		if (isFinite(parseFloat(stopLoss.val())) && (parseFloat(stopLoss.val())>=parseFloat(precioInicial.val()))) {
+		if (isFinite(parseFloat(stopLoss.val())) && (parseFloat(stopLoss.val()) >= parseFloat(precioInicial.val()))) {
 			aviso(`Stop Loss debe ser menor al precio de compra (${precioInicial.val()})`, "alert");
-			contador +=1;
+			contador += 1;
 		}
 		if (contador != 0) {
 			return false;
@@ -275,7 +294,7 @@ $(document).ready(function () {
 
 	function operarNumerico() {
 		criptomoneda.actualizar(precioActualizado);
-		if ((precioActualizado >= takeProfit) || (precioActualizado<= stopLoss)) {
+		if ((precioActualizado >= takeProfit) || (precioActualizado <= stopLoss)) {
 			operacion.finalizar();
 			reiniciarForm();
 		}
