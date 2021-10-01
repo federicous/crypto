@@ -64,7 +64,7 @@ class Inversion {
 	}
 	// finalizar la inversión
 	finalizar() {
-		this.dineroTotal = Number((this.crypto.vender()).toFixed(2));
+		this.dineroTotal = Number((this.crypto.vender()).toFixed(7));
 		this.finalizada = true;
 		this.saldoPorcentaje = Number((((this.dineroTotal - this.dineroInvertido) * 100) / this.dineroInvertido).toFixed(4));
 		if (this.dineroTotal > this.dineroInvertido) {
@@ -75,7 +75,7 @@ class Inversion {
 		this.estado = "Finalizado";
 	}
 	cancelar() {
-		this.dineroTotal = Number((this.crypto.vender()).toFixed(2));
+		this.dineroTotal = Number((this.crypto.vender()).toFixed(7));
 		this.finalizada = true;
 		this.saldoPorcentaje = Number((((this.dineroTotal - this.dineroInvertido) * 100) / this.dineroInvertido).toFixed(4));
 		if (this.dineroTotal > this.dineroInvertido) {
@@ -106,6 +106,7 @@ let URLGET;
 let cuentas;
 let usuarioActivo;
 let dineroDisponible;
+let dineroResultante;
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
 
@@ -161,7 +162,7 @@ $(document).ready(function () {
 			} else {
 				aviso(`Operación en curso Nº 1`);
 			}
-			visualizarDatos("Compra realizada:", `${criptomoneda.cantidad} ${cryptoName}`);
+			visualizarDatos("Compra realizada:", `${Number(criptomoneda.cantidad).toFixed(7)} ${cryptoName}`);
 			operacion.enCurso();
 			operarNumerico();
 			guardar();
@@ -213,27 +214,6 @@ $(document).ready(function () {
 		operacion = new Inversion(dineroInvertido, takeProfit, stopLoss, fechaHora, criptomoneda);
 	}
 
-	function validacion() {
-		cryptoName = $("#cryptoSelect");
-		dineroInvertido = $("#dineroInput");
-		takeProfit = $("#takeProfitInput");
-		stopLoss = $("#stopLossInput");
-		precioInicial = $("#precioInput");
-		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
-		quitarAviso();
-		let contador = 0;
-		for (const x of valoresNumericos) {
-			if (isNaN(x.val()) || (x.val() < 0) || x.val() == "") {
-				aviso(`${x.attr("name")} No válido!!`, "alert");
-				contador += 1;
-			}
-		}
-		if (contador != 0) {
-			return false;
-		}
-		return true;
-	}
-
 	function validacionNumerico() {
 		cryptoName = $("#cryptoSelect");
 		dineroInvertido = $("#dineroInput");
@@ -242,9 +222,7 @@ $(document).ready(function () {
 		precioInicial = $("#precioInput");
 		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
 		quitarAviso();
-		if (parseFloat(dineroInvertido.val()) > parseFloat()) {
 
-		}
 		let contador = 0;
 		for (const x of valoresNumericos) {
 			if (isNaN(x.val()) || (x.val() < 0) || x.val() == "") {
@@ -263,17 +241,15 @@ $(document).ready(function () {
 		if (contador != 0) {
 			return false;
 		}
-		return true;
-	}
-
-	function operar() {
-		let precioNuevo = parseFloat(precioActualizado);
-		criptomoneda.actualizar(precioNuevo);
-		let cambioPrecio = criptomoneda.porcentajeCambio();
-		if (((precioNuevo > precioInicial) && (cambioPrecio >= takeProfit)) || ((precioNuevo < precioInicial) && (cambioPrecio >= stopLoss))) {
-			operacion.finalizar();
-			reiniciarForm();
+		if (parseFloat(dineroInvertido.val()) > parseFloat(dineroDisponible)) {
+			aviso(`El dinero a invertir debe ser menor a ${dineroDisponible} USD`, "alert");
+			return false
+		}		
+		if (parseFloat(dineroInvertido.val()) < 10) {
+			aviso(`El dinero a invertir debe ser mayor a 10 USD`, "alert");
+			return false
 		}
+		return true;
 	}
 
 	function operarNumerico() {
@@ -288,34 +264,36 @@ $(document).ready(function () {
 
 		if (operacion.finalizada == true) {
 
-			// Reporto el resultado
-			if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
-				aviso("Operacion Finalizada!!!");
-				visualizarDatos("Alcanzó el Stop Loss", `Dinero total: $${operacion.dineroTotal}`);
-			} else if (operacion.dineroTotal > operacion.dineroInvertido && operacion.estado != "Cancelado") {
-				aviso("Operacion Finalizada!!!");
-				visualizarDatos("Alcanzó el Take Profit", `Dinero total: $${operacion.dineroTotal}`);
-			} else {
-				aviso("Operacion Cancelada!!!", "alert");
-				visualizarDatos("La operación fue cancelada", `Dinero total: $${operacion.dineroTotal}`);
-			}
+			dineroResultante= Number(dineroDisponible - dineroInvertido + operacion.dineroTotal).toFixed(2);
+			console.log(dineroResultante);
+			ganancias=Number(operacion.dineroTotal-dineroInvertido).toFixed(2);
 
-
-			// Almaceno la lista de operaciones, concatenandola en caso de que ya haya sido creada anteriormente
-			if (localStorage.getItem("historial") === null) {
-				localStorage.setItem("historial", JSON.stringify([operacion]));
-			} else {
-				const listaOld = JSON.parse(localStorage.getItem("historial"));
-				localStorage.setItem("historial", JSON.stringify(listaOld.concat([operacion])));
-			}
 			for (let i = 0; i < cuentas.length; i++) {
 				if (cuentas[i].usuario == usuarioActivo) {
-					cuentas[i].historial.push(operacion)
+					cuentas[i].historial.push(operacion);
+					cuentas[i].dolares=dineroResultante;
 					break;
 				}
 			}
 			localStorage.setItem("cuentas", JSON.stringify(cuentas));
 			console.log(cuentas);
+
+
+			// Reporto el resultado
+			if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
+				aviso("Operacion Finalizada!!!");
+				visualizarDatos("Alcanzó el Stop Loss", `Ganancias: ${ganancias} USD \n
+				Dinero total: $${dineroResultante} USD`);
+			} else if (operacion.dineroTotal > operacion.dineroInvertido && operacion.estado != "Cancelado") {
+				aviso("Operacion Finalizada!!!");
+				visualizarDatos("Alcanzó el Take Profit", `Ganancias: ${ganancias} USD \n
+				Dinero total: $${dineroResultante} USD`);
+			} else {
+				aviso("Operacion Cancelada!!!", "alert");
+				visualizarDatos("La operación fue cancelada", `Ganancias: ${ganancias} USD \n 
+				Dinero total: $${dineroResultante} USD`);
+			}
+
 		}
 	};
 
