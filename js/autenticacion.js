@@ -9,7 +9,7 @@ $("#usuario").change(() => {
 $("#clave").change(() => {
 	$(".avisos").remove();
 })
-$("#accesoDemo").click(()=>{
+$("#accesoDemo").click(() => {
 	localStorage.setItem("usuario", JSON.stringify("demo"));
 })
 
@@ -17,13 +17,23 @@ $(".botonIngreso").click(() => {
 	usuarioIngresado = $("#usuario").val();
 	claveIngresada = $("#clave").val();
 	$(".avisos").remove();
-	$.get("./credenciales.json", function (respuesta, estado) {
+	$.get("./data/cuentas.json", function (respuesta, estado) {
 		if (estado === "success") {
 			listaUsuarios = respuesta;
 			for (const user of listaUsuarios) {
 				if (user.usuario == usuarioIngresado && user.clave == claveIngresada) {
+
+					/* Guardo en localStorage los datos de las cuentas */
+					$.get("./data/cuentas.json", function (respuesta, estado) {
+						if (estado === "success") {
+							localStorage.setItem("cuentas", JSON.stringify(respuesta));
+						}
+
+					});
 					window.location.href = "./trading.html"
 					encontrado = true;
+
+					/* Guardo el nombre del usuario activo */
 					localStorage.setItem("usuario", JSON.stringify(usuarioIngresado));
 				}
 			}

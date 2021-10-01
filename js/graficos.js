@@ -1,9 +1,22 @@
-let historialInversiones = JSON.parse(localStorage.getItem("historial"));
 let datos = [];
 let labels = [];
 let positivo = 0;
 let negativo = 0;
 let cancelado = 0;
+let historialInversiones;
+let usuarioActivo;
+/* Lectura de los datos de las cuentas */
+cuentas = JSON.parse(localStorage.getItem("cuentas"));
+	
+/* Cargo el usuario activo */
+usuarioActivo = JSON.parse(localStorage.getItem("usuario"));
+
+for (let i = 0; i < cuentas.length; i++) {
+	if (cuentas[i].usuario == usuarioActivo) {
+		historialInversiones= cuentas[i].historial;
+		break;
+	}
+}
 
 $(document).ready(function () {
 

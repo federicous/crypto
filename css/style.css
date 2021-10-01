@@ -18,9 +18,6 @@ ul {
 
 /* ################# Pagina de Ingreso ##################### */
 .logoPrincipal {
-	/* width: 6rem;
-	height: 6rem;
-	min-width: 1.5rem; */
 	display: none;
 	width: clamp(2.5rem, 10vw, 6.5rem);
 	height: clamp(2.5rem, 10vw, 6.5rem);
@@ -31,7 +28,6 @@ ul {
 }
 
 .logoTexto {
-	/* font-size: 4rem; */
 	display: none;
 	font-size: clamp(2.5rem, 10vw, 5.5rem);
 }
@@ -41,16 +37,13 @@ ul {
 }
 
 .credenciales {
-	/* width: clamp(2.5rem, 10vw, 4.5rem); */
 	display: none;
 	width: clamp(15.5rem, 25vw, 20.5rem);
 }
 
 .seccionLogo {
-	background-color: #111827;
-	/* bg-gray-900 */
-	color: #9CA3AF;
-	/* text-gray-400  */
+	background-color: #111827; /* bg-gray-900 */
+	color: #9CA3AF; /* text-gray-400  */
 }
 
 .botonInicio {
@@ -85,31 +78,25 @@ ul {
 }
 
 .menuItems:hover {
-	background-color: #374151;
-	/* background-color: $bg-gray-700; */
-	color: #D1D5DB;
-	/* $text-gray-300 */
+	background-color: #374151; /* background-color: $bg-gray-700; */
+	color: #D1D5DB; /* $text-gray-300 */
 }
 
 .accesoCuenta {
 	height: 4rem;
 	width: 100%;
-	background-color: #1F2937;
-	/* bg-gray-800  */
+	background-color: #1F2937; /* bg-gray-800  */
 }
 
 .accesoCuenta:hover {
-	background-color: #374151;
-	/* bg-gray-700  */
-	color: #D1D5DB;
-	/* text-gray-300 */
+	background-color: #374151; /* bg-gray-700  */
+	color: #D1D5DB; /* text-gray-300 */
 }
 
 .nuevoMensaje {
 	height: 0.5rem;
 	width: 0.5rem;
-	background-color: #6366F1;
-	/* .bg-indigo-500 */
+	background-color: #6366F1; /* .bg-indigo-500 */
 	top: 480px;
 	left: 10px;
 }
@@ -124,25 +111,19 @@ a {
 }
 
 .navBar {
-	background-color: #111827;
-	/* bg-gray-900 */
-	color: #9CA3AF;
-	/* text-gray-400  */
+	background-color: #111827; /* bg-gray-900 */
+	color: #9CA3AF;	/* text-gray-400  */
 	min-width: max-content;
 }
 .navBarSecondary {
-	background-color: #111827;
-	/* bg-gray-900 */
-	color: #9CA3AF;
-	/* text-gray-400  */
+	background-color: #111827; /* bg-gray-900 */
+	color: #9CA3AF; /* text-gray-400  */
 	min-width: max-content;
 }
 
 nav {
-	background-color: #111827;
-	/* bg-gray-900 */
-	color: #9CA3AF;
-	/* text-gray-400  */
+	background-color: #111827; /* bg-gray-900 */
+	color: #9CA3AF; /* text-gray-400  */
 	min-width: max-content;
 }
 .secondaryMenu {
@@ -162,8 +143,7 @@ nav {
 .bordeMenu {
 	border-top-width: 0.5px;
 	border-top-style: solid;
-	border-color: #374151;
-	/* .border-gray-700 */
+	border-color: #374151; /* .border-gray-700 */
 	margin-top: 0.85rem;
 }
 .tradingViewGrafico {
@@ -174,8 +154,7 @@ nav {
 	min-width: 300px;
 }
 .seccionGrafico {
-	flex: 65%;
-	/* min-width: 100px; */
+	flex: 65%; 
 }
 
 /* Pagina de Estadisticas */
@@ -183,26 +162,17 @@ h4 {
 	font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
-.graficoIndividual {
-	/* flex: 40%; */
-	/* width: 90%; */
-	/* width: clamp(15.5rem, 25vw, 20.5rem); */
-}
 @media only screen and (max-width: 960px) {
 	.graficos {
-		/* flex-direction: column; */
 		flex-wrap: wrap;
 	}
 	
 }
 @media only screen and (max-width: 430px) {
 	.graficos {
-		/* flex-direction: column; */
 		flex-wrap: wrap;
 	}
 	.graficoIndividual {
-		/* flex: 40%; */
-		/* width: 90%; */
 		width: 20.5rem
 	}
 }

@@ -103,8 +103,17 @@ let fechaHora;
 let operacion;
 let contadorActualizaciones;
 let URLGET;
+let cuentas;
+let usuarioActivo;
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
+	
+/* Lectura de los datos de las cuentas */
+cuentas = JSON.parse(localStorage.getItem("cuentas"));
+	
+/* Cargo el usuario activo */
+usuarioActivo = JSON.parse(localStorage.getItem("usuario"));
+
 $(document).ready(function () {
 
 	bloquearBoton("#botonCancelar");
@@ -233,7 +242,6 @@ $(document).ready(function () {
 			aviso(`Stop Loss debe ser menor al precio de compra (${precioInicial.val()})`, "alert");
 			contador +=1;
 		}
-		console.log(contador);
 		if (contador != 0) {
 			return false;
 		}
@@ -282,6 +290,14 @@ $(document).ready(function () {
 				const listaOld = JSON.parse(localStorage.getItem("historial"));
 				localStorage.setItem("historial", JSON.stringify(listaOld.concat([operacion])));
 			}
+			for (let i = 0; i < cuentas.length; i++) {
+				if (cuentas[i].usuario == usuarioActivo) {
+					cuentas[i].historial.push(operacion)
+					break;
+				}
+			}
+			localStorage.setItem("cuentas", JSON.stringify(cuentas));
+			console.log(cuentas);
 		}
 	};
 

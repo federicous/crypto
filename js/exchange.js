@@ -17,18 +17,15 @@ let cryptoDestinoCotizacion;
 let cryptoOrigenCotizacion;
 let monedaPresente = false;
 let currenciesList = [];
-let usuarioActivo = JSON.parse(localStorage.getItem("usuario"));
+let usuarioActivo;
 
 $(function () {
-	$.get("./data/cuentas.json", function (respuesta, estado) {
-		if (estado === "success") {
-			localStorage.setItem("cuentas", JSON.stringify(respuesta));
-
-		}
-
-	});
+	/* Lectura de los datos de las cuentas */
 	cuentas = JSON.parse(localStorage.getItem("cuentas"));
-	console.log(cuentas);
+	
+	/* Cargo el usuario activo */
+	usuarioActivo = JSON.parse(localStorage.getItem("usuario"));
+
 
 	/* ################### Eventos de seleccion de criptomonedas a intercambiar ################# */
 	$("#cryptoSelect").change(() => {
@@ -57,7 +54,7 @@ $(function () {
 		cryptoNameDestino = $("#cryptoSelect2").val();
 		$(".unidadDestino").text(cryptoNameDestino);
 		URLGETDESTINO = `https://api.coinbase.com/v2/prices/${cryptoNameDestino}-USD/buy`
-		monedaPresente=false;
+		monedaPresente = false;
 		for (const user of cuentas) {
 			if (user.usuario == usuarioActivo) {
 				for (const moneda in user.wallet) {
@@ -86,7 +83,6 @@ $(function () {
 
 	/* ################ Lista de criptomonedas disponibles en la wallet ################# */
 
-
 	listaCryptoWallet();
 
 	/* ###################### Lista de criptomonedas posibles de intercambio ##################### */
@@ -111,7 +107,6 @@ $(function () {
 				opcion.text = coin;
 				seleccion.appendChild(opcion);
 			}
-			// $("#cryptoSelect option[value='BTC']").attr("selected", "selected");
 			$("#cryptoSelect2").val(cryptoNameDestino || "BTC");
 			$("#cryptoSelect2").trigger("change");
 		};
@@ -150,7 +145,7 @@ $(function () {
 		quitarAviso();
 		cantidadConvertir = $("#dineroInput").val();
 		cantidadConvertirName = $("#dineroInput").attr("name");
-		if (cryptoNameOrigen==cryptoNameDestino) {
+		if (cryptoNameOrigen == cryptoNameDestino) {
 			aviso(`Elegir criptomonedas diferentes`, "alert");
 			return;
 		}
