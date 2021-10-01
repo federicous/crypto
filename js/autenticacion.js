@@ -23,13 +23,15 @@ $(".botonIngreso").click(() => {
 			for (const user of listaUsuarios) {
 				if (user.usuario == usuarioIngresado && user.clave == claveIngresada) {
 
-					/* Guardo en localStorage los datos de las cuentas */
-					$.get("./data/cuentas.json", function (respuesta, estado) {
-						if (estado === "success") {
-							localStorage.setItem("cuentas", JSON.stringify(respuesta));
-						}
+					/* Cargo en localStorage los datos de las cuentas solo en caso de que no se haya hecho antes para que se conserven los datos de sesiones anteriores */
+					if (localStorage.getItem("cuentas") === null) {
+						$.get("./data/cuentas.json", function (respuesta, estado) {
+							if (estado === "success") {
+								localStorage.setItem("cuentas", JSON.stringify(respuesta));
+							}
 
-					});
+						});
+					}
 					window.location.href = "./trading.html"
 					encontrado = true;
 
