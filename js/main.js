@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 	bloquearBoton("#botonCancelar");
 	mostrarDineroDisponible();
-	
+
 	/* ############## Obtener precio periodicamente con la API ################# */
 	$("#cryptoSelect").change(() => {
 		cryptoName = $("#cryptoSelect").val();
@@ -182,21 +182,6 @@ $(document).ready(function () {
 	});
 	/* ################### Fin Boton Cancelar ###################### */
 
-	/* ################### Muestro dinero disponible ###################### */
-	function mostrarDineroDisponible() {
-		quitarAviso();
-		for (let i = 0; i < cuentas.length; i++) {
-			if (cuentas[i].usuario == usuarioActivo) {
-				// historialInversiones= cuentas[i].historial;
-				dineroDisponible = cuentas[i].dolares;
-				console.log(dineroDisponible);
-				break;
-			}
-		}
-		aviso(`Dinero disponible: ${dineroDisponible} USD`);
-	}
-	/* ################### Fin Muestro dinero disponible ###################### */
-
 	/* ################### FUNCIONES ###################### */
 
 	/* ################### Muestro dinero disponible ###################### */
@@ -204,7 +189,6 @@ $(document).ready(function () {
 		quitarAviso();
 		for (let i = 0; i < cuentas.length; i++) {
 			if (cuentas[i].usuario == usuarioActivo) {
-				// historialInversiones= cuentas[i].historial;
 				dineroDisponible = cuentas[i].dolares;
 				console.log(dineroDisponible);
 				break;
