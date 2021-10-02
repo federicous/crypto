@@ -33,14 +33,7 @@ class Crypto {
 	comprar(masDinero) {
 		this.cantidad = this.cantidad + (parseFloat(masDinero) / this.precio[this.precio.length - 1])
 	}
-	// muestra en consola los valores que fue teniendo la crypto
-	historial() {
-		console.log(this.precio);
-	}
-	// muestra la cantidad de crypto en consola
-	verCantidad() {
-		console.log(this.cantidad);
-	}
+
 	porcentajeCambio() {
 		return Math.abs(((this.precio[this.precio.length - 1] * 100) / this.precio[0]) - 100);
 	}
@@ -107,6 +100,8 @@ let cuentas;
 let usuarioActivo;
 let dineroDisponible;
 let dineroResultante;
+let historialInversiones;
+let valoresNumericos;
 
 /* ##################### BLOQUE DEL PROGRAMA ###################### */
 
@@ -156,7 +151,7 @@ $(document).ready(function () {
 		if (validacionNumerico()) {
 			datosOperacion();
 			precioActualizado = precioInicial;
-			let historialInversiones = JSON.parse(localStorage.getItem("historial"));
+			historialInversiones = JSON.parse(localStorage.getItem("historial"));
 			if (historialInversiones != null) {
 				aviso(`Operación en curso Nº ${historialInversiones.length+1}`);
 			} else {
@@ -191,11 +186,12 @@ $(document).ready(function () {
 		for (let i = 0; i < cuentas.length; i++) {
 			if (cuentas[i].usuario == usuarioActivo) {
 				dineroDisponible = cuentas[i].dolares;
-				console.log(dineroDisponible);
 				break;
 			}
 		}
+		$("#zonaAvisos").hide();
 		aviso(`Dinero disponible: ${dineroDisponible} USD`);
+		$("#zonaAvisos").fadeIn(1000);
 	}
 	/* ################### Fin Muestro dinero disponible ###################### */
 
@@ -220,7 +216,7 @@ $(document).ready(function () {
 		takeProfit = $("#takeProfitInput");
 		stopLoss = $("#stopLossInput");
 		precioInicial = $("#precioInput");
-		let valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
+		valoresNumericos = [precioInicial, dineroInvertido, takeProfit, stopLoss];
 		quitarAviso();
 
 		let contador = 0;
@@ -244,7 +240,7 @@ $(document).ready(function () {
 		if (parseFloat(dineroInvertido.val()) > parseFloat(dineroDisponible)) {
 			aviso(`El dinero a invertir debe ser menor a ${dineroDisponible} USD`, "alert");
 			return false
-		}		
+		}
 		if (parseFloat(dineroInvertido.val()) < 10) {
 			aviso(`El dinero a invertir debe ser mayor a 10 USD`, "alert");
 			return false
@@ -264,20 +260,17 @@ $(document).ready(function () {
 
 		if (operacion.finalizada == true) {
 
-			dineroResultante= Number(dineroDisponible - dineroInvertido + operacion.dineroTotal).toFixed(2);
-			console.log(dineroResultante);
-			ganancias=Number(operacion.dineroTotal-dineroInvertido).toFixed(2);
+			dineroResultante = Number(dineroDisponible - dineroInvertido + operacion.dineroTotal).toFixed(2);
+			ganancias = Number(operacion.dineroTotal - dineroInvertido).toFixed(2);
 
 			for (let i = 0; i < cuentas.length; i++) {
 				if (cuentas[i].usuario == usuarioActivo) {
 					cuentas[i].historial.push(operacion);
-					cuentas[i].dolares=dineroResultante;
+					cuentas[i].dolares = dineroResultante;
 					break;
 				}
 			}
 			localStorage.setItem("cuentas", JSON.stringify(cuentas));
-			console.log(cuentas);
-
 
 			// Reporto el resultado
 			if (operacion.dineroTotal < operacion.dineroInvertido && operacion.estado != "Cancelado") {
@@ -315,7 +308,8 @@ $(document).ready(function () {
 
 	function aviso(mensaje, tipo) {
 		if (tipo == "alert") {
-			$("#formulario").append(`
+			$("#zonaAvisos").hide();
+			$("#zonaAvisos").append(`
 		<div class="avisos alert alert-danger alert-dismissible fade show d-flex align-items-center mt-3" role="alert">
  	 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
  	  	 		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -325,9 +319,10 @@ $(document).ready(function () {
 		  	</div>
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
-		`)
+		`);
+			$("#zonaAvisos").fadeIn(1000);
 		} else {
-			$("#formulario").append(`
+			$("#zonaAvisos").append(`
 		<div class="avisos alert alert-primary d-flex align-items-center mt-3" role="alert">
  	 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
  	  	 		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -336,7 +331,7 @@ $(document).ready(function () {
 		   	 ${mensaje}
 		  	</div>
 		</div>
-		`)
+		`);
 		}
 	}
 
@@ -346,13 +341,15 @@ $(document).ready(function () {
 
 	function visualizarDatos(titulo, datos) {
 		$(".datos").remove();
+		$("#zonaDatos").hide();
 		$("#zonaDatos").append(`<div class="datos card text-dark bg-light my-3 w-100">
-	<div class="card-header">${titulo}</div>
-	<div class="card-body">
-	  <p class="card-text">${datos}
-		</p>
-	</div>
-      </div>`)
+						<div class="card-header">${titulo}</div>
+						<div class="card-body">
+							<p class="card-text">${datos}
+							</p>
+						</div>
+ 					</div>`)
+		$("#zonaDatos").fadeIn(1000);
 	}
 
 	function ocultarDatos() {

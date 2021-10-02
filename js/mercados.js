@@ -1,11 +1,11 @@
 let cryptoSeleccion;
+let currencies;
+let currenciesList = [];
 
 /* ################## Genero la lista de criptomonedas para seleccionar ##################### */
 
 $(function () {
 
-	let currencies;
-	let currenciesList = [];
 	const URLGETCUR = "https://api.pro.coinbase.com/currencies"
 	$.get(URLGETCUR, function (respuesta, estado) {
 		if (estado === "success") {

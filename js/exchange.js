@@ -32,8 +32,6 @@ $(function () {
 		cryptoNameOrigen = $("#cryptoSelect").val();
 		$(".unidadOrigen").text(cryptoNameOrigen);
 		URLGETORIGEN = `https://api.coinbase.com/v2/prices/${cryptoNameOrigen}-USD/buy`
-		console.log(URLGETORIGEN);
-
 
 		for (const user of cuentas) {
 			if (user.usuario == usuarioActivo) {
@@ -58,7 +56,6 @@ $(function () {
 		for (const user of cuentas) {
 			if (user.usuario == usuarioActivo) {
 				for (const moneda in user.wallet) {
-					// console.log(moneda);
 					if (moneda == cryptoNameDestino) {
 						localStorage.setItem("cryptoDestinoCantidad", JSON.stringify(user.wallet[moneda]));
 						coinbaseDestino = JSON.parse(localStorage.getItem("cryptoDestinoCantidad"));
@@ -69,7 +66,6 @@ $(function () {
 				/* Si la moneda no esta presente en la cartera aparece con cantidad "0" */
 				if (monedaPresente == false) {
 					localStorage.setItem("cryptoDestinoCantidad", JSON.stringify("0"));
-					console.log(cryptoNameDestino);
 					coinbaseDestino = JSON.parse(localStorage.getItem("cryptoDestinoCantidad"));
 
 				}
@@ -131,7 +127,6 @@ $(function () {
 				$("#destinoInput").attr("value", `${coinbaseDestino}`);
 				$("#destinoInputUSD").attr("value", `${coinbaseDestino*respuesta.data.amount}`);
 				$("#destinoInput").trigger("change");
-				// console.log(respuesta.data.amount);
 				localStorage.setItem("cryptoDestinoUSD", JSON.stringify(`${coinbaseDestino*respuesta.data.amount}`));
 				localStorage.setItem("cryptoDestinoCotizacion", JSON.stringify(`${respuesta.data.amount}`));
 			}
@@ -169,30 +164,23 @@ $(function () {
 			}
 
 			/* Si no existe en la wallet la agrego con valor "0" */
-			console.log(currenciesList.indexOf(cryptoNameDestino));
 			if (currenciesList.indexOf(cryptoNameDestino) == "-1") {
 				for (let i = 0; i < cuentas.length; i++) {
 					if (cuentas[i].usuario == usuarioActivo) {
 						cuentas[i].wallet[cryptoNameDestino] = "0";
-						console.log(cuentas);
 						break;
 					}
 				}
 			}
 
 			/* Realizo los calculos de la conversión */
-			console.log(cryptoOrigenUSD);
-			console.log(cryptoDestinoUSD);
 			resultadoOrigen = cantidadOrigen - cantidadConvertir;
 			let dolaresEnviar = (cantidadConvertir * cryptoOrigenCotizacion);
 			let dolaresTotal = parseFloat(cryptoDestinoUSD) + parseFloat(dolaresEnviar);
 			resultadoDestino = (dolaresTotal / cryptoDestinoCotizacion);
-			console.log(resultadoOrigen);
-			console.log(resultadoDestino);
 
 
 			/* Guardo los valores en LocalStorage */
-			console.log(cuentas);
 			for (let i = 0; i < cuentas.length; i++) {
 				if (cuentas[i].usuario == usuarioActivo) {
 					cuentas[i].wallet[cryptoNameDestino] = `${resultadoDestino}`;
