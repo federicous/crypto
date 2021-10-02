@@ -56,3 +56,9 @@ $(".botonIngreso").click(() => {
 	});
 
 });
+
+$("#clave").keypress(function (e) {
+	if (e.which == 13) {
+	  $(".botonIngreso").trigger("click");
+	}
+});
