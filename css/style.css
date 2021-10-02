@@ -176,7 +176,8 @@ h4 {
 		width: 20.5rem
 	}
 }
-/* Wallet */
+
+/* Pagina de Wallet */
 #dineroDisponible {
-	width: 50%;
+	width: 200px;;
 }
