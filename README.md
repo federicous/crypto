@@ -5,3 +5,5 @@ Una vez ingresados los valores anteriores se va a ir actualizando periodicamente
 El resultado de las operaciones se va almacenando en un historial y se muestran en la respectiva sección, por otro lado, en la sección Estadisticas se muestran en gráficos la evolución de las ganancias y perdidas, y en otro las cantidades de operaciones con ganancia, perdida y las canceladas.
 
 En la sección Exchange se pueden hacer intercambios entre criptomonedas y luego se ven reflejados en la sección Wallet
+
+NOTA: Para hacerlo funcionar localmente debe utililzarse un live server!!!
