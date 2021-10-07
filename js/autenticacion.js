@@ -20,6 +20,8 @@ $(".botonIngreso").click(() => {
 	$.get("./data/cuentas.json", function (respuesta, estado) {
 		if (estado === "success") {
 			listaUsuarios = respuesta;
+			localStorage.setItem("cuentas", JSON.stringify(respuesta));
+
 			for (const user of listaUsuarios) {
 				if (user.usuario == usuarioIngresado && user.clave == claveIngresada) {
 
